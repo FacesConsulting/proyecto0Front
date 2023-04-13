@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import { Divider, IconButton } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { useState } from "react";
@@ -12,14 +10,14 @@ const HeaderMobile = () => {
   const [show, setShow] = useState<boolean>(false);
 
   return (
-    <div className="relative md:hidden bg-blue-400">
+    <div className="relative md:hidden bg-white border-b-2 border-blue-600">
       <div className="flex items-center justify-between p-3">
         {/* <Image src={Sandhuer} alt="logo" width={150} /> */}
         <h1>Proyecto 0</h1>
 
         <div className="flex items-center gap-4">
-          <IconButton onClick={() => setShow(!show)}>
-            <Menu sx={{ color: grey[50] }} />
+          <IconButton color="primary" onClick={() => setShow(!show)}>
+            <Menu color="primary" />
           </IconButton>
         </div>
       </div>

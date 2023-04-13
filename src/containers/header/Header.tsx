@@ -8,14 +8,14 @@ const Header = () => {
       <div className="hidden bg-blue-400 md:flex p-3 justify-around text-xs text-white font-semibold">
         <div className="flex gap-2 items-center">
           <i className="fas fa-phone" />
-          <span>+52 00 00000 0000</span>
+          <span className="text-base">+52 00 00000 0000</span>
         </div>
         <div className="flex gap-4 items-center">
           <i className="fas fa-paper-plane" />
-          <span>mail@mail.com.mx</span>
+          <span className="text-base">mail@mail.com.mx</span>
         </div>
         <ul className="links">
-          <li>FAQs</li>
+          <li className="text-base">FAQs</li>
           <li>
             <i className="fab fa-facebook-f" />
           </li>

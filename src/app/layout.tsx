@@ -1,4 +1,5 @@
 import '@/assets/styles/globals.scss'
+import Script from 'next/script'
 
 export const metadata = {
   title: 'Proyecto 0',
@@ -13,6 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>{children}</body>
+      <Script src="https://kit.fontawesome.com/da618b3aee.js" crossOrigin="anonymous"></Script>
     </html>
   )
 }
