@@ -38,6 +38,7 @@ const Header = () => {
           <Link href={""}>inicio</Link>
           <Link href={""}>nosotros</Link>
           <Link href={""}>contacto</Link>
+          <Link href={"/login"}>Login</Link>
           <Link href={""}></Link>
         </nav>
       </div>
