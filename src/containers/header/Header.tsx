@@ -3,18 +3,18 @@ import HeaderMobile from "./HeaderMobile";
 
 const Header = () => {
   return (
-    <header>
-      <div className="hidden bg-blue-400 md:flex p-3 justify-around text-xs text-white font-semibold">
+    <header id="home">
+      <div className="hidden bg-sky-600 md:flex p-3 justify-around text-xs text-white font-normal">
         <div className="flex gap-2 items-center">
           <i className="fas fa-phone" />
-          <span className="text-base">+52 00 00000 0000</span>
+          <span className="text-sm">+52 00 00000 0000</span>
         </div>
         <div className="flex gap-4 items-center">
           <i className="fas fa-paper-plane" />
-          <span className="text-base">mail@mail.com.mx</span>
+          <span className="text-sm">mail@mail.com.mx</span>
         </div>
         <ul className="links">
-          <li className="text-base">FAQs</li>
+          <li className="text-sm">FAQs</li>
           <li>
             <i className="fab fa-facebook-f" />
           </li>
@@ -35,8 +35,8 @@ const Header = () => {
         </div>
 
         <nav>
-          <Link href={""}>inicio</Link>
-          <Link href={""}>nosotros</Link>
+          <Link href={"#home"}>inicio</Link>
+          <Link href={"#about us"}>nosotros</Link>
           <Link href={""}>contacto</Link>
           <Link href={"/login"}>Login</Link>
           <Link href={""}></Link>

@@ -1,6 +1,6 @@
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 * {
   box-sizing: border-box;
@@ -9,6 +9,33 @@
   text-decoration: none;
   font-family: "Roboto", sans-serif;
   user-select: none;
+  list-style: none;
+}
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
 }
 
 :root {
@@ -177,8 +204,11 @@ main {
         padding: 2rem 4rem;
         transform: translate(-50%, -50%);
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> Desarrollo_Dylan
         @media screen and (max-width: 1024px) {
           width: 50%;
           left: 35%;
@@ -190,7 +220,6 @@ main {
           height: 70%;
           left: 48%;
           padding: 1rem 1.5rem;
-
         }
       }
     }
