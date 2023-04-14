@@ -46,6 +46,7 @@ object {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+
   li {
     position: relative;
     cursor: pointer;
@@ -133,6 +134,7 @@ main {
   -moz-transform: translate(-100%);
   -ms-transform: translate(-100%);
   -o-transform: translate(-100%);
+
   nav a {
     font-size: 10pt;
     font-weight: 500;
@@ -276,6 +278,7 @@ main {
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.5);
+
         svg {
           fill: var(--color-primary);
         }
@@ -290,8 +293,7 @@ main {
       right: 10px;
     }
 
-    @media screen and (max-width: 1024px) {
-    }
+    @media screen and (max-width: 1024px) {}
 
     @media screen and (max-width: 768px) {
       button {
@@ -337,6 +339,19 @@ main {
 }
 
 //! Login
+.bg-login {
+  width: 60%;
+  height: 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.shadow-form {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
 //! Slider Cards
 
