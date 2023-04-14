@@ -24,9 +24,10 @@ const LoginForm = () => {
     })
 
   return (
+    
     <Box>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} autoComplete="off">
+        <div  className="mb-4">
         <TextField
               fullWidth
               id="user"
@@ -38,23 +39,42 @@ const LoginForm = () => {
               error={touched.user && Boolean(errors.user)}
               helperText={touched.user && errors.user}
               inputProps={{ maxLength: 10 }}
-              placeholder="Lorem "
+              placeholder="ej: Usuario "
             />
+        </div>
+        <div className="mb-4">
+        <TextField
+              fullWidth
+              type="password"
+              id="password"
+              name="password"
+              label="Contraseña"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.user && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              inputProps={{ maxLength: 15 }}
+              placeholder="ej: Password1- "
+            />
+        </div>
+        <div>
         </div>
         <LoadingButton
           size="small"
           color="primary"
           variant="contained"
           type="submit"
+          className="text-center"
+          text-align= "center"
           loading={loading}
           loadingPosition="end"
-          endIcon={<Save />}
-        >
-          Registrar Persona
+          endIcon={<Save />}>
+          Login 
         </LoadingButton>
-      
       </form>
     </Box>
+    
   );
 };
 
