@@ -204,11 +204,6 @@ main {
         padding: 2rem 4rem;
         transform: translate(-50%, -50%);
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> Desarrollo_Dylan
         @media screen and (max-width: 1024px) {
           width: 50%;
           left: 35%;
@@ -298,6 +293,16 @@ main {
 }
 
 //! Login
+.bg-login {
+  width: 60%;
+  height: 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
 .shadow-form {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
