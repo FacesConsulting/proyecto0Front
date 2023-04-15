@@ -2,16 +2,14 @@
 
 import { ContraseniaInterface } from "@/interfaces/cambiarContrasenia/contrasenia.interface";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useFormik } from 'formik'
 import { validationSchemaPassword } from "@/validations/Password/ValidationPassword";
 import { LoadingButton } from '@mui/lab'
 import { Box, TextField } from "@mui/material";
-
+import Link from "next/link";
 const NewPasswordForm = () => {
     const [initialValues] = useState<ContraseniaInterface>({ newPassword: "", confirmPassword: "" });
     const [loading] = useState<boolean>(false)
-    const router = useRouter()
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
         useFormik({
             enableReinitialize: true,
@@ -68,8 +66,8 @@ const NewPasswordForm = () => {
                     </LoadingButton>
                 </div>
                 <div className="text-center">
-                <button type="button" className="text-center bg-transparent" onClick={() => router.push('/login')}>Regresar </button>
-            </div>
+                    <Link href={"/login"} className="text-center text-s text-indigo-500" >Regresar</Link>
+                </div>
             </form>
         </Box>
     );

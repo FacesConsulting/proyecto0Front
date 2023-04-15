@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import { LoginInterface } from "@/interfaces/login/login.interface";
 import { Box, Divider, TextField } from "@mui/material";
 import React, { useState } from "react";
@@ -11,7 +11,6 @@ import Link from "next/link";
 const LoginForm = () => {
   const [initialValues] = useState<LoginInterface>({ user: "", password: "" });
   const [loading] = useState<boolean>(false)
-  const router = useRouter()
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       enableReinitialize: true,
@@ -80,8 +79,8 @@ const LoginForm = () => {
           <Link href={""} className="text-center text-sm text-slate-500" >¿Necesitas una cuenta? Registrate</Link>
         </div>
         <div className="text-center">
-                <button type="button" className="text-center bg-transparent" onClick={() => router.push('/')}>Regresar </button>
-            </div>
+          <Link href={"/"} className="text-center text-s text-indigo-500" >Regresar</Link>
+        </div>
       </form>
 
     </Box>
