@@ -24,8 +24,9 @@ const NewPasswordForm = () => {
     return (
         <Box>
             <form onSubmit={handleSubmit} autoComplete="off">
-                <h1 className="text-center text-indigo-400 mb-4">Nueva contraseña</h1>
-                <div className="mb-2">
+                <h1 className="text-center text-indigo-400 mb-2">Nueva contraseña</h1>
+                <p className="text-center text-indigo-400 mb-4 text-xs">La contraseña necesita minimo 8 caracteres</p>
+                <div className="text-center mb-2">
                     <TextField
                         fullWidth
                         type="password"
@@ -41,7 +42,7 @@ const NewPasswordForm = () => {
                         placeholder="ej: Password1- "
                     />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4 text-center ">
                     <TextField
                         fullWidth
                         type="password"
@@ -66,11 +67,10 @@ const NewPasswordForm = () => {
                         <span>Guardar</span>
                     </LoadingButton>
                 </div>
-
-            </form>
-            <div className="text-center">
+                <div className="text-center">
                 <button type="button" className="text-center bg-transparent" onClick={() => router.push('/login')}>Regresar </button>
             </div>
+            </form>
         </Box>
     );
 };
