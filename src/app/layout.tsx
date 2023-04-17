@@ -1,4 +1,6 @@
 import '@/assets/styles/globals.scss'
+import '@/assets/styles/fontawesome.min.css'
+import 'swiper/css'
 import Script from 'next/script'
 
 export const metadata = {

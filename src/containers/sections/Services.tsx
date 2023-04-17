@@ -2,12 +2,13 @@ import ServiceCard from "@/components/cards/ServiceCard";
 
 const Services = () => {
   return (
-    <div className="min-h-screen w-screen bg-sky-950 py-16">
-      <div className="block m-auto w-4/5">
-        <h2 className="text-4xl text-center w-full mb-12 text-white relative">
-          Servicios
+    <div className="min-h-screen w-screen bg-sky-950 flex ">
+      <div className="m-auto py-12 lg:m-auto w-4/5">
+      <p className="text-center mb-3 text-sky-400 font-medium">Ofrecemos</p>
+        <h2 className="text-4xl text-center w-full mb-12 text-white relative bottom-after-select">
+          Nuestros Servicios
         </h2>
-        <div className="flex justify-center items-center gap-6">
+        <div className="flex flex-col justify-center items-center gap-6 lg:flex-row">
           <ServiceCard
             title="Consulta online"
             size={64}

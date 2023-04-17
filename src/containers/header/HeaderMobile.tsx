@@ -3,14 +3,13 @@
 import { Divider, IconButton } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { useState } from "react";
-import { grey } from "@mui/material/colors";
 import Link from "next/link";
 
 const HeaderMobile = () => {
   const [show, setShow] = useState<boolean>(false);
 
   return (
-    <div className="relative md:hidden bg-white border-b-2 border-blue-600">
+    <div className="relative md:hidden bg-white border-b-4" id="header-mobile">
       <div className="flex items-center justify-between p-3">
         {/* <Image src={Sandhuer} alt="logo" width={150} /> */}
         <h1>Proyecto 0</h1>
@@ -35,6 +34,8 @@ const HeaderMobile = () => {
           </Link>
           <Link href={"/contact"}>
             <i className="fas fa-headset"></i> contacto</Link>
+          <Link href={"/login"}>
+            <i className="fas fa-user"></i> Login</Link>
         </nav>
       </div>
     </div>
