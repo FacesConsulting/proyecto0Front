@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "sonarqube": "sonar-scanner",
     "lint": "next lint"
   },
   "dependencies": {
@@ -35,5 +36,8 @@
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4",
     "yup": "^1.0.2"
+  },
+  "devDependencies": {
+    "sonar-scanner": "^3.1.0"
   }
 }
