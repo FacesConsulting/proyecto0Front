@@ -2,7 +2,7 @@
 
 import { Swiper } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import { Pagination, Navigation, Autoplay, FreeMode } from "swiper";
+import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper';
 
 type SliderCardProps = {
   children: any;
@@ -10,36 +10,36 @@ type SliderCardProps = {
 const SliderCards = ({ children }: SliderCardProps) => {
   return (
     <Swiper
-      freeMode={true}
-      autoplay={{
-        delay: 2000,
-      }}
-      grabCursor={true}
-      loop={true}
-      pagination={{
-        clickable: true,
-      }}
-      navigation={true}
-      modules={[Pagination, Navigation, Autoplay, FreeMode]}
-      className="mySwiper"
-      breakpoints={{
-        0: {
-          slidesPerView: 1,
-          spaceBetween: 10,
-        },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-        1024: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        1280: {
-          slidesPerView: 4,
-          spaceBetween: 30,
-        },
-      }}
+    effect={'coverflow'}
+    grabCursor={true}
+    centeredSlides={true}
+    loop={true}
+    breakpoints={{
+      0:{
+        slidesPerView: 1
+      },
+      768:{
+        slidesPerView: 2
+      },
+      1024:{
+        slidesPerView:4
+      }
+
+
+    }}
+    coverflowEffect={{
+      rotate: 0,
+      stretch: 0,
+      depth: 100,
+      modifier: 2.5,
+    }}
+    autoplay={
+      {delay: 3000}
+    }
+    pagination={{clickable: true }}
+    navigation={true}
+    modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
+    className="swiper_container"
     >
       {children}
     </Swiper>
