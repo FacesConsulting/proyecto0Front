@@ -1,6 +1,5 @@
 "use client";
 
-import SliderCards from "@/components/slider/SliderCards";
 import { TestimonialsInterface } from "@/interfaces/testimonials/testimonial.interface";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -21,7 +20,7 @@ const Testimonials = () => {
         id: 2,
         clinic: "Lorem Ipsum",
         customer: "Eddie Murphy",
-        stars: 2,
+        stars: 5,
         testimony:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam cumque recusandae dolorum porro, quasi sunt necessitatibus dolorem ab laudantium vel.",
       },
