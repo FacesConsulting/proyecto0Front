@@ -8,10 +8,10 @@ export const validationSchemaPassword = yup.object().shape({
     .matches(/[a-z]/, 'Requiere una letra minuscula')
     .matches(/[A-Z]/, 'Requiere una letra mayúscula')
     .matches(/[^\w]/, 'Requiere un simbolo')
-    .required("Es un campo obligatorio"),
+    .required("Por favor ingrese su nueva contraseña"),
     confirmPassword: yup
     .string()
     .oneOf([yup.ref('newPassword')], 'Debe coincidir con el valor del campo "Nueva Contraseña"')
-    .required("Es un campo obligatorio"),
+    .required("Por favor ingrese la confirmación de su contraseña"),
 });
 

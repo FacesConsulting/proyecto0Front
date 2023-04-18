@@ -1,6 +1,6 @@
 "use client";
 
-import { ContraseniaInterface } from "@/interfaces/cambiarContrasenia/contrasenia.interface";
+import { ResetPasswordInterface } from "@/interfaces/auth/auth.interface";
 import React, { useState } from "react";
 import { useFormik } from 'formik'
 import { validationSchemaPassword } from "@/validations/Password/ValidationPassword";
@@ -8,7 +8,7 @@ import { LoadingButton } from '@mui/lab'
 import { Box, TextField } from "@mui/material";
 import Link from "next/link";
 const NewPasswordForm = () => {
-    const [initialValues] = useState<ContraseniaInterface>({ newPassword: "", confirmPassword: "" });
+    const [initialValues] = useState<ResetPasswordInterface>({ newPassword: "", confirmPassword: "" });
     const [loading] = useState<boolean>(false)
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
         useFormik({

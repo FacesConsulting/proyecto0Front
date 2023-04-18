@@ -3,8 +3,8 @@ import * as yup from "yup";
 export const validationSchemaUser = yup.object().shape({
     email: yup
     .string()
-    .matches(/^[a-zA-ZÀ-ÿ\s]{1,40}$/, {
-      message: "El usuario solo puede contener letras y acentos",
+    .matches(/^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/, {
+      message: "El usuario solo puede contener letras ",
     })
     .required("Por favor ingrese su correo electrónico."),
     password: yup
@@ -15,5 +15,13 @@ export const validationSchemaUser = yup.object().shape({
     .matches(/[A-Z]/, 'Requiere una letra mayúscula')
     .matches(/[^\w]/, 'Requiere un simbolo')
     .required("Por favor ingrese su contraseña."),
+});
+export const validationSchemaEmail = yup.object().shape({
+  email: yup
+  .string()
+  .matches(/^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/, {
+    message: "El usuario solo puede contener letras ",
+  })
+  .required("Por favor ingrese su correo electrónico."),
 });
 

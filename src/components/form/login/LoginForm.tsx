@@ -11,7 +11,7 @@ import Link from "next/link";
 const LoginForm = () => {
   const [initialValues] = useState<LoginInterface>({ email: "", password: "" });
   const [loading] = useState<boolean>(false)
-  
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       enableReinitialize: true,
