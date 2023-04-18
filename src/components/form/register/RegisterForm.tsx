@@ -2,6 +2,8 @@
 
 import { DatePicker } from "@mui/lab"
 import { Box, Button, TextField } from "@mui/material"
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+
 
 const RegisterForm = () => {
   return (
@@ -39,6 +41,12 @@ const RegisterForm = () => {
         <TextField  id="zip" label="Codigo Postal" variant="standard" />
         </div>
         <div>
+        <FormComponent>
+    <HCaptcha
+      sitekey="your-sitekey"
+      onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
+    />
+</FormComponent>
         <center><Button variant="contained">Registrar</Button>    </center>
         </div>        
     </Box>
