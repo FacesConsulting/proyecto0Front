@@ -12,36 +12,61 @@ const DoctorRanking = () => {
   const { doctors }: RankingDrInterface = {
     doctors: [
       {
+        id:1,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
       },
       {
+        id:2,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
       },
       {
+        id:3,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
       },
       {
+        id:4,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
       },
       {
+        id:5,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
       },
       {
+        id:6,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
       },
       {
+        id:7,
+        name: "Dr. Lorem Ipsum",
+        image: "",
+        socialNetworks: [{ platform: "facebook", url: "" }],
+      },
+      {
+        id:8,
+        name: "Dr. Lorem Ipsum",
+        image: "",
+        socialNetworks: [{ platform: "facebook", url: "" }],
+      },
+      {
+        id:9,
+        name: "Dr. Lorem Ipsum",
+        image: "",
+        socialNetworks: [{ platform: "facebook", url: "" }],
+      },
+      {
+        id:10,
         name: "Dr. Lorem Ipsum",
         image: "",
         socialNetworks: [{ platform: "facebook", url: "" }],
@@ -61,9 +86,9 @@ const DoctorRanking = () => {
 
         <SliderCards>
           {doctors.map((dr) => {
-            const { name, image, socialNetworks } = dr;
+            const { id, name, image, socialNetworks } = dr;
             return (
-              <SwiperSlide key={name}>
+              <SwiperSlide key={id}>
                 <div className="bg-white flex justify-center items-center p-6">
                   <div className="block">
                     <Avatar

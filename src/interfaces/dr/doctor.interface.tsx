@@ -3,6 +3,7 @@ export interface RankingDrInterface {
 }
 
 export interface DrInterface {
+    id: number;
     name: string;
     image: string;
     socialNetworks: SocialNetworksInterface[];
