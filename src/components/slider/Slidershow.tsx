@@ -168,24 +168,36 @@ const Slidershow = ({ controls, autoplay, speed, interval }: SliderProps) => {
       </div>
       {controls && (
         <div className="container-buttons">
-          <button id="left" onClick={prev}>
+          <button className="prev-button rounded-full border border-sky-600 p-3 text-sky-600 hover:bg-sky-600 hover:text-white absolute left-2" onClick={prev}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              fill="none"
               viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="h-5 w-5 rtl:rotate-180"
             >
-              <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
             </svg>
           </button>
-          <button id="rigth" onClick={next}>
+          <button className="next-button rounded-full border border-sky-600 p-3 text-sky-600 hover:bg-sky-600 hover:text-white absolute right-2" onClick={next}>
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              className="h-5 w-5 rtl:rotate-180"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
+              <path
+                d="M9 5l7 7-7 7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
             </svg>
           </button>
         </div>
