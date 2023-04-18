@@ -103,7 +103,7 @@ const Slidershow = ({ controls, autoplay, speed, interval }: SliderProps) => {
   }, [autoplay, interval, next]);
 
   return (
-    <div className="contenedor-principal">
+    <div className="contenedor-principal mt-12 md:mt-0">
       <div className="contenedor-slideshow" ref={slideshow}>
         <div className="slide">
           <Image src={image1} alt="" />

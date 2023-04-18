@@ -35,7 +35,7 @@ const HeaderClinic = () => {
             component="div"
             sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1 }}
           >
-           Consulta Ya!
+           {process.env.NEXT_PUBLIC_COMPANY_NAME}
           </Typography>
         </Toolbar>
       </AppBar>
