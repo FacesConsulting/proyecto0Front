@@ -31,7 +31,7 @@ const RegisterForm = () => {
         </div>
         <h1>Domicilio</h1>
         <div>
-        <TextField  id="Estado" label="Estado" variant="standard" />
+        <TextField  id="Estado" label="Estado" variant="standard" /> 
         <TextField id="Municipio" label="Municipio" variant="standard" />        
         </div>
         <div>
