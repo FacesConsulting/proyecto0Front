@@ -9,7 +9,7 @@ import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
 
 const LoginForm = () => {
-  const [initialValues] = useState<LoginInterface>({ user: "", password: "" });
+  const [initialValues] = useState<LoginInterface>({ email: "", password: "" });
   const [loading] = useState<boolean>(false)
   
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -26,7 +26,7 @@ const LoginForm = () => {
   return (
     <Box className="w-full px-4">
       <form onSubmit={handleSubmit} autoComplete="off">
-        <h1 className="text-center text-indigo-400 mb-4">Login</h1>
+        <h1 className="text-center text-sky-600 mb-4">Iniciar sesión</h1>
         <div className="mb-4">
           <TextField
             fullWidth
