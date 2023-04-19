@@ -3,7 +3,7 @@
 import { DatePicker } from "@mui/lab"
 import { Box, Button, TextField } from "@mui/material"
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-
+import FormComponent from '@hcaptcha/react-hcaptcha';
 
 const RegisterForm = () => {
   return (
@@ -15,6 +15,7 @@ const RegisterForm = () => {
       noValidate
       autoComplete="off"
     >
+      <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <div>
         <TextField id="Nombre" label="Nombre" variant="standard" />
         <TextField id="Apellidos" label="Apellidos" variant="standard" />
@@ -41,12 +42,7 @@ const RegisterForm = () => {
         <TextField  id="zip" label="Codigo Postal" variant="standard" />
         </div>
         <div>
-        <FormComponent>
-    <HCaptcha
-      sitekey="your-sitekey"
-      onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
-    />
-</FormComponent>
+        <div className="h-captcha" data-sitekey="98d89b74-a963-4017-9938-f4faf609f577"></div>
         <center><Button variant="contained">Registrar</Button>    </center>
         </div>        
     </Box>
