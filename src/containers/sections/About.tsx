@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Public from "@/assets/images/doc.jpg";
+import Public from "@/assets/images/doc.webp";
 import Link from "next/link";
 import IconSvg from "@/components/svg/IconSvg";
 
@@ -15,7 +15,7 @@ const About = () => {
       <div className="w-full h-full flex flex-col justify-center items-center gap-4 lg:w-3/5 lg:flex-row ">
         <div className="w-full pt-12 pb-4 lg:w-1/2">
           <h1 className="text-4xl font-black text-sky-600 mb-4 text-center lg:text-start">
-            Conecta Salud
+            Consulta Ya!
           </h1>
           <p className="text-gray-500 text-lg text-center px-8 lg:text-start lg:px-0">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
