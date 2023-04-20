@@ -1,31 +1,39 @@
 "use client";
 
 import { LoginInterface } from "@/interfaces/auth/auth.interface";
-import { Box, Divider, TextField } from "@mui/material";
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import { validationSchemaUser } from "@/validations/Login/ValidationLogin";
+import { Alert, Box, Divider, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const LoginForm = () => {
-  const [initialValues] = useState<LoginInterface>({ email: "", password: "" });
-  const [loading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<LoginInterface>({ email: "", password: "" });
+  const [error, setError] = useState<string>("");
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      enableReinitialize: true,
-      validationSchema: validationSchemaUser,
-      initialValues,
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has("error")){
+      setError(urlParams?.get("error") || "")
+    }
+  }, []);
 
-      onSubmit: async (values, { resetForm }) => {
-        console.log(values);
-      },
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true)
+    const result = await signIn("credentials", {
+      email: user.email,
+      password: user.password,
+      redirect: true,
+      callbackUrl: "/",
     });
+    setLoading(false)
+  };
 
   return (
     <Box className="w-full px-4">
-      <form onSubmit={handleSubmit} autoComplete="off">
+      <form autoComplete="off">
         <h1 className="text-sky-600 mb-4">Inicia sesión</h1>
         <div className="mb-4">
           <TextField
@@ -33,12 +41,8 @@ const LoginForm = () => {
             id="email"
             name="email"
             label="Correo electrónico"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
-            inputProps={{ maxLength: 30 }}
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             placeholder="joe_doe@example.com"
           />
         </div>
@@ -49,12 +53,8 @@ const LoginForm = () => {
             id="password"
             name="password"
             label="Contraseña"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.password && Boolean(errors.password)}
-            helperText={touched.password && errors.password}
-            inputProps={{ maxLength: 20 }}
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
         </div>
         <div className="text-right mb-4">
@@ -66,15 +66,7 @@ const LoginForm = () => {
           </Link>
         </div>
         <div className="text-center box mb-4">
-          <LoadingButton
-            className="text-center"
-            size="small"
-            type="submit"
-            loading={loading}
-            variant="contained"
-          >
-            <span>inicia sesión</span>
-          </LoadingButton>
+          <LoadingButton onClick={handleSubmit} loading={loading}>Inicia sesión</LoadingButton>
         </div>
         <Divider textAlign="center" className="text-slate-400 mb-4">
           Continua con
@@ -93,6 +85,10 @@ const LoginForm = () => {
             ¿Necesitas una cuenta? <span className="">Registrate</span>
           </Link>
         </div>
+        {
+          error != "" &&
+        <Alert severity="error">Tus accesos son incorrectos</Alert>
+        }
       </form>
     </Box>
   );

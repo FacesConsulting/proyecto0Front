@@ -1,5 +1,7 @@
+"use client"
 import Link from "next/link";
 import HeaderMobile from "./HeaderMobile";
+import { signIn } from "next-auth/react";
 
 const Header = () => {
   return (
@@ -38,7 +40,7 @@ const Header = () => {
           <Link href={"#home"}>inicio</Link>
           <Link href={"#about us"}>nosotros</Link>
           <Link href={""}>contacto</Link>
-          <Link href={"/login"}>inicia sesión</Link>
+          <span onClick={() => signIn()}>inicia sesión</span>
           <Link href={""}></Link>
         </nav>
       </div>

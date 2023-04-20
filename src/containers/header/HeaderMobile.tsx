@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { Home, Menu } from "@mui/icons-material";
 import { useState } from "react";
-import Link from "next/link";
 
 const HeaderMobile = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -36,6 +35,7 @@ const HeaderMobile = () => {
     }
   ]
   return (
+
     <Hidden mdUp>
       <AppBar
         position="fixed"
