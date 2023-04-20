@@ -1,10 +1,12 @@
+"use client"
 import Link from "next/link";
 import HeaderMobile from "./HeaderMobile";
+import { signIn } from "next-auth/react";
 
 const Header = () => {
   return (
     <header id="home">
-      <div className="hidden bg-sky-600 md:flex p-3 justify-around text-xs text-white font-normal">
+      <div className="flex bg-sky-600 p-3 justify-around text-xs text-white font-normal top-header">
         <div className="flex gap-2 items-center">
           <i className="fas fa-phone" />
           <span className="text-sm">+52 00 00000 0000</span>
@@ -26,11 +28,11 @@ const Header = () => {
           </li>
         </ul>
       </div>
-      <div className="hidden md:flex header">
+      <div className="flex header">
         <div>
           <Link href={"/"}>
             {/* <Image src={Sandhuer} alt="Logo Sandhuer" height={70}/> */}
-            Proyecto 0
+            Consulta Ya!
           </Link>
         </div>
 
@@ -38,13 +40,10 @@ const Header = () => {
           <Link href={"#home"}>inicio</Link>
           <Link href={"#about us"}>nosotros</Link>
           <Link href={""}>contacto</Link>
-          <Link href={"/login"}>Login</Link>
+          <span onClick={() => signIn()}>inicia sesión</span>
           <Link href={""}></Link>
         </nav>
       </div>
-
-      {/* Mobile */}
-
       <HeaderMobile />
     </header>
   );

@@ -329,3 +329,17 @@ main {
     }
   }
 }
+
+@media screen and (max-width: 900px) {
+
+  header .top-header{
+    display: none;
+    visibility: hidden;
+  }
+
+  header .header{
+    display: none;
+    visibility: hidden;
+  }
+  
+}
