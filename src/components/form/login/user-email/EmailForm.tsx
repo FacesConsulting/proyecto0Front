@@ -27,7 +27,7 @@ const EmailForm = () => {
         <Box className="w-full px-4">
             <form onSubmit={handleSubmit} autoComplete="off">
                 <h1 className="text-center text-sky-600 mb-4">Restablecer contraseña</h1>
-                <p className="text-center text-indigo-400 mb-4 text-xs">Ingrese el correo electrónico asociado con su cuenta </p>
+                <p className="text-center text-indigo-400 mb-4 text-xs">Ingresa el correo electrónico asociado con tu cuenta </p>
                 <div className="mb-4">
                     <TextField
                         fullWidth
