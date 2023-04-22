@@ -28,21 +28,36 @@ export default NextAuth({
 
         const data = JSON.stringify({
           email: credentials?.email,
-          password: MD5(credentials?.password || "").toString(),
+          password:credentials?.password,
         });
 
         console.log(data)
+        const crypto = require('crypto');
+        const key = crypto.randomBytes(16);
+        const iv = crypto.randomBytes(16);
+        console.log("key:" + key.toString('base64'))
+        console.log("iv:" + iv.toString('base64'))
+        // Crear instancia de cifrado
+        const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
 
+        // Cifrar los datos
+        let encryptedData = cipher.update(data, 'utf8', 'base64');
+        encryptedData += cipher.final('base64');
+        //const encryptedData = AES.encrypt(data, key,{iv}).toString();
+        
         console.log(JSON.stringify({
-          data: AES.encrypt(data, "12345678901234567890123456789012").toString(),
+          data: encryptedData.toString('base64'),
         }));
-        const res = await fetch("http://192.168.0.23:8081/login/auth/login", {
+        
+        const res = await fetch("http://localhost:8081/clinica/clinica/encriptar", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            data: AES.encrypt(data, "12345678901234567890123456789012").toString(),
+            data: encryptedData.toString('base64'),
+            key: key.toString('base64'),
+            iv:iv.toString('base64')
           }),
         });
 
