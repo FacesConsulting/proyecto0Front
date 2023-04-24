@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import {MD5, AES} from "crypto-js";
+import * as crypto from 'crypto-js'
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 export default NextAuth({
@@ -28,36 +28,33 @@ export default NextAuth({
 
         const data = JSON.stringify({
           email: credentials?.email,
-          password:credentials?.password,
+          password: credentials?.password.toString(),
         });
 
         console.log(data)
-        const crypto = require('crypto');
-        const key = crypto.randomBytes(16);
-        const iv = crypto.randomBytes(16);
-        console.log("key:" + key.toString('base64'))
-        console.log("iv:" + iv.toString('base64'))
+        const key = process.env.NEXT_PUBLIC_COMPANY_KEY || ''
+        //const iv = crypto.randomBytes(16);
+        console.log("key:" + Buffer.from(key, 'utf8').toString('base64'))
+        //console.log("iv:" + iv.toString('base64'))
+        
         // Crear instancia de cifrado
-        const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
+        // const cipher = crypto.createCipheriv('AES-128-CBC', key, iv)
 
-        // Cifrar los datos
-        let encryptedData = cipher.update(data, 'utf8', 'base64');
-        encryptedData += cipher.final('base64');
-        //const encryptedData = AES.encrypt(data, key,{iv}).toString();
+        // // Cifrar los datos
+        // let encryptedData = cipher.update(data, 'utf8', 'base64');
+        // encryptedData += cipher.final('base64');
         
-        console.log(JSON.stringify({
-          data: encryptedData.toString('base64'),
-        }));
+        // console.log("data:" + encryptedData)
         
-        const res = await fetch("http://localhost:8081/clinica/clinica/encriptar", {
+        const res = await fetch("http://localhost:8081/login/auth/signIn", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            data: encryptedData.toString('base64'),
-            key: key.toString('base64'),
-            iv:iv.toString('base64')
+            data: 'mkklmklmlm',
+            key: Buffer.from(key, 'utf8').toString('base64'),
+            iv: 'mwNiQrhx4O8PRdt1hS94jA=='
           }),
         });
 
@@ -86,8 +83,8 @@ export default NextAuth({
     },
   },
   pages: {
-    signIn: "/auth/login",
+    signIn: "/auth/signIn",
     signOut: "/auth/signout",
-    error: "/auth/login",
+    error: "/auth/signIn",
   },
 });

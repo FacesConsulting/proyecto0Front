@@ -9,3 +9,10 @@ export interface ResetPasswordInterface{
 export interface EmailInterface{
     email: string,
 }
+
+export interface SingUpInterface{
+    firstname: string;
+    lastname: string;
+    email: string;
+    password: string;
+}

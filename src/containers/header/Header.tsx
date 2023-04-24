@@ -40,8 +40,8 @@ const Header = () => {
           <Link href={"#home"}>inicio</Link>
           <Link href={"#about us"}>nosotros</Link>
           <Link href={""}>contacto</Link>
-          <span onClick={() => signIn()}>inicia sesión</span>
-          <Link href={""}></Link>
+          <Link href={"/auth/signIn"}>inicia sesión</Link>
+          <button onClick={() => signIn()}>Iniciar</button>
         </nav>
       </div>
       <HeaderMobile />

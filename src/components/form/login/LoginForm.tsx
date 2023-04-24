@@ -135,7 +135,7 @@ const LoginForm = () => {
       </form>
 
       <div className="flex">
-        <Link href={""} className="text-center text-sm text-slate-500">
+        <Link href={"/auth/signUp"} className="text-center text-sm text-slate-500">
           ¿No tienes cuenta? <span className="text-sky-600">Crea una cuenta</span>
         </Link>
       </div>
