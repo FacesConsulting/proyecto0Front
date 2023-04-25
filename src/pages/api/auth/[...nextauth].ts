@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
-import * as crypto from 'crypto-js'
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
+import { fetchingDataEncrypted } from "@/utils/utils";
 export default NextAuth({
   providers: [
     FacebookProvider({
@@ -28,42 +28,16 @@ export default NextAuth({
 
         const data = JSON.stringify({
           email: credentials?.email,
-          password: credentials?.password.toString(),
+          password:credentials?.password,
         });
 
-        console.log(data)
-        const key = process.env.NEXT_PUBLIC_COMPANY_KEY || ''
-        //const iv = crypto.randomBytes(16);
-        console.log("key:" + Buffer.from(key, 'utf8').toString('base64'))
-        //console.log("iv:" + iv.toString('base64'))
-        
-        // Crear instancia de cifrado
-        // const cipher = crypto.createCipheriv('AES-128-CBC', key, iv)
+        const res = await fetchingDataEncrypted(data, 'login/auth/signIn', 'post')
 
-        // // Cifrar los datos
-        // let encryptedData = cipher.update(data, 'utf8', 'base64');
-        // encryptedData += cipher.final('base64');
-        
-        // console.log("data:" + encryptedData)
-        
-        const res = await fetch("http://localhost:8081/login/auth/signIn", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            data: 'mkklmklmlm',
-            key: Buffer.from(key, 'utf8').toString('base64'),
-            iv: 'mwNiQrhx4O8PRdt1hS94jA=='
-          }),
-        });
+        console.log(res)
 
-        console.log(res.status);
-        const user = await res.json();
-
-        if (user && res.ok) {
+        if (res.data && res.status === 200) {
           // Any object returned will be saved in `user` property of the JWT
-          return user;
+          return res.data;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null;
@@ -84,7 +58,6 @@ export default NextAuth({
   },
   pages: {
     signIn: "/auth/signIn",
-    signOut: "/auth/signout",
     error: "/auth/signIn",
   },
 });

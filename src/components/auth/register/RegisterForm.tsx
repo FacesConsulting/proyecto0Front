@@ -3,32 +3,45 @@
 import { SingUpInterface } from "@/interfaces/auth/auth.interface";
 import { LoadingButton } from "@mui/lab";
 import {
-  Alert,
   Box,
   Checkbox,
   FormControl,
   FormControlLabel,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   TextField,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { FormEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const captchaRef = useRef(null)
-  const [token, setToken] = useState("")
+  const captchaRef = useRef(null);
+  const [token, setToken] = useState("");
   const [user, setUser] = useState<SingUpInterface>({
     email: "",
     firstname: "",
     lastname: "",
     password: "",
   });
-
-  const handleSubmit = (e : React.FormEvent<HtmlFrom>) => {
+  
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
   };
+
+  const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name)
+  }
+
   return (
     <Box className="w-full px-4">
       <h2 className="text-black mb-6">Registro</h2>
@@ -70,6 +83,32 @@ const RegisterForm = () => {
           />
         </div>
         <div className="mb-4">
+          <FormControl variant="outlined" size="small" fullWidth>
+            <InputLabel htmlFor="password">
+              Contraseña
+            </InputLabel>
+            <OutlinedInput
+              fullWidth
+              size="small"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
+        </div>
+        <div className="mb-4">
           <TextField
             required
             fullWidth
@@ -77,7 +116,7 @@ const RegisterForm = () => {
             type="password"
             id="password"
             name="password"
-            label="Contraseña"
+            label="Confirmar Contraseña"
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
@@ -87,7 +126,7 @@ const RegisterForm = () => {
             control={<Checkbox size="small" />}
             label={
               <Typography fontSize={11}>
-                Acepto{" "}
+                Acepto &nbsp;
                 <Link href={""} className="text-sky-700">
                   Terminos y Servicios
                 </Link>
@@ -99,7 +138,7 @@ const RegisterForm = () => {
             control={<Checkbox size="small" />}
             label={
               <Typography fontSize={11}>
-                Acepto{" "}
+                Acepto &nbsp;
                 <Link href={""} className="text-sky-700">
                   Política de privacidad.
                 </Link>
@@ -108,11 +147,13 @@ const RegisterForm = () => {
           />
         </FormControl>
 
-        <HCaptcha
-          ref={captchaRef}
-          sitekey={"da4ad4a2-1610-4b1b-8986-ae0137a4bce3"}
-          onVerify={(t) => setToken(t)}
-        />
+        <div className="my-4 flex justify-center">
+          <HCaptcha
+            ref={captchaRef}
+            sitekey={"da4ad4a2-1610-4b1b-8986-ae0137a4bce3"}
+            onVerify={(t) => setToken(t)}
+          />
+        </div>
 
         <div className="text-center box mb-4">
           <LoadingButton
@@ -131,12 +172,10 @@ const RegisterForm = () => {
           href={"/auth/signIn"}
           className="text-center text-sm text-slate-500"
         >
-          ¿Ya tienes una cuenta?
-          <span className="text-sky-700">Inicia sesión</span>
+          ¿Ya tienes una cuenta? &nbsp;
+          <span className="text-sky-700 hover:underline decoration-1">Inicia sesión</span>
         </Link>
       </div>
-
-      <Alert severity="error">Tus accesos son incorrectos</Alert>
     </Box>
   );
 };

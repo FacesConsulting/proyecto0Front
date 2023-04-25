@@ -2,6 +2,7 @@ import {
   AccountBalance,
   AccountBox,
   CalendarMonth,
+  ExitToApp,
   Home,
   MedicalServices,
 } from "@mui/icons-material";
@@ -17,6 +18,7 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/material";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
 
 const NavbarClinic = () => {
@@ -75,6 +77,17 @@ const NavbarClinic = () => {
             </ListItemText>
           </ListItemButton>
         ))}
+        <ListItemButton
+            
+            onClick={() => signOut()}
+            dense={false}
+            sx={{marginBottom: 1, borderRadius: 2}}
+          >
+            <ListItemIcon><ExitToApp /></ListItemIcon>
+            <ListItemText>
+                <Typography color={"inherit"}>Cerrar Sesión</Typography>
+            </ListItemText>
+          </ListItemButton>
       </List>
     </Box>
   );
