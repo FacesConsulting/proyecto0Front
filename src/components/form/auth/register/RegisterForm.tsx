@@ -77,6 +77,7 @@ const RegisterForm = () => {
         <div className='flex gap-4 mb-4'>
           <TextField
             fullWidth
+            size='small'
             id='firstname'
             name='firstname'
             label='Nombre(s) *'
@@ -89,14 +90,16 @@ const RegisterForm = () => {
           />
           <TextField
             fullWidth
-            required
             size='small'
             id='lastname'
             name='lastname'
-            label='Apellidos'
-            value={user.lastname}
-            onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-            placeholder='Lorem Ipsum'
+            label='Apellidos *'
+            value={values.lastname}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.lastname && Boolean(errors.lastname)}
+            helperText={touched.lastname && errors.lastname}
+            placeholder='John Doe'
           />
         </div>
         <div className='mb-4'>
@@ -105,10 +108,13 @@ const RegisterForm = () => {
             size='small'
             id='email'
             name='email'
-            label='Correo electrónico'
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            placeholder='joe_doe@example.com'
+            label='Correo Electrónico *'
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
+            placeholder='John Doe'
           />
         </div>
         <div className='mb-4'>
@@ -118,6 +124,7 @@ const RegisterForm = () => {
               fullWidth
               size='small'
               id='password'
+              name='password'
               type={showPassword ? 'text' : 'password'}
               onChange={handleChange}
               endAdornment={
@@ -130,22 +137,33 @@ const RegisterForm = () => {
                   </IconButton>
                 </InputAdornment>
               }
-              label='Password'
+              label='Contraseña'
             />
           </FormControl>
         </div>
         <div className='mb-4'>
-          <TextField
-            required
-            fullWidth
-            size='small'
-            type='password'
-            id='password'
-            name='password'
-            label='Confirmar Contraseña'
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
+        <FormControl variant='outlined' size='small' fullWidth>
+            <InputLabel htmlFor='confirmPassword'>Confirmar Contraseña</InputLabel>
+            <OutlinedInput
+              fullWidth
+              size='small'
+              id='confirmPassword'
+              name='confirmPassword'
+              type={showPassword ? 'text' : 'password'}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    edge='end'>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label='Confirmar Contraseña'
+            />
+          </FormControl>
         </div>
         <FormControl>
           <FormControlLabel
