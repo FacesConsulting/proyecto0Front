@@ -28,3 +28,13 @@ export const fetchingDataEncrypted = async (
 
   return res
 }
+
+export const expresiones = {
+  onlyLetters: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+  correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+  telefono: /^\d{10}$/, // 10 numeros.
+  password:
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/, // 8 a 15 digitos.
+  numerosPositivos: /^\d*$/, // Solo números positivos
+  soloLetrasYNumeros: /^[a-zA-Z0-9À-ÿ.,\s]+$/ // Solo letras y numeros
+}

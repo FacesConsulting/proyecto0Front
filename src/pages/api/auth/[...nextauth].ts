@@ -23,7 +23,7 @@ export default NextAuth({
         },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials, req) {
+      async authorize (credentials, req) {
         // Add logic here to look up the user from the credentials supplied
 
         const data = JSON.stringify({
@@ -36,8 +36,6 @@ export default NextAuth({
           'login/auth/signIn',
           'post'
         )
-
-        console.log(res)
 
         if (res.data && res.status === 200) {
           // Any object returned will be saved in `user` property of the JWT
@@ -52,10 +50,10 @@ export default NextAuth({
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt ({ token, user }) {
       return { ...token, ...user }
     },
-    async session({ session, token, user }) {
+    async session ({ session, token, user }) {
       session.user = token as any
       return session
     }

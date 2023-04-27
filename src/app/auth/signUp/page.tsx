@@ -1,4 +1,4 @@
-import RegisterForm from '@/components/auth/register/RegisterForm'
+import RegisterForm from '@/components/form/auth/register/RegisterForm'
 import AuthContext from '@/context/AuthContext'
 import Public from '../../../assets/svg/Public.svg'
 import img from '@/assets/images/log1.png'

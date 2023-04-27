@@ -6,7 +6,13 @@ export const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-//* Produccio+ */
+//* Remota */
+// export const api = axios.create({
+//   baseURL: 'http://{ip}:8081/',
+//   headers: { 'Content-Type': 'application/json' }
+// })
+
+//* Produccion */
 // export const api = axios.create({
 //   baseURL: 'https://isc-web.vercel.app/api/',
 //   headers: { 'Content-Type': 'application/json' }

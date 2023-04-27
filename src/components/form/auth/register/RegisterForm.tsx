@@ -1,6 +1,5 @@
 'use client'
 
-import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
@@ -15,33 +14,61 @@ import {
   Typography
 } from '@mui/material'
 import Link from 'next/link'
-import React, { useRef, useState } from 'react'
-import HCaptcha from '@hcaptcha/react-hcaptcha'
+import React, { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { useFormik } from 'formik'
+import { SingUpInterface } from '@/interfaces/auth/auth.interface'
+import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
+import { fetchingDataEncrypted } from '@/utils/utils'
+import Swal from 'sweetalert2'
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const captchaRef = useRef(null)
-  const [token, setToken] = useState('')
-  const [user, setUser] = useState<SingUpInterface>({
-    email: '',
+  const initialValues: SingUpInterface = {
     firstname: '',
     lastname: '',
-    password: ''
-  })
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setLoading(true)
-  }
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      enableReinitialize: true,
+      initialValues,
+      validationSchema: validationSchemaSignUp,
+      onSubmit: async (values, { resetForm }) => {
+        setLoading(true)
+        const serializeData = JSON.stringify(values)
+        try {
+          const res = await fetchingDataEncrypted(
+            serializeData,
+            '/login/auth/signUp',
+            'post'
+          )
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name)
-    console.log(token)
-  }
+          if (res.status === 200) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Hecho',
+              text: 'Registro exitoso'
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Opsss',
+              text: 'Registro exitoso'
+            })
+          }
+        } catch (error) {
+          console.log(error)
+        }
+        resetForm()
+      }
+    })
 
   return (
     <Box className='w-full px-4'>
@@ -50,13 +77,14 @@ const RegisterForm = () => {
         <div className='flex gap-4 mb-4'>
           <TextField
             fullWidth
-            required
-            size='small'
             id='firstname'
             name='firstname'
-            label='Nombre(s)'
-            value={user.firstname}
-            onChange={(e) => setUser({ ...user, firstname: e.target.value })}
+            label='Nombre(s) *'
+            value={values.firstname}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.firstname && Boolean(errors.firstname)}
+            helperText={touched.firstname && errors.firstname}
             placeholder='John Doe'
           />
           <TextField
@@ -144,14 +172,6 @@ const RegisterForm = () => {
             }
           />
         </FormControl>
-
-        <div className='my-4 flex justify-center'>
-          <HCaptcha
-            ref={captchaRef}
-            sitekey={'da4ad4a2-1610-4b1b-8986-ae0137a4bce3'}
-            onVerify={(t) => setToken(t)}
-          />
-        </div>
 
         <div className='text-center box mb-4'>
           <LoadingButton

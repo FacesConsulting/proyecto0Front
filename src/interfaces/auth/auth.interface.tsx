@@ -15,4 +15,6 @@ export interface SingUpInterface {
   lastname: string
   email: string
   password: string
+  confirmPassword: string
+
 }
