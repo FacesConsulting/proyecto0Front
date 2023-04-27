@@ -1,7 +1,13 @@
+'use client'
+import { Box, Typography } from '@mui/material'
 
-const page = () => {
+const page = ({ params }: { params: { id: string } }) => {
   return (
-    <div>page</div>
+    <Box>
+      <Typography variant='h4' component={'h2'}>
+        Dashboard
+      </Typography>
+    </Box>
   )
 }
 
