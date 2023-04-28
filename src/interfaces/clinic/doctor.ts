@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs'
+
 interface Ranking {
   puntuacion: number
 }
@@ -5,7 +7,7 @@ interface Ranking {
 export type DoctorType = {
   nombres: string
   apellidos: string
-  fecha_nacimiento?: string
+  fecha_nacimiento?: Dayjs | null
   telefono: string
   curp: string
   cedula_profesional: string
@@ -17,4 +19,5 @@ export type DoctorType = {
   correo: string
   password: string
   tipo_registro: string
+  codigo_postal: string
 }
