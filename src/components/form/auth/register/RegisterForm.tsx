@@ -30,7 +30,9 @@ const RegisterForm = () => {
     lastname: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    atys: false,
+    apdp: false
   }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -39,34 +41,35 @@ const RegisterForm = () => {
     useFormik({
       enableReinitialize: true,
       initialValues,
-      validationSchema: validationSchemaSignUp,
+      // validationSchema: validationSchemaSignUp,
       onSubmit: async (values, { resetForm }) => {
-        setLoading(true)
-        const serializeData = JSON.stringify(values)
-        try {
-          const res = await fetchingDataEncrypted(
-            serializeData,
-            '/login/auth/signUp',
-            'post'
-          )
+        console.log(values)
+        // setLoading(true)
+        // const serializeData = JSON.stringify(values)
+        // try {
+        //   const res = await fetchingDataEncrypted(
+        //     serializeData,
+        //     '/login/auth/signUp',
+        //     'post'
+        //   )
 
-          if (res.status === 200) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Hecho',
-              text: 'Registro exitoso'
-            })
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Opsss',
-              text: 'Registro exitoso'
-            })
-          }
-        } catch (error) {
-          console.log(error)
-        }
-        resetForm()
+        //   if (res.status === 200) {
+        //     Swal.fire({
+        //       icon: 'success',
+        //       title: 'Hecho',
+        //       text: 'Registro exitoso'
+        //     })
+        //   } else {
+        //     Swal.fire({
+        //       icon: 'error',
+        //       title: 'Opsss',
+        //       text: 'Registro exitoso'
+        //     })
+        //   }
+        // } catch (error) {
+        //   console.log(error)
+        // }
+        // resetForm()
       }
     })
 
@@ -125,7 +128,9 @@ const RegisterForm = () => {
               size='small'
               id='password'
               name='password'
+              value={values.password}
               type={showPassword ? 'text' : 'password'}
+              error={touched.password && Boolean(errors.password)}
               onChange={handleChange}
               endAdornment={
                 <InputAdornment position='end'>
@@ -142,7 +147,7 @@ const RegisterForm = () => {
           </FormControl>
         </div>
         <div className='mb-4'>
-        <FormControl variant='outlined' size='small' fullWidth>
+          <FormControl variant='outlined' size='small' fullWidth>
             <InputLabel htmlFor='confirmPassword'>Confirmar Contraseña</InputLabel>
             <OutlinedInput
               fullWidth
@@ -167,6 +172,9 @@ const RegisterForm = () => {
         </div>
         <FormControl>
           <FormControlLabel
+            id='atys'
+            name='atys'
+            values={values.atys}
             control={<Checkbox size='small' />}
             label={
               <Typography fontSize={11}>
@@ -179,6 +187,9 @@ const RegisterForm = () => {
           />
 
           <FormControlLabel
+            id='apdp'
+            name='apdp'
+            value={values.apdp}
             control={<Checkbox size='small' />}
             label={
               <Typography fontSize={11}>
