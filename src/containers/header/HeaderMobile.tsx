@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   AppBar,
@@ -11,53 +11,49 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography,
-} from "@mui/material";
-import { Home, Menu } from "@mui/icons-material";
-import { useState } from "react";
+  Typography
+} from '@mui/material'
+import { Home, Menu } from '@mui/icons-material'
+import React, { useState } from 'react'
 
 const HeaderMobile = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const drawerWidth = 240;
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false)
+  const drawerWidth = 240
+  const [selectedIndex, setSelectedIndex] = useState<number>(0)
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number
   ) => {
-    setSelectedIndex(index);
-  };
+    setSelectedIndex(index)
+  }
 
   const navigate = [
     {
-      label: "Inicio",
-      icon: <Home color={selectedIndex === 0 ? "primary" : "inherit"} />
+      label: 'Inicio',
+      icon: <Home color={selectedIndex === 0 ? 'primary' : 'inherit'} />
     }
   ]
   return (
-
     <Hidden mdUp>
       <AppBar
-        position="fixed"
+        position='fixed'
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        color="inherit"
-      >
+        color='inherit'>
         <Toolbar>
           <IconButton
-            color="primary"
-            size="large"
-            edge="start"
+            color='primary'
+            size='large'
+            edge='start'
             onClick={() => setOpen(!open)}
-            sx={{ mr: 2, display: { xs: "flex", md: "none" } }}
-          >
+            sx={{ mr: 2, display: { xs: 'flex', md: 'none' } }}>
             <Menu />
           </IconButton>
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="div"
-            sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1 }}
-          >
+            component='div'
+            sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
             {process.env.NEXT_PUBLIC_COMPANY_NAME}
           </Typography>
         </Toolbar>
@@ -65,34 +61,31 @@ const HeaderMobile = () => {
 
       <Hidden mdUp>
         <Drawer
-          variant="temporary"
+          variant='temporary'
           open={open}
           sx={{
             width: drawerWidth,
             flexShrink: 0,
-            [`& .MuiDrawer-paper`]: {
+            '& .MuiDrawer-paper': {
               width: drawerWidth,
-              boxSizing: "border-box",
-            },
+              boxSizing: 'border-box'
+            }
           }}
-          onClose={() => setOpen(false)}
-        >
+          onClose={() => setOpen(false)}>
           <Toolbar />
-          <Box sx={{ overflow: "auto", p: 1 }}>
-            <List component={"nav"} aria-label="Menú navegación">
+          <Box sx={{ overflow: 'auto', p: 1 }}>
+            <List component={'nav'} aria-label='Menú navegación'>
               {navigate.map((item, index) => (
                 <ListItemButton
                   key={item.label}
                   selected={selectedIndex === index}
                   onClick={(event) => handleListItemClick(event, index)}
                   dense={false}
-                  sx={{ marginBottom: 1, borderRadius: 2 }}
-                >
+                  sx={{ marginBottom: 1, borderRadius: 2 }}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText>
                     <Typography
-                      color={selectedIndex === index ? "primary" : "inherit"}
-                    >
+                      color={selectedIndex === index ? 'primary' : 'inherit'}>
                       {item.label}
                     </Typography>
                   </ListItemText>
@@ -103,7 +96,7 @@ const HeaderMobile = () => {
         </Drawer>
       </Hidden>
     </Hidden>
-  );
-};
+  )
+}
 
-export default HeaderMobile;
+export default HeaderMobile

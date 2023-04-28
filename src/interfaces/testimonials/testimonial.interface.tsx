@@ -1,11 +1,10 @@
-export interface TestimonialsInterface {
-    testimonials: TestimonialInterface[]
-}
-
 export interface TestimonialInterface {
-    id: number;
-    customer: string;
-    testimony: string;
-    stars: number;
-    clinic: string;
+  id: number
+  customer: string
+  testimony: string
+  stars: number
+  clinic: string
+}
+export interface TestimonialsInterface {
+  testimonials: TestimonialInterface[]
 }

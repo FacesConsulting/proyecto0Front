@@ -38,7 +38,7 @@ object {
   display: block;
 }
 
-button{
+button {
   border: transparent;
 }
 
@@ -275,7 +275,6 @@ main {
       -ms-border-radius: 50%;
       -o-border-radius: 50%;
     }
-
   }
 }
 
@@ -302,8 +301,6 @@ main {
 
 //! Login
 .bg-login {
-  width: 60%;
-  height: 30%;
   background-size: cover;
   background-repeat: no-repeat;
   @media screen and (max-width: 768px) {
@@ -315,10 +312,80 @@ main {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.btn-singIn-oauth {
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+  width: 300px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border:1px solid rgba(100, 100, 111, 0.2);
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  &:hover{
+    transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    border: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+}
+
 //! Slider Cards
 
+//! Loader
+.loading svg polyline {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
+.loading svg polyline#back {
+  fill: none;
+  stroke: #ff4d5033;
+}
 
+.loading svg polyline#front {
+  fill: none;
+  stroke: #ff4d4f;
+  stroke-dasharray: 48, 144;
+  stroke-dashoffset: 192;
+  -webkit-animation: dash_682 1.4s linear infinite;
+  animation: dash_682 1.4s linear infinite;
+}
+
+@-webkit-keyframes dash_682 {
+  72.5% {
+    opacity: 0;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash_682 {
+  72.5% {
+    opacity: 0;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 
 @media screen and (max-width: 1024px) {
   .header {
@@ -331,15 +398,13 @@ main {
 }
 
 @media screen and (max-width: 900px) {
-
-  header .top-header{
+  header .top-header {
     display: none;
     visibility: hidden;
   }
 
-  header .header{
+  header .header {
     display: none;
     visibility: hidden;
   }
-  
 }

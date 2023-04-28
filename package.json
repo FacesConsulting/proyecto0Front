@@ -7,24 +7,28 @@
     "build": "next build",
     "start": "next start",
     "sonarqube": "sonar-scanner",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"{,!(.next)/**/}*.{ts, tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.126",
     "@mui/material": "^5.12.0",
     "@mui/styled-engine-sc": "^5.12.0",
     "@reduxjs/toolkit": "^1.9.3",
+    "@types/crypto-js": "^4.1.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
     "axios": "^1.3.5",
-    "eslint": "8.38.0",
+    "crypto-js": "^4.1.1",
     "eslint-config-next": "13.3.0",
     "formik": "^2.2.9",
+    "jose": "^4.14.1",
     "next": "13.3.0",
     "next-auth": "^4.22.1",
     "next-password-protect": "^1.8.0",
@@ -41,6 +45,15 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "eslint": "^8.39.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.8",
     "sonar-scanner": "^3.1.0"
   }
 }
