@@ -5,19 +5,29 @@ interface Ranking {
 }
 
 export type DoctorType = {
+  // Datos generales
+  uid?: string
+  curp: string
   nombres: string
   apellidos: string
-  fecha_nacimiento?: Dayjs | null
   telefono: string
-  curp: string
+  fecha_nacimiento?: Dayjs | null
+  correo: string
+  password?: string
+
+  // Domicilio
+  codigo_postal: string
+  estado: string
+  municipio: string
+  colonia: string
+  calle: string
+  numero_exterior: string
+  numero_interior: string
+
+  // Informacion profesional
   cedula_profesional: string
   titulo: string
   especialidad: string
   ranking?: Array<Ranking>
-  direccion: string
-  uid?: string
-  correo: string
-  password: string
   tipo_registro: string
-  codigo_postal: string
 }

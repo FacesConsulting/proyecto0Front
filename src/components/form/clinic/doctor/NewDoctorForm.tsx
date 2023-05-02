@@ -9,6 +9,7 @@ import { LoadingButton } from '@mui/lab'
 import GeneralData from './GeneralData'
 import ProfessionalInformation from './ProfessionalInformation'
 import Address from './Address'
+import { Toaster } from 'react-hot-toast'
 
 export interface NewDoctorFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,7 +26,12 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     password: '',
     // Direccion
     codigo_postal: '',
-    direccion: '',
+    estado: '',
+    municipio: '',
+    colonia: '',
+    calle: '',
+    numero_exterior: '',
+    numero_interior: '',
     // Preperacion academica
     cedula_profesional: '',
     especialidad: '',
@@ -40,10 +46,15 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     onSubmit: async (values, { resetForm }) => {}
   })
 
-  const steeps: Array<string> = ['Datos generales', 'Domicilio', 'Información Profesional']
+  const steeps: Array<string> = [
+    'Datos generales',
+    'Domicilio',
+    'Información Profesional'
+  ]
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'es'}>
+      <Toaster position='top-right' reverseOrder={false} />
       <form autoComplete='off' onSubmit={formik.handleSubmit}>
         <Box my={3}>
           <Stepper alternativeLabel>

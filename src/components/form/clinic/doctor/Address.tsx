@@ -1,24 +1,40 @@
+import { api } from '@/api/axiosAPI'
 import { DoctorType } from '@/interfaces/clinic/doctor'
-import { Grid, TextField } from '@mui/material'
+import { InfoAddress } from '@/interfaces/types/HelperTypes'
+import { Grid, MenuItem, TextField } from '@mui/material'
 import { FormikProps } from 'formik'
 import React, { useState } from 'react'
+import { toast } from 'react-hot-toast'
 interface AddressProps {
   formikProps: FormikProps<DoctorType>
 }
 const Address = ({ formikProps }: AddressProps) => {
-  const [disableFields, setDisableField] = useState<boolean>()
+  const [disableFields, setDisableField] = useState<boolean>(true)
+  const [colonias, setColonias] = useState<Array<string>>([])
+
+  const clearAddress = () => {
+    formikProps.setFieldValue('estado', '', true)
+    formikProps.setFieldValue('municipio', '', true)
+    setColonias([])
+    setDisableField(true)
+  }
 
   const getZipData = async () => {
-    console.log('Generando peticion')
+    setDisableField(false)
     try {
-      const res = await fetch(
-        `http://api.zippopotam.us/mx/${formikProps.values.codigo_postal}`
+      const res = await api.get(
+        `api/codigoPostal/mx/${formikProps.values.codigo_postal}`
       )
-      console.log(res.json())
+      const { colonias, estado, municipio } : InfoAddress = res.data
+      formikProps.setFieldValue('estado', estado, true)
+      formikProps.setFieldValue('municipio', municipio, true)
+      setColonias(colonias)
     } catch (error) {
-      console.log(error)
+      toast.error('No pudimos encontrar tu código postal')
+      clearAddress()
     }
   }
+
   return (
     <>
       <Grid container spacing={2} marginBottom={2}>
@@ -34,6 +50,8 @@ const Address = ({ formikProps }: AddressProps) => {
               formikProps.handleBlur(e)
               if (formikProps.values.codigo_postal.length === 5) {
                 getZipData()
+              } else {
+                clearAddress()
               }
             }}
             error={
@@ -44,7 +62,7 @@ const Address = ({ formikProps }: AddressProps) => {
               formikProps.touched.codigo_postal &&
               formikProps.errors.codigo_postal
             }
-            placeholder='Av. Lorem Ipsum'
+            placeholder='54123'
           />
         </Grid>
       </Grid>
@@ -52,117 +70,124 @@ const Address = ({ formikProps }: AddressProps) => {
         <Grid item xs={4}>
           <TextField
             fullWidth
-            id='direccion'
-            name='direccion'
+            disabled
+            id='estado'
+            name='estado'
             label='Estado '
-            value={formikProps.values.direccion}
+            value={formikProps.values.estado}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.direccion &&
-              Boolean(formikProps.errors.direccion)
+              formikProps.touched.estado && Boolean(formikProps.errors.estado)
             }
-            helperText={
-              formikProps.touched.direccion && formikProps.errors.direccion
-            }
-            placeholder='Av. Lorem Ipsum'
+            helperText={formikProps.touched.estado && formikProps.errors.estado}
+            placeholder='México'
           />
         </Grid>
         <Grid item xs={4}>
           <TextField
             fullWidth
-            id='direccion'
-            name='direccion'
+            disabled
+            id='municipio'
+            name='municipio'
             label='Municipio/ Alcaldía '
-            value={formikProps.values.direccion}
+            value={formikProps.values.municipio}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.direccion &&
-              Boolean(formikProps.errors.direccion)
+              formikProps.touched.municipio &&
+              Boolean(formikProps.errors.municipio)
             }
             helperText={
-              formikProps.touched.direccion && formikProps.errors.direccion
+              formikProps.touched.municipio && formikProps.errors.municipio
             }
-            placeholder='Av. Lorem Ipsum'
+            placeholder='Naucalpan'
           />
         </Grid>
         <Grid item xs={4}>
           <TextField
             fullWidth
-            id='direccion'
-            name='direccion'
+            disabled={disableFields}
+            select
+            id='colonia'
+            name='colonia'
             label='Colonia '
-            value={formikProps.values.direccion}
+            value={formikProps.values.colonia}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.direccion &&
-              Boolean(formikProps.errors.direccion)
+              formikProps.touched.colonia && Boolean(formikProps.errors.colonia)
             }
             helperText={
-              formikProps.touched.direccion && formikProps.errors.direccion
+              formikProps.touched.colonia && formikProps.errors.colonia
             }
-            placeholder='Av. Lorem Ipsum'
-          />
+            placeholder='Santa Fe'>
+            {colonias?.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
       </Grid>
       <Grid container spacing={2} marginBottom={3}>
         <Grid item xs={12}>
           <TextField
             fullWidth
-            id='direccion'
-            name='direccion'
+            disabled={disableFields}
+            id='calle'
+            name='calle'
             label='Calle '
-            value={formikProps.values.direccion}
+            value={formikProps.values.calle}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.direccion &&
-              Boolean(formikProps.errors.direccion)
+              formikProps.touched.calle && Boolean(formikProps.errors.calle)
             }
-            helperText={
-              formikProps.touched.direccion && formikProps.errors.direccion
-            }
+            helperText={formikProps.touched.calle && formikProps.errors.calle}
             placeholder='Av. Lorem Ipsum'
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
             fullWidth
-            id='direccion'
-            name='direccion'
+            disabled={disableFields}
+            id='numero_exterior'
+            name='numero_exterior'
             label='Número exterior '
-            value={formikProps.values.direccion}
+            value={formikProps.values.numero_exterior}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.direccion &&
-              Boolean(formikProps.errors.direccion)
+              formikProps.touched.numero_exterior &&
+              Boolean(formikProps.errors.numero_exterior)
             }
             helperText={
-              formikProps.touched.direccion && formikProps.errors.direccion
+              formikProps.touched.numero_exterior &&
+              formikProps.errors.numero_exterior
             }
-            placeholder='Av. Lorem Ipsum'
+            placeholder='5'
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
             fullWidth
-            id='direccion'
-            name='direccion'
+            disabled={disableFields}
+            id='numero_interior'
+            name='numero_interior'
             label='Nº interior/Depto (opcional) '
-            value={formikProps.values.direccion}
+            value={formikProps.values.numero_interior}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.direccion &&
-              Boolean(formikProps.errors.direccion)
+              formikProps.touched.numero_interior &&
+              Boolean(formikProps.errors.numero_interior)
             }
             helperText={
-              formikProps.touched.direccion && formikProps.errors.direccion
+              formikProps.touched.numero_interior &&
+              formikProps.errors.numero_interior
             }
-            placeholder='Av. Lorem Ipsum'
+            placeholder='6'
           />
         </Grid>
       </Grid>
