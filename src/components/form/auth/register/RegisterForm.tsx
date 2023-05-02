@@ -6,12 +6,14 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   TextField,
-  Typography
+  Typography,
+  colors
 } from '@mui/material'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -21,18 +23,19 @@ import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
 import { fetchingDataEncrypted } from '@/utils/utils'
 import Swal from 'sweetalert2'
+import { red } from '@mui/material/colors'
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const initialValues: SingUpInterface = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    atys: false,
-    apdp: false
+    firstname: 'Ivan',
+    lastname: 'Mateos',
+    email: 'imateos@yahoo.com',
+    password: '123abc456A!',
+    confirmPassword: '123abc456A!',
+    atys: true,
+    apdp: true
   }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -43,33 +46,34 @@ const RegisterForm = () => {
       initialValues,
       validationSchema: validationSchemaSignUp,
       onSubmit: async (values, { resetForm }) => {
-        console.log(values)
-        // setLoading(true)
-        // const serializeData = JSON.stringify(values)
-        // try {
-        //   const res = await fetchingDataEncrypted(
-        //     serializeData,
-        //     '/login/auth/signUp',
-        //     'post'
-        //   )
-
-        //   if (res.status === 200) {
-        //     Swal.fire({
-        //       icon: 'success',
-        //       title: 'Hecho',
-        //       text: 'Registro exitoso'
-        //     })
-        //   } else {
-        //     Swal.fire({
-        //       icon: 'error',
-        //       title: 'Opsss',
-        //       text: 'Registro exitoso'
-        //     })
-        //   }
-        // } catch (error) {
-        //   console.log(error)
-        // }
-        // resetForm()
+        // console.log(values)
+        setLoading(true)
+        const serializeData = JSON.stringify(values)
+        try {
+          const res = await fetchingDataEncrypted(
+            serializeData,
+            '/login/auth/signUp',
+            'post'
+          )
+          if (res.status === 200) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Hecho',
+              text: 'Registro exitoso'
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Opsss',
+              text: 'Registro no exitoso'
+            })
+          }
+        } catch (error) {
+          console.log('Error catastrofico')
+          console.log(error)
+        }
+        resetForm()
+        setLoading(false)
       }
     })
 
@@ -132,6 +136,7 @@ const RegisterForm = () => {
               type={showPassword ? 'text' : 'password'}
               error={touched.password && Boolean(errors.password)}
               onChange={handleChange}
+              onBlur={handleBlur}
               endAdornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -144,6 +149,9 @@ const RegisterForm = () => {
               }
               label='Contraseña'
             />
+            <FormHelperText>
+              {touched.password && <span style={{color: '#FF5733'}}>{errors.password}</span>}
+            </FormHelperText>
           </FormControl>
         </div>
         <div className='mb-4'>
@@ -154,8 +162,11 @@ const RegisterForm = () => {
               size='small'
               id='confirmPassword'
               name='confirmPassword'
+              value={values.confirmPassword }
               type={showPassword ? 'text' : 'password'}
+              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
               onChange={handleChange}
+              onBlur={handleBlur}
               endAdornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -168,6 +179,9 @@ const RegisterForm = () => {
               }
               label='Confirmar Contraseña'
             />
+            <FormHelperText>
+              {touched.confirmPassword && <span style={{color: '#FF5733'}}>{errors.confirmPassword}</span>}
+            </FormHelperText>
           </FormControl>
         </div>
         <FormControl>
@@ -178,13 +192,16 @@ const RegisterForm = () => {
               name='atys'
               value={values.atys}
               onClick={handleChange}
-              />}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />}
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
                 <Link href={''} className='text-sky-700'>
                   Terminos y Servicios
                 </Link>
+                {errors.atys && <span style={{color: '#FF5733'}}><br/>{errors.atys}</span>}
               </Typography>
             }
           />
@@ -196,13 +213,16 @@ const RegisterForm = () => {
               name='apdp'
               value={values.apdp}
               onClick={handleChange}
-               />}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />}
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
                 <Link href={''} className='text-sky-700'>
                   Política de privacidad.
                 </Link>
+                {errors.apdp && <span style={{color: '#FF5733'}}><br/>{errors.apdp}</span>}
               </Typography>
             }
           />

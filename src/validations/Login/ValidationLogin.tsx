@@ -38,7 +38,19 @@ export const validationSchemaSignUp = yup.object().shape({
     .matches(expresiones.onlyLetters, {
       message: 'El usuario solo puede contener letras '
     })
-    .required('Por favor ingresa tu correo electrónico.'),
+    .required('Por favor ingresa tu Nombre.'),
+  lastname: yup
+    .string()
+    .matches(expresiones.onlyLetters, {
+      message: 'Solo se admiten letras.'
+    })
+    .required('Por favor ingresa tus apellidos.'),
+  email: yup
+    .string()
+    .matches(expresiones.correo, {
+      message: 'Ingresa un correo electronico valido.'
+    })
+    .required('Es necesario un correo elctronico.'),
   password: yup
     .string()
     .min(8, 'La longitud de la contraseña es de minimo 8 carácteres')
@@ -52,9 +64,9 @@ export const validationSchemaSignUp = yup.object().shape({
     .oneOf([yup.ref('password'), ''], 'Las contrasenas no coinciden.')
     .required('Este campo es obligatorio.'),
   atys: yup
-    .boolean()
-    .isTrue(),
-  apyp: yup
-    .boolean()
-    .isTrue()
+    .bool()
+    .oneOf([true], 'Tiene que aceptar los terminos y condiciones.'),
+  apdp: yup
+    .bool()
+    .oneOf([true], 'Tiene que aceptar la politica de privacidad')
 })
