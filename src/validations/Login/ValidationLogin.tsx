@@ -1,5 +1,4 @@
 import { expresiones } from '@/utils/utils'
-import { YouTube } from '@mui/icons-material'
 import * as yup from 'yup'
 
 export const validationSchemaUser = yup.object().shape({
@@ -54,10 +53,8 @@ export const validationSchemaSignUp = yup.object().shape({
     .required('Este campo es obligatorio.'),
   atys: yup
     .boolean()
-    .isTrue()
-    .required('Debe aceptar los terminos y servicios.'),
+    .isTrue(),
   apyp: yup
     .boolean()
     .isTrue()
-    .required('Debe aeptar las politicas de privacidad.')
 })

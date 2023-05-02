@@ -41,7 +41,7 @@ const RegisterForm = () => {
     useFormik({
       enableReinitialize: true,
       initialValues,
-      // validationSchema: validationSchemaSignUp,
+      validationSchema: validationSchemaSignUp,
       onSubmit: async (values, { resetForm }) => {
         console.log(values)
         // setLoading(true)
@@ -172,10 +172,13 @@ const RegisterForm = () => {
         </div>
         <FormControl>
           <FormControlLabel
-            id='atys'
-            name='atys'
-            values={values.atys}
-            control={<Checkbox size='small' />}
+            control={<Checkbox
+              size='small'
+              id='atys'
+              name='atys'
+              value={values.atys}
+              onClick={handleChange}
+              />}
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
@@ -187,10 +190,13 @@ const RegisterForm = () => {
           />
 
           <FormControlLabel
-            id='apdp'
-            name='apdp'
-            value={values.apdp}
-            control={<Checkbox size='small' />}
+            control={<Checkbox
+              size='small'
+              id='apdp'
+              name='apdp'
+              value={values.apdp}
+              onClick={handleChange}
+               />}
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
