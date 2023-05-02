@@ -29,13 +29,13 @@ const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const initialValues: SingUpInterface = {
-    firstname: 'Ivan',
-    lastname: 'Mateos',
-    email: 'imateos@yahoo.com',
-    password: '123abc456A!',
-    confirmPassword: '123abc456A!',
-    atys: true,
-    apdp: true
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    atys: false,
+    apdp: false
   }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -46,16 +46,17 @@ const RegisterForm = () => {
       initialValues,
       validationSchema: validationSchemaSignUp,
       onSubmit: async (values, { resetForm }) => {
-        // console.log(values)
+        console.log(values)
         setLoading(true)
         const serializeData = JSON.stringify(values)
+        console.log(serializeData)
         try {
           const res = await fetchingDataEncrypted(
             serializeData,
             '/login/auth/signUp',
             'post'
           )
-          if (res.status === 200) {
+          if (res.status === 208) {
             Swal.fire({
               icon: 'success',
               title: 'Hecho',
@@ -64,12 +65,16 @@ const RegisterForm = () => {
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Opsss',
+              title: 'Oopss',
               text: 'Registro no exitoso'
             })
           }
         } catch (error) {
-          console.log('Error catastrofico')
+          Swal.fire({
+            icon: 'error',
+            title: 'Error Catastrofico',
+            text: 'Error Catastrofico'
+          })
           console.log(error)
         }
         resetForm()
@@ -190,6 +195,7 @@ const RegisterForm = () => {
               size='small'
               id='atys'
               name='atys'
+              checked={values.atys}
               value={values.atys}
               onClick={handleChange}
               onBlur={handleBlur}
@@ -211,6 +217,7 @@ const RegisterForm = () => {
               size='small'
               id='apdp'
               name='apdp'
+              checked={values.apdp}
               value={values.apdp}
               onClick={handleChange}
               onBlur={handleBlur}
