@@ -169,20 +169,33 @@ const DynamicInput = () => {
                     />
                   </svg>
                 </button>
-                <div className='absolute w-12 h-12 text-gray-400 transform top-0 flex justify-center items-center'>
-                  {handleValidateTypeOfFile(especialidad.archivo) ? (
-                    <Image className='absolute inset-0 z-0 object-cover w-full h-full border-4 border-white' src={'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tooltyp.com%2F8-beneficios-de-usar-imagenes-en-nuestros-sitios-web%2F&psig=AOvVaw3jWaUCGnkqsTg3rSVXUfYn&ust=1683241223650000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjy9qug2v4CFQAAAAAdAAAAABAE'} alt={especialidad.especialidad} fill />
-                  ) : (
+                {handleValidateTypeOfFile(especialidad.archivo) ? (
+                  <div className='absolute w-full h-full top-0'>
+                    <Image
+                      className='absolute inset-0 z-0 object-cover w-full h-full border-4 border-white'
+                      src={URL.createObjectURL(
+                        especialidad?.archivo || new Blob()
+                      )}
+                      alt={especialidad.especialidad}
+                      fill
+                    />
+                  </div>
+                ) : (
+                  <div className='absolute w-12 h-12 text-gray-400 transform top-0 flex justify-center items-center'>
                     <IconSvg
                       color='#9ca3af'
                       size={30}
                       icon='M11.362 2c4.156 0 2.638 6 2.638 6s6-1.65 6 2.457v11.543h-16v-20h7.362zm.827-2h-10.189v24h20v-14.386c0-2.391-6.648-9.614-9.811-9.614zm-3.741 17.261c.346-.327.932-.647 1.742-.954.366-.725.731-1.523 1.018-2.232-.242-.506-.397-1.039-.464-1.588-.25-2.061 2.083-1.907 1.729.012-.068.368-.23.884-.483 1.536.367.654.849 1.146 1.233 1.472.524-.084 1.271-.17 1.797-.093 1.396.205 1.219 1.744-.021 1.744-.649 0-1.463-.507-1.972-.896-.779.144-1.613.365-2.33.618-.229.44-.536 1.001-.811 1.396-1.143 1.646-2.65.127-1.438-1.015zm1.199.055c-.253.128-.609.348-.801.559-.299.328-.103.586.257.233.178-.172.392-.492.544-.792zm4.44-1.201c.235.158.558.323.911.33.412.008.377-.261-.082-.328-.2-.03-.488-.03-.829-.002zm-2.947-.128c.328-.109 1.036-.274 1.213-.315-.02-.021-.528-.544-.695-.832-.134.335-.509 1.127-.518 1.147zm.314-3.983c-.057.296.029.771.129 1.061.113-.237.255-.806.197-1.085-.056-.279-.262-.299-.326.024z'
                     />
-                  )}
-                </div>
+                  </div>
+                )}
                 <div className='absolute bottom-0 left-0 right-0 flex flex-col p-2 text-xs bg-white bg-opacity-50'>
-                    <p className='w-full font-bold text-xs text-gray-900 truncate'>{especialidad.archivo?.name}</p>
-                    <small className='text-xs text-gray-900'>{formatBytes(especialidad.archivo?.size)}</small>
+                  <p className='w-full font-bold text-xs text-gray-900 truncate'>
+                    {especialidad.archivo?.name}
+                  </p>
+                  <small className='text-xs text-gray-900'>
+                    {formatBytes(especialidad.archivo?.size)}
+                  </small>
                 </div>
               </div>
             )
