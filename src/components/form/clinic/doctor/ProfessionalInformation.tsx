@@ -1,3 +1,4 @@
+import DynamicInput from '@/components/helpers/DynamicInput'
 import { DoctorType } from '@/interfaces/clinic/doctor'
 import { Grid, TextField } from '@mui/material'
 import { FormikProps } from 'formik'
@@ -41,18 +42,15 @@ const ProfessionalInformation = ({
           onChange={formikProps.handleChange}
           onBlur={formikProps.handleBlur}
           error={
-            formikProps.touched.titulo &&
-            Boolean(formikProps.errors.titulo)
+            formikProps.touched.titulo && Boolean(formikProps.errors.titulo)
           }
-          helperText={
-            formikProps.touched.titulo &&
-            formikProps.errors.titulo
-          }
+          helperText={formikProps.touched.titulo && formikProps.errors.titulo}
           placeholder='Licenciado en Medicina'
         />
       </Grid>
       <Grid item xs={12}>
-        <TextField
+        <DynamicInput />
+        {/* <TextField
           fullWidth
           id='especialidad'
           name='especialidad'
@@ -69,7 +67,7 @@ const ProfessionalInformation = ({
             formikProps.errors.especialidad
           }
           placeholder='Cardiología Clínica'
-        />
+        /> */}
       </Grid>
     </Grid>
   )

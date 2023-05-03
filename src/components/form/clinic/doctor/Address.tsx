@@ -38,7 +38,7 @@ const Address = ({ formikProps }: AddressProps) => {
   return (
     <>
       <Grid container spacing={2} marginBottom={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             id='codigo_postal'
@@ -67,7 +67,7 @@ const Address = ({ formikProps }: AddressProps) => {
         </Grid>
       </Grid>
       <Grid container spacing={2} marginBottom={2}>
-        <Grid item xs={4}>
+        <Grid item xs={6} md={4}>
           <TextField
             fullWidth
             disabled
@@ -84,7 +84,7 @@ const Address = ({ formikProps }: AddressProps) => {
             placeholder='México'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} md={4}>
           <TextField
             fullWidth
             disabled
@@ -104,7 +104,7 @@ const Address = ({ formikProps }: AddressProps) => {
             placeholder='Naucalpan'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <TextField
             fullWidth
             disabled={disableFields}

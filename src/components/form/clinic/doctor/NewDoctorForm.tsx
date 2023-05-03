@@ -1,7 +1,7 @@
 import { DoctorType } from '@/interfaces/clinic/doctor'
 import { Box, Button, Step, StepLabel, Stepper } from '@mui/material'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import 'dayjs/locale/es'
@@ -16,6 +16,20 @@ export interface NewDoctorFormProps {
 }
 
 const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
+  const [activeStep, setActiveStep] = useState<number>(0)
+
+  const nextStep = () => {
+    if (activeStep < 2) {
+      setActiveStep((prev) => prev + 1)
+    }
+  }
+
+  const prevStep = () => {
+    if (activeStep > 0) {
+      setActiveStep((prev) => prev - 1)
+    }
+  }
+
   const initialValues: DoctorType = {
     curp: '',
     nombres: '',
@@ -43,7 +57,9 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     enableReinitialize: true,
     initialValues,
     // validationSchema: validationSchemaSignUp,
-    onSubmit: async (values, { resetForm }) => {}
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values)
+    }
   })
 
   const steeps: Array<string> = [
@@ -57,7 +73,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
       <Toaster position='top-right' reverseOrder={false} />
       <form autoComplete='off' onSubmit={formik.handleSubmit}>
         <Box my={3}>
-          <Stepper alternativeLabel>
+          <Stepper alternativeLabel activeStep={activeStep}>
             {steeps.map((s) => (
               <Step key={s}>
                 <StepLabel>{s}</StepLabel>
@@ -65,9 +81,10 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
             ))}
           </Stepper>
         </Box>
-        <GeneralData formikProps={formik} />
-        <Address formikProps={formik} />
-        <ProfessionalInformation formikProps={formik} />
+        {activeStep === 0 && <GeneralData formikProps={formik} />}
+        {activeStep === 1 && <Address formikProps={formik} />}
+        {activeStep === 2 && <ProfessionalInformation formikProps={formik} />}
+
         <Box
           sx={{
             display: 'flex',
@@ -75,10 +92,16 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
             alignItems: 'center',
             gap: 2
           }}>
-          <Button color='error' onClick={() => state(false)}>
-            Cancelar
-          </Button>
-          <LoadingButton>Guardar</LoadingButton>
+          {activeStep > 0 && (
+            <Button onClick={prevStep}>
+              Anterior
+            </Button>
+          )}
+          <LoadingButton
+            type={activeStep === 2 ? 'submit' : 'button'}
+            onClick={nextStep}>
+            {activeStep === 2 ? 'Guardar' : 'Siguiente'}
+          </LoadingButton>
         </Box>
       </form>
     </LocalizationProvider>
