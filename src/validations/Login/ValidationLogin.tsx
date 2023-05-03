@@ -63,10 +63,10 @@ export const validationSchemaSignUp = yup.object().shape({
     .string()
     .oneOf([yup.ref('password'), ''], 'Las contrasenas no coinciden.')
     .required('Este campo es obligatorio.'),
-  atys: yup
+  terminos: yup
     .bool()
     .oneOf([true], 'Tiene que aceptar los terminos y condiciones.'),
-  apdp: yup
+  politicas: yup
     .bool()
     .oneOf([true], 'Tiene que aceptar la politica de privacidad')
 })
