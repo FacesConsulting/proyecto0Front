@@ -1,19 +1,51 @@
 import { DoctorType } from '@/interfaces/clinic/doctor'
-import { Grid, TextField } from '@mui/material'
+import { Box, Button, Step, StepLabel, Stepper } from '@mui/material'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import 'dayjs/locale/es'
+import { LoadingButton } from '@mui/lab'
+import GeneralData from './GeneralData'
+import ProfessionalInformation from './ProfessionalInformation'
+import Address from './Address'
+import { Toaster } from 'react-hot-toast'
 
-const NewDoctorForm = () => {
+export interface NewDoctorFormProps {
+  state: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
+  const [activeStep, setActiveStep] = useState<number>(0)
+
+  const nextStep = () => {
+    if (activeStep < 2) {
+      setActiveStep((prev) => prev + 1)
+    }
+  }
+
+  const prevStep = () => {
+    if (activeStep > 0) {
+      setActiveStep((prev) => prev - 1)
+    }
+  }
+
   const initialValues: DoctorType = {
     curp: '',
     nombres: '',
     apellidos: '',
     telefono: '',
     correo: '',
-    fecha_nacimiento: '',
+    fecha_nacimiento: null,
     password: '',
     // Direccion
-    direccion: '',
+    codigo_postal: '',
+    estado: '',
+    municipio: '',
+    colonia: '',
+    calle: '',
+    numero_exterior: '',
+    numero_interior: '',
     // Preperacion academica
     cedula_profesional: '',
     especialidad: '',
@@ -21,113 +53,58 @@ const NewDoctorForm = () => {
     titulo: ''
   }
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      enableReinitialize: true,
-      initialValues,
-      // validationSchema: validationSchemaSignUp,
-      onSubmit: async (values, { resetForm }) => {}
-    })
+  const formik = useFormik<DoctorType>({
+    enableReinitialize: true,
+    initialValues,
+    // validationSchema: validationSchemaSignUp,
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values)
+    }
+  })
+
+  const steeps: Array<string> = [
+    'Datos generales',
+    'Domicilio',
+    'Información Profesional'
+  ]
 
   return (
-    <form autoComplete='off' onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            id='curp'
-            name='curp'
-            label='CURP *'
-            value={values.curp}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.curp && Boolean(errors.curp)}
-            helperText={touched.curp && errors.curp}
-            placeholder='JOD'
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            id='nombres'
-            name='nombres'
-            label='Nombre(s) *'
-            value={values.nombres}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.nombres && Boolean(errors.nombres)}
-            helperText={touched.nombres && errors.nombres}
-            placeholder='John Doe'
-          />
-        </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              id='apellidos'
-              name='apellidos'
-              label='Apellidos *'
-              value={values.apellidos}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.apellidos && Boolean(errors.apellidos)}
-              helperText={touched.apellidos && errors.apellidos}
-              placeholder='Lorem Ipsum'
-            />
-          </Grid>
-      </Grid>
-      <div className='flex gap-4 mb-4'>
-        <TextField
-          fullWidth
-          id='telefono'
-          name='telefono'
-          label='Telefóno *'
-          value={values.telefono}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.telefono && Boolean(errors.telefono)}
-          helperText={touched.telefono && errors.telefono}
-          placeholder='12345678945'
-        />
-        <TextField
-          fullWidth
-          id='fecha_nacimiento'
-          name='fecha_nacimiento'
-          label='Fecha de nacimiento *'
-          value={values.fecha_nacimiento}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.fecha_nacimiento && Boolean(errors.fecha_nacimiento)}
-          helperText={touched.fecha_nacimiento && errors.fecha_nacimiento}
-          placeholder='Lorem Ipsum'
-        />
-      </div>
-      <div className='flex gap-4 mb-4'>
-        <TextField
-          fullWidth
-          id='correo'
-          name='correo'
-          label='Correo Electrónico *'
-          value={values.correo}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.correo && Boolean(errors.correo)}
-          helperText={touched.correo && errors.correo}
-          placeholder='john_doe@example.com'
-        />
-        <TextField
-          fullWidth
-          id='password'
-          name='password'
-          label='Contraseña *'
-          value={values.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.password && Boolean(errors.password)}
-          helperText={touched.password && errors.password}
-          placeholder='Lorem Ipsum'
-        />
-      </div>
-    </form>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'es'}>
+      <Toaster position='top-right' reverseOrder={false} />
+      <form autoComplete='off' onSubmit={formik.handleSubmit}>
+        <Box my={3}>
+          <Stepper alternativeLabel activeStep={activeStep}>
+            {steeps.map((s) => (
+              <Step key={s}>
+                <StepLabel>{s}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
+        {activeStep === 0 && <GeneralData formikProps={formik} />}
+        {activeStep === 1 && <Address formikProps={formik} />}
+        {activeStep === 2 && <ProfessionalInformation formikProps={formik} />}
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            gap: 2
+          }}>
+          {activeStep > 0 && (
+            <Button onClick={prevStep}>
+              Anterior
+            </Button>
+          )}
+          <LoadingButton
+            type={activeStep === 2 ? 'submit' : 'button'}
+            onClick={nextStep}>
+            {activeStep === 2 ? 'Guardar' : 'Siguiente'}
+          </LoadingButton>
+        </Box>
+      </form>
+    </LocalizationProvider>
   )
 }
 

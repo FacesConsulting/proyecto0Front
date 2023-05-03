@@ -9,7 +9,7 @@ export const api = axios.create({
 
 //* Remota */
 // export const api = axios.create({
-//   baseURL: 'http://{ip}:8081/',
+//   baseURL: 'http://192.168.0.7:8081/',
 //   headers: { 'Content-Type': 'application/json' }
 // })
 
