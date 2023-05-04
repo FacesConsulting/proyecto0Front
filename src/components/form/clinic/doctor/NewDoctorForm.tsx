@@ -1,4 +1,4 @@
-import { DoctorType, DatosGenerales, Domicilio, InformacionProfesional } from '@/interfaces/clinic/doctor'
+import { DoctorType } from '@/interfaces/clinic/doctor'
 import { Box, Button, Step, StepLabel, Stepper } from '@mui/material'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
@@ -20,7 +20,6 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
 
   const nextStep = () => {
     if (activeStep < 2) {
-      //console.log(formik.values)
       setActiveStep((prev) => prev + 1)
     }
   }
@@ -54,33 +53,6 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
       { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 },
       { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 }
     ],
-    tipo_registro: 'Medico',
-    titulo: ''
-  }
-
-  const initialDatosGenerales: DatosGenerales = {
-    curp: '',
-    nombres: '',
-    apellidos: '',
-    telefono: '',
-    fecha_nacimiento: null,
-    correo: '',
-    password: ''
-  }
-
-  const initialDomicilio: Domicilio = {
-    codigo_postal: '',
-    estado: '',
-    municipio: '',
-    colonia: '',
-    calle: '',
-    numero_exterior: '',
-    numero_interior: '',
-  }
-
-  const initialInformacionProfesional: InformacionProfesional = {
-    cedula_profesional: '',
-    especialidad: '',
     tipo_registro: 'Medico',
     titulo: ''
   }

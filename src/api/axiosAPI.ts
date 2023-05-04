@@ -2,9 +2,8 @@ import axios from 'axios'
 
 //* Develop */
 export const api = axios.create({
-  baseURL: 'http://192.168.0.15:8081/',
-  headers: { 'Content-Type': 'application/json'
-}
+  baseURL: 'http://192.168.0.7:8081/',
+  headers: { 'Content-Type': 'application/json' }
 })
 
 //* Remota */

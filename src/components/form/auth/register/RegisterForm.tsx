@@ -12,8 +12,7 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
-  Typography,
-  colors
+  Typography
 } from '@mui/material'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -23,8 +22,7 @@ import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
 import { fetchingDataEncrypted } from '@/utils/utils'
 import Swal from 'sweetalert2'
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 
 const RegisterForm = () => {
   const router = useRouter()
@@ -158,19 +156,23 @@ const RegisterForm = () => {
               label='Contraseña'
             />
             <FormHelperText>
-              {touched.password && <span style={{color: '#d32f2f'}}>{errors.password}</span>}
+              {touched.password && (
+                <span style={{ color: '#d32f2f' }}>{errors.password}</span>
+              )}
             </FormHelperText>
           </FormControl>
         </div>
         <div className='mb-4'>
           <FormControl variant='outlined' size='small' fullWidth>
-            <InputLabel htmlFor='confirmPassword'>Confirmar Contraseña</InputLabel>
+            <InputLabel htmlFor='confirmPassword'>
+              Confirmar Contraseña
+            </InputLabel>
             <OutlinedInput
               fullWidth
               size='small'
               id='confirmPassword'
               name='confirmPassword'
-              value={values.confirmPassword }
+              value={values.confirmPassword}
               type={showPassword ? 'text' : 'password'}
               error={touched.confirmPassword && Boolean(errors.confirmPassword)}
               onChange={handleChange}
@@ -188,51 +190,69 @@ const RegisterForm = () => {
               label='Confirmar Contraseña'
             />
             <FormHelperText>
-              {touched.confirmPassword && <span style={{color: '#d32f2f'}}>{errors.confirmPassword}</span>}
+              {touched.confirmPassword && (
+                <span style={{ color: '#d32f2f' }}>
+                  {errors.confirmPassword}
+                </span>
+              )}
             </FormHelperText>
           </FormControl>
         </div>
         <FormControl>
           <FormControlLabel
-            control={<Checkbox
-              size='small'
-              id='terminos'
-              name='terminos'
-              checked={values.terminos}
-              value={values.terminos}
-              onClick={handleChange}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />}
+            control={
+              <Checkbox
+                size='small'
+                id='terminos'
+                name='terminos'
+                checked={values.terminos}
+                value={values.terminos}
+                onClick={handleChange}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+            }
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
                 <Link href={''} className='text-sky-700'>
                   Terminos y Servicios
                 </Link>
-                {errors.terminos && <span style={{color: '#d32f2f'}}><br/>{errors.terminos}</span>}
+                {errors.terminos && (
+                  <span style={{ color: '#d32f2f' }}>
+                    <br />
+                    {errors.terminos}
+                  </span>
+                )}
               </Typography>
             }
           />
 
           <FormControlLabel
-            control={<Checkbox
-              size='small'
-              id='politicas'
-              name='politicas'
-              checked={values.politicas}
-              value={values.politicas}
-              onClick={handleChange}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />}
+            control={
+              <Checkbox
+                size='small'
+                id='politicas'
+                name='politicas'
+                checked={values.politicas}
+                value={values.politicas}
+                onClick={handleChange}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+            }
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
                 <Link href={''} className='text-sky-700'>
                   Política de privacidad.
                 </Link>
-                {errors.politicas && <span style={{color: '#d32f2f'}}><br/>{errors.politicas}</span>}
+                {errors.politicas && (
+                  <span style={{ color: '#d32f2f' }}>
+                    <br />
+                    {errors.politicas}
+                  </span>
+                )}
               </Typography>
             }
           />

@@ -1,72 +1,60 @@
 import { expresiones } from '@/utils/utils'
 import * as yup from 'yup'
 
-export const validationSchemaUser = yup.object().shape({
-  email: yup
+export const validationSchemaNewDoctor = yup.object().shape({
+  curp: yup
     .string()
-    .matches(
-      /^\w+([.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/,
-      {
-        message: 'El usuario solo puede contener letras '
-      }
-    )
-    .required('Por favor ingresa tu correo electrónico.'),
-  password: yup
-    .string()
-    .min(8, 'La longitud de la contraseña es de minimo 8 carácteres')
-    .matches(/[0-9]/, 'Requiere un número')
-    .matches(/[a-z]/, 'Requiere una letra minuscula')
-    .matches(/[A-Z]/, 'Requiere una letra mayúscula')
-    .matches(/[^\w]/, 'Requiere un simbolo')
-    .required('Por favor ingresa tu contraseña.')
-})
-export const validationSchemaEmail = yup.object().shape({
-  email: yup
-    .string()
-    .matches(
-      /^\w+([.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/,
-      {
-        message: 'El usuario solo puede contener letras '
-      }
-    )
-    .required('Por favor ingresa tu correo electrónico.')
-})
-
-export const validationSchemaSignUp = yup.object().shape({
-  firstname: yup
+    .matches(expresiones.curp, {
+      message: 'CURP Incorrecto.'
+    })
+    .required('Campo requerido.'),
+  nombre: yup.string().matches(expresiones.onlyLetters, {
+    message: 'Solo Letras.'
+  }),
+  apellido: yup
     .string()
     .matches(expresiones.onlyLetters, {
-      message: 'El usuario solo puede contener letras '
+      message: 'Solo Letras.'
     })
-    .required('Por favor ingresa tu Nombre.'),
-  lastname: yup
-    .string()
-    .matches(expresiones.onlyLetters, {
-      message: 'Solo se admiten letras.'
-    })
-    .required('Por favor ingresa tus apellidos.'),
-  email: yup
-    .string()
-    .matches(expresiones.correo, {
-      message: 'Ingresa un correo electronico valido.'
-    })
-    .required('Es necesario un correo elctronico.'),
+    .required('Campo requerido.'),
+  telefono: yup.string().required('Campo requerido.'),
+  fechaDeNacimiento: yup.date().required('Campo requerido.'),
+  email: yup.string().matches(expresiones.correo, {
+    message: 'Correo invalido'
+  }),
   password: yup
     .string()
-    .min(8, 'La longitud de la contraseña es de minimo 8 carácteres')
+    .min(8, 'La longitud de la contraseña es de minimo 8 carácteres.')
     .matches(expresiones.password, {
       message:
         'Tu contraseña debe contener al menos (1 letra mayúscula, 1 letra minúscula, 1 digito y 1 cracter especial) y depe ser de 8 - 15 caracteres.'
     })
     .required('Por favor ingresa tu contraseña.'),
-  confirmPassword: yup
+  codigoPostal: yup
+    .number()
+    .max(5)
+    .min(1)
+    .required('Campo requerido.'),
+  colonia: yup
     .string()
-    .oneOf([yup.ref('password'), ''], 'Las contrasenas no coinciden.')
-    .required('Este campo es obligatorio.'),
-  terminos: yup
-    .bool()
-    .oneOf([true], 'Tiene que aceptar los terminos y condiciones.'),
-  politicas: yup
-    .bool()
-    .oneOf([true], 'Tiene que aceptar la politica de privacidad')
+    .required('Campo requerido'),
+  calle: yup
+    .string()
+    .matches(expresiones.soloLetrasYNumeros, {
+      message: 'Solo numeros y letras'
+    })
+    .required('Campo requerido'),
+  noInterior: yup
+    .number(),
+  cedula: yup
+    .number()
+    .max(8)
+    .min(8)
+    .required('Campo requerido'),
+  titulo: yup
+    .string()
+    .matches(expresiones.onlyLetters, {
+      message: 'Solo Letras'
+    })
+    .required('Campo requerido')
 })
