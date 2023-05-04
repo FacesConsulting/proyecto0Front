@@ -4,6 +4,13 @@ interface Ranking {
   puntuacion: number
 }
 
+export type Especialidad = {
+  especialidad: string
+  archivo: File | null
+  nombreArchivo? : string
+  sizeArchivo?: number
+}
+
 export type DoctorType = {
   // Datos generales
   uid?: string
@@ -27,7 +34,7 @@ export type DoctorType = {
   // Informacion profesional
   cedula_profesional: string
   titulo: string
-  especialidad: string
+  especialidad: Array<Especialidad>
   ranking?: Array<Ranking>
   tipo_registro: string
 }

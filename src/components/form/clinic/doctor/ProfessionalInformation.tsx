@@ -1,12 +1,7 @@
 import DynamicInput from '@/components/helpers/DynamicInput'
-import { DoctorType } from '@/interfaces/clinic/doctor'
+import { ProfessionalInformationProps } from '@/interfaces/types/HelperTypes'
 import { Grid, TextField } from '@mui/material'
-import { FormikProps } from 'formik'
-import React from 'react'
 
-interface ProfessionalInformationProps {
-  formikProps: FormikProps<DoctorType>
-}
 const ProfessionalInformation = ({
   formikProps
 }: ProfessionalInformationProps) => {
@@ -49,7 +44,7 @@ const ProfessionalInformation = ({
         />
       </Grid>
       <Grid item xs={12}>
-        <DynamicInput />
+        <DynamicInput formikProps={formikProps} />
         {/* <TextField
           fullWidth
           id='especialidad'

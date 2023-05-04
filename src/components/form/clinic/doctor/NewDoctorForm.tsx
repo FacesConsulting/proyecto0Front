@@ -48,7 +48,11 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     numero_interior: '',
     // Preperacion academica
     cedula_profesional: '',
-    especialidad: '',
+    especialidad: [
+      { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 },
+      { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 },
+      { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 }
+    ],
     tipo_registro: 'Medico',
     titulo: ''
   }
@@ -92,11 +96,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
             alignItems: 'center',
             gap: 2
           }}>
-          {activeStep > 0 && (
-            <Button onClick={prevStep}>
-              Anterior
-            </Button>
-          )}
+          {activeStep > 0 && <Button onClick={prevStep}>Anterior</Button>}
           <LoadingButton
             type={activeStep === 2 ? 'submit' : 'button'}
             onClick={nextStep}>
