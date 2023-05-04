@@ -1,6 +1,5 @@
 /* eslint-disable multiline-ternary */
-import { Add, Remove } from '@mui/icons-material'
-import { Box, Grid, IconButton, TextField, Tooltip } from '@mui/material'
+import { Box, Grid, TextField } from '@mui/material'
 import react, { useState } from 'react'
 import IconSvg from '../svg/IconSvg'
 import { formatBytes } from '@/utils/utils'
@@ -13,16 +12,11 @@ interface EspecialidadInterface {
 const DynamicInput = () => {
   const [especialidades, setEspecialidades] = useState<
     Array<EspecialidadInterface>
-  >([{ especialidad: '', archivo: null }])
-
-  const handleAdd = () => {
-    if (especialidades.length < 5) {
-      setEspecialidades([
-        ...especialidades,
-        { especialidad: '', archivo: null }
-      ]) // Copiamos el arreglo y creamos un nuevo array con especialidad y archivo
-    }
-  }
+  >([
+    { especialidad: '', archivo: null },
+    { especialidad: '', archivo: null },
+    { especialidad: '', archivo: null }
+  ])
 
   const handleChange = (
     event: react.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,12 +27,10 @@ const DynamicInput = () => {
     setEspecialidades(values) // Regresamos el arreglo copiado con los nuevos valores
   }
 
-  const handleDelete = (index: number) => {
-    if (especialidades.length > 1) {
-      const deleteSocial = [...especialidades] // Copias de nuevo el arreglo
-      deleteSocial.splice(index, 1) // Eliminamor con la funcion splice el elemento que se recibe (index)
-      setEspecialidades(deleteSocial) // Regresamos el arreglo
-    }
+  const handleDeleteFile = (index: number) => {
+    const deleteSocial = [...especialidades] // Copias de nuevo el arreglo
+    deleteSocial[index].archivo = null // Eliminamor con el archivo de la especialidad
+    setEspecialidades(deleteSocial) // Regresamos el arreglo
   }
 
   const handleChangeFile = (
@@ -69,7 +61,6 @@ const DynamicInput = () => {
   }
 
   const handleValidateTypeOfFile = (document: File | null) => {
-    console.log(document)
     if (document?.type.includes('image/') && document !== null) {
       return true
     }
@@ -78,27 +69,25 @@ const DynamicInput = () => {
   }
 
   return (
-    <Box>
+    <Grid container spacing={2}>
       {especialidades.map((data, index) => {
         return (
-          <Grid container key={index} spacing={2} alignItems={'center'} mb={2}>
-            <Grid item xs={12} lg={5}>
-              <TextField
-                fullWidth
-                id='especialidad'
-                label='Especialidad'
-                name='especialidad'
-                value={data.especialidad}
-                onChange={(e) => handleChange(e, index)}
-              />
-            </Grid>
-
+          <Grid item xs={12} lg={4} key={index}>
+            <TextField
+              fullWidth
+              id='especialidad'
+              label='Especialidad (opcional)'
+              name='especialidad'
+              value={data.especialidad}
+              onChange={(e) => handleChange(e, index)}
+            />
             <Grid item xs={8} lg={5}>
               <div className='relative flex flex-col text-gray-400 border border-gray-200 border-dashed rounded cursor-pointer'>
                 <input
                   type='file'
                   name='archivo'
                   id='archivo'
+                  accept='.png,.jpge,.jpg,application/pdf'
                   className='absolute inset-0 z-50 w-full h-8 p-0 m-0 outline-none opacity-0 cursor-pointer'
                   onChange={(e) => handleChangeFile(e, index)}
                   onDragOver={(e) => e.preventDefault()}
@@ -119,27 +108,6 @@ const DynamicInput = () => {
                 </div>
               </div>
             </Grid>
-
-            <Grid item xs={4} lg={2}>
-              {especialidades.length > 1 && (
-                <Tooltip title={'Quitar especialidad'}>
-                  <IconButton
-                    onClick={() => handleDelete(index)}
-                    aria-label='remover especialidad'>
-                    <Remove />
-                  </IconButton>
-                </Tooltip>
-              )}
-              {especialidades.length < 5 && (
-                <Tooltip title={'Agregar especialidad'}>
-                  <IconButton
-                    onClick={() => handleAdd()}
-                    aria-label='agregar especialidad'>
-                    <Add />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </Grid>
           </Grid>
         )
       })}
@@ -150,11 +118,14 @@ const DynamicInput = () => {
             return (
               <div
                 key={index}
-                className='relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none'
+                className={`relative ${
+                  especialidad.archivo !== null ? 'flex' : 'hidden'
+                } flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none`}
                 style={{ paddingTop: '100%' }}>
                 <button
-                  className='absolute top-0 right-0 z-50 p-1 bg-white rounded-bl focus:outline-none'
-                  type='button'>
+                  className='absolute top-0 right-0 z-50 p-1 bg-white rounded-bl cursor-pointer focus:outline-none'
+                  type='button'
+                  onClick={() => handleDeleteFile(index)}>
                   <svg
                     className='w-4 h-4 text-gray-700'
                     xmlns='http://www.w3.org/2000/svg'
@@ -181,7 +152,7 @@ const DynamicInput = () => {
                     />
                   </div>
                 ) : (
-                  <div className='absolute w-12 h-12 text-gray-400 transform top-0 flex justify-center items-center'>
+                  <div className='absolute w-full h-full text-gray-400 transform top-0 flex justify-center items-center -m-4'>
                     <IconSvg
                       color='#9ca3af'
                       size={30}
@@ -202,7 +173,7 @@ const DynamicInput = () => {
           })}
         </div>
       </Box>
-    </Box>
+    </Grid>
   )
 }
 
