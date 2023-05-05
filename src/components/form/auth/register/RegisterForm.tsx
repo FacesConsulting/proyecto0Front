@@ -22,6 +22,8 @@ import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
 import { fetchingDataEncrypted } from '@/utils/utils'
 import Swal from 'sweetalert2'
+import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
+import { useRouter } from 'next/navigation'
 
 const RegisterForm = () => {
   const router = useRouter()
@@ -55,6 +57,7 @@ const RegisterForm = () => {
             '/login/auth/signUp',
             'post'
           )
+
           if (res.status === 200) {
             Swal.fire({
               icon: 'success',
@@ -99,7 +102,7 @@ const RegisterForm = () => {
             onBlur={handleBlur}
             error={touched.firstname && Boolean(errors.firstname)}
             helperText={touched.firstname && errors.firstname}
-            placeholder='Jhon'
+            placeholder='John Doe'
           />
           <TextField
             fullWidth
@@ -112,7 +115,7 @@ const RegisterForm = () => {
             onBlur={handleBlur}
             error={touched.lastname && Boolean(errors.lastname)}
             helperText={touched.lastname && errors.lastname}
-            placeholder='Doe'
+            placeholder='John Doe'
           />
         </div>
         <div className='mb-4'>
@@ -127,7 +130,7 @@ const RegisterForm = () => {
             onBlur={handleBlur}
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
-            placeholder='example@mail.com'
+            placeholder='John Doe'
           />
         </div>
         <div className='mb-4'>
@@ -163,7 +166,7 @@ const RegisterForm = () => {
           </FormControl>
         </div>
         <div className='mb-4'>
-          <FormControl variant='outlined' size='small' fullWidth>
+        <FormControl variant='outlined' size='small' fullWidth>
             <InputLabel htmlFor='confirmPassword'>
               Confirmar Contraseña
             </InputLabel>
