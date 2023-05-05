@@ -1,5 +1,6 @@
 import { FormikProps } from 'formik'
 import { DoctorType } from '../clinic/doctor'
+import React from 'react'
 
 export type InfoAddress = {
   codigoPostal?: string
@@ -10,4 +11,10 @@ export type InfoAddress = {
 
 export interface ProfessionalInformationProps {
   formikProps: FormikProps<DoctorType>
+}
+
+export interface ModalProps {
+  title: string
+  open: boolean
+  state: React.Dispatch<React.SetStateAction<boolean>>
 }

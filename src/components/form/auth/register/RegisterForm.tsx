@@ -21,6 +21,7 @@ import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
 import { fetchingDataEncrypted } from '@/utils/utils'
 import Swal from 'sweetalert2'
+import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -32,6 +33,7 @@ const RegisterForm = () => {
     password: '',
     confirmPassword: ''
   }
+  const [politicas, setPoliticas] = useState<boolean>(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -212,6 +214,7 @@ const RegisterForm = () => {
           </span>
         </Link>
       </div>
+      <ModalPrivacyPolicy open={politicas} state={setPoliticas} title='Politicas de privacidad' />
     </Box>
   )
 }
