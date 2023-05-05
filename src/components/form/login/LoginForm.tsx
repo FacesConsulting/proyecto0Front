@@ -25,12 +25,16 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await signIn('credentials', {
-      email: user.email,
-      password: user.password,
-      redirect: true,
-      callbackUrl: '/clinic/45'
-    })
+    try {
+      await signIn('credentials', {
+        email: user.email,
+        password: user.password,
+        redirect: true,
+        callbackUrl: '/clinic/45'
+      })
+    } catch (e) {
+      console.log(e)
+    }
     setLoading(false)
   }
 

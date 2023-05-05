@@ -55,7 +55,7 @@ const RegisterForm = () => {
             '/login/auth/signUp',
             'post'
           )
-          if (res.status === 200) {
+          if (res.status === 201) {
             Swal.fire({
               icon: 'success',
               title: 'Hecho',
