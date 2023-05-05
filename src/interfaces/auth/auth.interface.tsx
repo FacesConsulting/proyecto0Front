@@ -16,5 +16,6 @@ export interface SingUpInterface {
   email: string
   password: string
   confirmPassword: string
-
+  terminos: boolean
+  politicas: boolean
 }

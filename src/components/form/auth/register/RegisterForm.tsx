@@ -6,6 +6,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -21,9 +22,9 @@ import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
 import { fetchingDataEncrypted } from '@/utils/utils'
 import Swal from 'sweetalert2'
-import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 
 const RegisterForm = () => {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const initialValues: SingUpInterface = {
@@ -31,44 +32,54 @@ const RegisterForm = () => {
     lastname: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    terminos: false,
+    politicas: false
   }
   const [politicas, setPoliticas] = useState<boolean>(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
-
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       enableReinitialize: true,
       initialValues,
       validationSchema: validationSchemaSignUp,
       onSubmit: async (values, { resetForm }) => {
+        console.log(values)
         setLoading(true)
         const serializeData = JSON.stringify(values)
+        console.log(serializeData)
         try {
           const res = await fetchingDataEncrypted(
             serializeData,
             '/login/auth/signUp',
             'post'
           )
-
           if (res.status === 200) {
             Swal.fire({
               icon: 'success',
               title: 'Hecho',
               text: 'Registro exitoso'
             })
+            router.push('/auth/signIn')
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Opsss',
-              text: 'Registro exitoso'
+              title: 'Oopss',
+              text: res.data
             })
+            console.log(res)
           }
         } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error Catastrofico',
+            text: 'Error Catastrofico'
+          })
           console.log(error)
         }
         resetForm()
+        setLoading(false)
       }
     })
 
@@ -88,7 +99,7 @@ const RegisterForm = () => {
             onBlur={handleBlur}
             error={touched.firstname && Boolean(errors.firstname)}
             helperText={touched.firstname && errors.firstname}
-            placeholder='John Doe'
+            placeholder='Jhon'
           />
           <TextField
             fullWidth
@@ -101,7 +112,7 @@ const RegisterForm = () => {
             onBlur={handleBlur}
             error={touched.lastname && Boolean(errors.lastname)}
             helperText={touched.lastname && errors.lastname}
-            placeholder='John Doe'
+            placeholder='Doe'
           />
         </div>
         <div className='mb-4'>
@@ -116,7 +127,7 @@ const RegisterForm = () => {
             onBlur={handleBlur}
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
-            placeholder='John Doe'
+            placeholder='example@mail.com'
           />
         </div>
         <div className='mb-4'>
@@ -127,8 +138,11 @@ const RegisterForm = () => {
               size='small'
               id='password'
               name='password'
+              value={values.password}
               type={showPassword ? 'text' : 'password'}
+              error={touched.password && Boolean(errors.password)}
               onChange={handleChange}
+              onBlur={handleBlur}
               endAdornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -141,18 +155,28 @@ const RegisterForm = () => {
               }
               label='Contraseña'
             />
+            <FormHelperText>
+              {touched.password && (
+                <span style={{ color: '#d32f2f' }}>{errors.password}</span>
+              )}
+            </FormHelperText>
           </FormControl>
         </div>
         <div className='mb-4'>
-        <FormControl variant='outlined' size='small' fullWidth>
-            <InputLabel htmlFor='confirmPassword'>Confirmar Contraseña</InputLabel>
+          <FormControl variant='outlined' size='small' fullWidth>
+            <InputLabel htmlFor='confirmPassword'>
+              Confirmar Contraseña
+            </InputLabel>
             <OutlinedInput
               fullWidth
               size='small'
               id='confirmPassword'
               name='confirmPassword'
+              value={values.confirmPassword}
               type={showPassword ? 'text' : 'password'}
+              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
               onChange={handleChange}
+              onBlur={handleBlur}
               endAdornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -165,29 +189,70 @@ const RegisterForm = () => {
               }
               label='Confirmar Contraseña'
             />
+            <FormHelperText>
+              {touched.confirmPassword && (
+                <span style={{ color: '#d32f2f' }}>
+                  {errors.confirmPassword}
+                </span>
+              )}
+            </FormHelperText>
           </FormControl>
         </div>
         <FormControl>
           <FormControlLabel
-            control={<Checkbox size='small' />}
+            control={
+              <Checkbox
+                size='small'
+                id='terminos'
+                name='terminos'
+                checked={values.terminos}
+                value={values.terminos}
+                onClick={handleChange}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+            }
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
                 <Link href={''} className='text-sky-700'>
                   Terminos y Servicios
                 </Link>
+                {errors.terminos && (
+                  <span style={{ color: '#d32f2f' }}>
+                    <br />
+                    {errors.terminos}
+                  </span>
+                )}
               </Typography>
             }
           />
 
           <FormControlLabel
-            control={<Checkbox size='small' />}
+            control={
+              <Checkbox
+                size='small'
+                id='politicas'
+                name='politicas'
+                checked={values.politicas}
+                value={values.politicas}
+                onClick={handleChange}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+            }
             label={
               <Typography fontSize={11}>
                 Acepto &nbsp;
                 <Link href={''} className='text-sky-700'>
                   Política de privacidad.
                 </Link>
+                {errors.politicas && (
+                  <span style={{ color: '#d32f2f' }}>
+                    <br />
+                    {errors.politicas}
+                  </span>
+                )}
               </Typography>
             }
           />

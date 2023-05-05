@@ -100,6 +100,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
           }}>
           {activeStep > 0 && <Button onClick={prevStep}>Anterior</Button>}
           <LoadingButton
+            disabled={false}
             type={activeStep === 2 ? 'submit' : 'button'}
             color={activeStep === 2 ? 'success' : 'primary'}
             onClick={nextStep}>
