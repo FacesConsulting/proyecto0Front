@@ -2,7 +2,7 @@ import { expresiones } from '@/utils/utils'
 import * as yup from 'yup'
 
 export const validationSchemaUser = yup.object().shape({
-  email: yup
+  correoElectronico: yup
     .string()
     .matches(
       /^\w+([.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/,
@@ -33,19 +33,19 @@ export const validationSchemaEmail = yup.object().shape({
 })
 
 export const validationSchemaSignUp = yup.object().shape({
-  firstname: yup
+  nombre: yup
     .string()
     .matches(expresiones.onlyLetters, {
       message: 'El usuario solo puede contener letras '
     })
     .required('Por favor ingresa tu Nombre.'),
-  lastname: yup
+  apellidos: yup
     .string()
     .matches(expresiones.onlyLetters, {
       message: 'Solo se admiten letras.'
     })
     .required('Por favor ingresa tus apellidos.'),
-  email: yup
+  correoElectronico: yup
     .string()
     .matches(expresiones.correo, {
       message: 'Ingresa un correo electronico valido.'

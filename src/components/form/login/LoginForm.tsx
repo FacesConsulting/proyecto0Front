@@ -5,16 +5,12 @@ import { Alert, Box, Divider, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import Link from 'next/link'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { grey } from '@mui/material/colors'
 const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [user, setUser] = useState<LoginInterface>({ email: '', password: '' })
   const [error, setError] = useState<string>('')
-  const { data: session, status } = useSession()
-
-  console.log(session)
-  console.log(status)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -28,9 +24,12 @@ const LoginForm = () => {
     await signIn('credentials', {
       email: user.email,
       password: user.password,
-      redirect: true,
-      callbackUrl: '/clinic/45'
+      redirect: false
     })
+      .then((e: any) => {
+        console.log(e)
+      })
+      .catch((error) => console.log('Error ' + error))
     setLoading(false)
   }
 
