@@ -30,9 +30,9 @@ const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const initialValues: SingUpInterface = {
-    firstname: '',
-    lastname: '',
-    email: '',
+    nombre: '',
+    apellidos: '',
+    correoElectronico: '',
     password: '',
     confirmPassword: '',
     terminos: false,
@@ -47,10 +47,8 @@ const RegisterForm = () => {
       initialValues,
       validationSchema: validationSchemaSignUp,
       onSubmit: async (values, { resetForm }) => {
-        console.log(values)
         setLoading(true)
         const serializeData = JSON.stringify(values)
-        console.log(serializeData)
         try {
           const res = await fetchingDataEncrypted(
             serializeData,
@@ -58,28 +56,27 @@ const RegisterForm = () => {
             'post'
           )
 
-          if (res.status === 200) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Hecho',
-              text: 'Registro exitoso'
-            })
-            router.push('/auth/signIn')
-          } else {
+          if (res.status !== 201) {
             Swal.fire({
               icon: 'error',
               title: 'Oopss',
               text: res.data
             })
-            console.log(res)
+            return
           }
-        } catch (error) {
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: res.data
+          })
+          router.push('/auth/signIn')
+        } catch (error: any) {
           Swal.fire({
             icon: 'error',
             title: 'Error Catastrofico',
-            text: 'Error Catastrofico'
+            text: error.message
           })
-          console.log(error)
         }
         resetForm()
         setLoading(false)
@@ -94,43 +91,45 @@ const RegisterForm = () => {
           <TextField
             fullWidth
             size='small'
-            id='firstname'
-            name='firstname'
+            id='nombre'
+            name='nombre'
             label='Nombre(s) *'
-            value={values.firstname}
+            value={values.nombre}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.firstname && Boolean(errors.firstname)}
-            helperText={touched.firstname && errors.firstname}
+            error={touched.nombre && Boolean(errors.nombre)}
+            helperText={touched.nombre && errors.nombre}
             placeholder='John Doe'
           />
           <TextField
             fullWidth
             size='small'
-            id='lastname'
-            name='lastname'
+            id='apellidos'
+            name='apellidos'
             label='Apellidos *'
-            value={values.lastname}
+            value={values.apellidos}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.lastname && Boolean(errors.lastname)}
-            helperText={touched.lastname && errors.lastname}
-            placeholder='John Doe'
+            error={touched.apellidos && Boolean(errors.apellidos)}
+            helperText={touched.apellidos && errors.apellidos}
+            placeholder='Doe'
           />
         </div>
         <div className='mb-4'>
           <TextField
             fullWidth
             size='small'
-            id='email'
-            name='email'
+            id='correoElectronico'
+            name='correoElectronico'
             label='Correo Electrónico *'
-            value={values.email}
+            value={values.correoElectronico}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
-            placeholder='John Doe'
+            error={
+              touched.correoElectronico && Boolean(errors.correoElectronico)
+            }
+            helperText={touched.correoElectronico && errors.correoElectronico}
+            placeholder='example@mail.com'
           />
         </div>
         <div className='mb-4'>
@@ -166,7 +165,7 @@ const RegisterForm = () => {
           </FormControl>
         </div>
         <div className='mb-4'>
-        <FormControl variant='outlined' size='small' fullWidth>
+          <FormControl variant='outlined' size='small' fullWidth>
             <InputLabel htmlFor='confirmPassword'>
               Confirmar Contraseña
             </InputLabel>
@@ -282,7 +281,11 @@ const RegisterForm = () => {
           </span>
         </Link>
       </div>
-      <ModalPrivacyPolicy open={politicas} state={setPoliticas} title='Politicas de privacidad' />
+      <ModalPrivacyPolicy
+        open={politicas}
+        state={setPoliticas}
+        title='Politicas de privacidad'
+      />
     </Box>
   )
 }
