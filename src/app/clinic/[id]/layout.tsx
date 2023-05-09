@@ -1,3 +1,4 @@
+// import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import BoxClinic from '@/template/clinic/box/BoxClinic'
 import React from 'react'
 

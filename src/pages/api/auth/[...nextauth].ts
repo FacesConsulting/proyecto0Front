@@ -27,7 +27,7 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
 
         const data = JSON.stringify({
-          email: credentials?.email,
+          correoElectronico: credentials?.email,
           password: credentials?.password
         })
 

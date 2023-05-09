@@ -17,6 +17,14 @@ export const fetchingDataEncrypted = async (
   let encryptedData = cipher.update(data, 'utf8', 'base64')
   encryptedData += cipher.final('base64')
 
+  console.log(
+    JSON.stringify({
+      data: encryptedData,
+      key: key.toString('base64'),
+      iv: iv.toString('base64')
+    })
+  )
+
   const res = api.post(
     url,
     JSON.stringify({
@@ -48,7 +56,10 @@ export const expresiones = {
  * @param {number} [decimals=2] - Número de decimales a mostrar en el resultado. Por defecto es 2.
  * @returns {string} Cadena de texto con el tamaño formateado y su unidad correspondiente.
  */
-export const formatBytes = (bytes: number | undefined, decimals: number = 2): string => {
+export const formatBytes = (
+  bytes: number | undefined,
+  decimals: number = 2
+): string => {
   if (bytes === undefined) return ''
   if (bytes === 0) return '0 Bytes'
   const k = 1024
