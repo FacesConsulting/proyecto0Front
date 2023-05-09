@@ -2,13 +2,13 @@ import axios from 'axios'
 
 //* Develop */
 export const api = axios.create({
-  baseURL: 'http://localhost:8081/',
+  baseURL: 'http://192.168.0.14:8081/',
   headers: { 'Content-Type': 'application/json' }
 })
 
 //* Remota */
 // export const api = axios.create({
-//   baseURL: 'http://{ip}:8081/',
+//   baseURL: 'http://192.168.0.7:8081/',
 //   headers: { 'Content-Type': 'application/json' }
 // })
 

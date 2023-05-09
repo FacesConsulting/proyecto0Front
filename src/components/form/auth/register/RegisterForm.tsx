@@ -3,15 +3,13 @@
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
-  Checkbox,
   FormControl,
-  FormControlLabel,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField,
-  Typography
+  TextField
 } from '@mui/material'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -21,112 +19,146 @@ import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
 import { fetchingDataEncrypted } from '@/utils/utils'
 import Swal from 'sweetalert2'
+import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
+import { useRouter } from 'next/navigation'
 
 const RegisterForm = () => {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const initialValues: SingUpInterface = {
-    firstname: '',
-    lastname: '',
-    email: '',
+    nombre: '',
+    apellidos: '',
+    correoElectronico: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    terminos: false,
+    politicas: false
   }
+  const [open, setOpen] = useState<boolean>(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      enableReinitialize: true,
-      initialValues,
-      validationSchema: validationSchemaSignUp,
-      onSubmit: async (values, { resetForm }) => {
-        setLoading(true)
-        const serializeData = JSON.stringify(values)
-        try {
-          const res = await fetchingDataEncrypted(
-            serializeData,
-            '/login/auth/signUp',
-            'post'
-          )
+  const formikProps = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema: validationSchemaSignUp,
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values)
+      setLoading(true)
+      const serializeData = JSON.stringify(values)
+      try {
+        const res = await fetchingDataEncrypted(
+          serializeData,
+          '/login/auth/signUp',
+          'post'
+        )
 
-          if (res.status === 200) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Hecho',
-              text: 'Registro exitoso'
-            })
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Opsss',
-              text: 'Registro exitoso'
-            })
-          }
-        } catch (error) {
-          console.log(error)
+        if (res.status !== 201) {
+          throw new Error(res.data)
         }
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Hecho',
+          text: res.data
+        })
+        router.push('/auth/signIn')
+
         resetForm()
+      } catch (error : any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Opsss.',
+          text: error.message
+        })
       }
-    })
+      setLoading(false)
+    }
+  })
 
   return (
     <Box className='w-full px-4'>
       <h2 className='text-black mb-6'>Registro</h2>
-      <form autoComplete='off' onSubmit={handleSubmit}>
+      <form autoComplete='off' onSubmit={formikProps.handleSubmit}>
         <div className='flex gap-4 mb-4'>
           <TextField
             fullWidth
             size='small'
-            id='firstname'
-            name='firstname'
+            id='nombre'
+            name='nombre'
             label='Nombre(s) *'
-            value={values.firstname}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.firstname && Boolean(errors.firstname)}
-            helperText={touched.firstname && errors.firstname}
+            value={formikProps.values.nombre}
+            onChange={formikProps.handleChange}
+            onBlur={formikProps.handleBlur}
+            error={
+              formikProps.touched.nombre &&
+              Boolean(formikProps.errors.nombre)
+            }
+            helperText={
+              formikProps.touched.nombre && formikProps.errors.nombre
+            }
             placeholder='John Doe'
           />
           <TextField
             fullWidth
             size='small'
-            id='lastname'
-            name='lastname'
+            id='apellidos'
+            name='apellidos'
             label='Apellidos *'
-            value={values.lastname}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.lastname && Boolean(errors.lastname)}
-            helperText={touched.lastname && errors.lastname}
-            placeholder='John Doe'
+            value={formikProps.values.apellidos}
+            onChange={formikProps.handleChange}
+            onBlur={formikProps.handleBlur}
+            error={
+              formikProps.touched.apellidos &&
+              Boolean(formikProps.errors.apellidos)
+            }
+            helperText={
+              formikProps.touched.apellidos && formikProps.errors.apellidos
+            }
+            placeholder='Lorem Ipsum'
           />
         </div>
         <div className='mb-4'>
           <TextField
             fullWidth
             size='small'
-            id='email'
-            name='email'
+            id='correoElectronico'
+            name='correoElectronico'
             label='Correo Electrónico *'
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
-            placeholder='John Doe'
+            value={formikProps.values.correoElectronico}
+            onChange={formikProps.handleChange}
+            onBlur={formikProps.handleBlur}
+            error={
+              formikProps.touched.correoElectronico && Boolean(formikProps.errors.correoElectronico)
+            }
+            helperText={formikProps.touched.correoElectronico && formikProps.errors.correoElectronico}
+            placeholder='JohnDoe@example.com'
           />
         </div>
         <div className='mb-4'>
           <FormControl variant='outlined' size='small' fullWidth>
-            <InputLabel htmlFor='password'>Contraseña</InputLabel>
+            <InputLabel
+              htmlFor='password'
+              error={
+                formikProps.touched.password &&
+                Boolean(formikProps.errors.password)
+              }>
+              Contraseña
+            </InputLabel>
             <OutlinedInput
               fullWidth
               size='small'
               id='password'
               name='password'
+              value={formikProps.values.password}
               type={showPassword ? 'text' : 'password'}
-              onChange={handleChange}
+              error={
+                formikProps.touched.password &&
+                Boolean(formikProps.errors.password)
+              }
+              onChange={formikProps.handleChange}
+              onBlur={formikProps.handleBlur}
               endAdornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -139,18 +171,33 @@ const RegisterForm = () => {
               }
               label='Contraseña'
             />
+            <FormHelperText>
+              {formikProps.touched.password && (
+                <span style={{ color: '#d32f2f' }}>
+                  {formikProps.errors.password}
+                </span>
+              )}
+            </FormHelperText>
           </FormControl>
         </div>
         <div className='mb-4'>
-        <FormControl variant='outlined' size='small' fullWidth>
-            <InputLabel htmlFor='confirmPassword'>Confirmar Contraseña</InputLabel>
+          <FormControl variant='outlined' size='small' fullWidth>
+            <InputLabel htmlFor='confirmPassword'>
+              Confirmar Contraseña
+            </InputLabel>
             <OutlinedInput
               fullWidth
               size='small'
               id='confirmPassword'
               name='confirmPassword'
+              value={formikProps.values.confirmPassword}
               type={showPassword ? 'text' : 'password'}
-              onChange={handleChange}
+              error={
+                formikProps.touched.confirmPassword &&
+                Boolean(formikProps.errors.confirmPassword)
+              }
+              onChange={formikProps.handleChange}
+              onBlur={formikProps.handleBlur}
               endAdornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -163,43 +210,46 @@ const RegisterForm = () => {
               }
               label='Confirmar Contraseña'
             />
+            <FormHelperText>
+              {formikProps.touched.confirmPassword && (
+                <span style={{ color: '#d32f2f' }}>
+                  {formikProps.errors.confirmPassword}
+                </span>
+              )}
+            </FormHelperText>
           </FormControl>
         </div>
-        <FormControl>
-          <FormControlLabel
-            control={<Checkbox size='small' />}
-            label={
-              <Typography fontSize={11}>
-                Acepto &nbsp;
-                <Link href={''} className='text-sky-700'>
-                  Terminos y Servicios
-                </Link>
-              </Typography>
-            }
-          />
-
-          <FormControlLabel
-            control={<Checkbox size='small' />}
-            label={
-              <Typography fontSize={11}>
-                Acepto &nbsp;
-                <Link href={''} className='text-sky-700'>
-                  Política de privacidad.
-                </Link>
-              </Typography>
-            }
-          />
-        </FormControl>
 
         <div className='text-center box mb-4'>
           <LoadingButton
             fullWidth
+            disabled={open}
             variant='contained'
-            type='submit'
-            loading={loading}>
-            Registrate
+            type={
+              !formikProps.values.politicas || !formikProps.values.terminos
+                ? 'button'
+                : 'submit'
+            }
+            loading={loading}
+            onClick={() => {
+              if (
+                !formikProps.values.politicas ||
+                !formikProps.values.terminos
+              ) {
+                setOpen(true)
+              }
+            }}>
+            {!formikProps.values.politicas || !formikProps.values.terminos
+              ? 'Continuar'
+              : 'Registrarme'}
           </LoadingButton>
         </div>
+
+        <ModalPrivacyPolicy
+          open={open}
+          state={setOpen}
+          formikProps={formikProps}
+        />
       </form>
 
       <div className='flex mb-4'>

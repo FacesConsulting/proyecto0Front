@@ -1,14 +1,29 @@
-'use client'
-import { Box, Typography } from '@mui/material'
+import Dashboard from '@/template/clinic/dashboard/Dashboard'
+import { getServerSession } from 'next-auth'
 
 const page = ({ params }: { params: { id: string } }) => {
-  return (
-    <Box>
-      <Typography variant='h4' component={'h2'}>
-        Dashboard
-      </Typography>
-    </Box>
-  )
+  return <Dashboard />
 }
 
+export async function getServerSideProps(context) {
+  console.log('provando session')
+  const session = await getServerSession(context.req, context.res)
+
+  console.log(session)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
+}
 export default page
