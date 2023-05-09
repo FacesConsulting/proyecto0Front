@@ -1,6 +1,31 @@
 import { api } from '@/api/axiosAPI'
 import { AxiosResponse } from 'axios'
 import * as crypto from 'crypto'
+import { JWTPayload, JWTVerifyOptions, jwtVerify } from 'jose'
+
+// interface jwtPayload {
+//   id: string
+//   nombre: string
+//   apellidos: string
+//   correoElectronico: string
+//   jti: string
+//   expiresAt: Date
+//   issuedAt: Date
+// }
+
+export async function decodeJWT (
+  jwtToken: string,
+  jwtSecret: string
+): Promise<JWTPayload> {
+  const jwtVerifyOptions: JWTVerifyOptions = {
+    algorithms: ['HS256'],
+    issuer: 'http://consulta-ya.com.mx'
+  }
+
+  const key: Uint8Array = new TextEncoder().encode(jwtSecret)
+  const { payload } = await jwtVerify(jwtToken, key, jwtVerifyOptions)
+  return payload as JWTPayload
+}
 
 export const fetchingDataEncrypted = async (
   data: string,
