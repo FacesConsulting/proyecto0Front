@@ -7,10 +7,12 @@ import { LoadingButton } from '@mui/lab'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { grey } from '@mui/material/colors'
+import { useRouter } from 'next/navigation'
 const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [user, setUser] = useState<LoginInterface>({ email: '', password: '' })
   const [error, setError] = useState<string>('')
+  const router = useRouter()
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -28,6 +30,7 @@ const LoginForm = () => {
     })
       .then((e: any) => {
         console.log(e)
+        router.push('/clinic/45')
       })
       .catch((error) => console.log('Error ' + error))
     setLoading(false)

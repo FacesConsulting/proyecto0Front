@@ -7,5 +7,6 @@
     "jsxSingleQuote": true,
     "bracketSameLine": true,
     "endOfLine": "lf",
-    "proseWrap": "never"
+    "proseWrap": "never",
+    "multilineTernary": false
 }
