@@ -74,7 +74,7 @@ const RegisterForm = () => {
         } catch (error: any) {
           Swal.fire({
             icon: 'error',
-            title: 'Error Catastrofico',
+            title: 'Oopss',
             text: error.message
           })
         }
