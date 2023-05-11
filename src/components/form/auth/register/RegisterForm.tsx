@@ -17,7 +17,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useFormik } from 'formik'
 import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
-import { fetchingDataEncrypted } from '@/utils/utils'
+import { fetchingDataEncrypted } from '@/utils/encryptData'
 import Swal from 'sweetalert2'
 import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 import { useRouter } from 'next/navigation'
@@ -66,11 +66,13 @@ const RegisterForm = () => {
         router.push('/auth/signIn')
 
         resetForm()
-      } catch (error : any) {
+        console.log(res.data)
+      } catch (error: any) {
+        const { severity, title, message } = error.response.data
         Swal.fire({
-          icon: 'error',
-          title: 'Opsss.',
-          text: error.message
+          icon: severity.toLowerCase(),
+          title,
+          text: message
         })
       }
       setLoading(false)
@@ -92,12 +94,9 @@ const RegisterForm = () => {
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.nombre &&
-              Boolean(formikProps.errors.nombre)
+              formikProps.touched.nombre && Boolean(formikProps.errors.nombre)
             }
-            helperText={
-              formikProps.touched.nombre && formikProps.errors.nombre
-            }
+            helperText={formikProps.touched.nombre && formikProps.errors.nombre}
             placeholder='John Doe'
           />
           <TextField
@@ -130,9 +129,13 @@ const RegisterForm = () => {
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.correoElectronico && Boolean(formikProps.errors.correoElectronico)
+              formikProps.touched.correoElectronico &&
+              Boolean(formikProps.errors.correoElectronico)
             }
-            helperText={formikProps.touched.correoElectronico && formikProps.errors.correoElectronico}
+            helperText={
+              formikProps.touched.correoElectronico &&
+              formikProps.errors.correoElectronico
+            }
             placeholder='JohnDoe@example.com'
           />
         </div>

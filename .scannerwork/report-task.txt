@@ -1,6 +1,6 @@
-projectKey=frontConectaSalud
+projectKey=consulta-ya-front
 serverUrl=http://localhost:9000
 serverVersion=10.0.0.68432
-dashboardUrl=http://localhost:9000/dashboard?id=frontConectaSalud
-ceTaskId=AYeBKi2SyAZs7R1PeWXJ
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYeBKi2SyAZs7R1PeWXJ
+dashboardUrl=http://localhost:9000/dashboard?id=consulta-ya-front
+ceTaskId=AYgMzo09IWX_WZ5xcsKO
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYgMzo09IWX_WZ5xcsKO

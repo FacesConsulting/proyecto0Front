@@ -30,7 +30,7 @@ const LoginForm = () => {
     })
       .then((e: any) => {
         console.log(e)
-        router.push('/clinic/45')
+        // router.push('/clinic/45')
       })
       .catch((error) => console.log('Error ' + error))
     setLoading(false)
