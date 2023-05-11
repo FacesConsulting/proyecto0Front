@@ -19,3 +19,12 @@ export interface SingUpInterface {
   terminos: boolean
   politicas: boolean
 }
+
+export type ClinicType = {
+  razonSocial: string
+  rfc: string
+  direccion: string
+  correoElectronico: string
+  password: string
+  logoSource: string
+}
