@@ -16,7 +16,16 @@ export const decodeJWT = async (
   const { payload } = await jwtVerify(jwtToken, key, jwtVerifyOptions)
   return payload
 }
-
+/**
+ * Envia datos cifrados a una direccion URL utilizando la biblioteca criptográfica nativa de Node.js.
+ *
+ * @async
+ * @function fetchingDataEncrypted
+ * @param {string} data - Los datos que se van a cifrar previamente serializados.
+ * @param {string} url - La dirección URL donde se enviarán los datos cifrados.
+ * @param {string} method - El método HTTP que se utilizará para enviar los datos cifrados.
+ * @returns {Promise<AxiosResponse>} - Una promesa que se resuelve en un objeto AxiosResponse.
+ */
 export const fetchingDataEncrypted = async (
   data: string,
   url: string,
@@ -31,14 +40,6 @@ export const fetchingDataEncrypted = async (
   // Cifrar los datos
   let encryptedData = cipher.update(data, 'utf8', 'base64')
   encryptedData += cipher.final('base64')
-
-  console.log(
-    JSON.stringify({
-      data: encryptedData,
-      key: key.toString('base64'),
-      iv: iv.toString('base64')
-    })
-  )
 
   const res = api.post(
     url,
