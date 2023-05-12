@@ -1,11 +1,11 @@
 import Slidershow from '@/components/slider/Slidershow'
-import Footer from '@/containers/footer/Footer'
-import Header from '@/containers/header/Header'
-import About from '@/containers/sections/About'
-import DoctorRanking from '@/containers/sections/DoctorRanking'
-import Services from '@/containers/sections/Services'
-import Team from '@/containers/sections/Team'
-import Testimonials from '@/containers/sections/Testimonials'
+import Footer from '@/containers/landingPage/footer/Footer'
+import Header from '@/containers/landingPage/header/Header'
+import About from '@/containers/landingPage/sections/About'
+import DoctorRanking from '@/containers/landingPage/sections/DoctorRanking'
+import Services from '@/containers/landingPage/sections/Services'
+import Team from '@/containers/landingPage/sections/Team'
+import Testimonials from '@/containers/landingPage/sections/Testimonials'
 
 export default function Home () {
   return (
