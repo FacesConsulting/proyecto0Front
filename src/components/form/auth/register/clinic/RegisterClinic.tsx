@@ -17,6 +17,7 @@ import {
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
+<<<<<<< HEAD:src/components/form/auth/register/clinic/RegisterClinic.tsx
 import Public from '../../../../../assets/images/new_clinic.jpg'
 import img from '@/assets/images/log1.png'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
@@ -28,6 +29,12 @@ import React, { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import ToastCustom from '@/components/toast/ToastCustom'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+=======
+import Public from '../../../../assets/images/new_clinic.jpg'
+import { ClinicType } from '@/interfaces/auth/auth.interface'
+import { useFormik } from 'formik'
+import React, { useEffect, useState } from 'react'
+>>>>>>> Desarrollo_Dylan:src/components/form/auth/register/RegisterClinic.tsx
 
 interface ModalPrivacyPolicyProps {
   open: boolean
@@ -36,8 +43,12 @@ interface ModalPrivacyPolicyProps {
 }
 const RegisterClinic = () => {
   const [file, setFile] = useState<File | null>(null)
+<<<<<<< HEAD:src/components/form/auth/register/clinic/RegisterClinic.tsx
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
+=======
+  const [largeFile, setLargeFile] = useState<boolean>(false)
+>>>>>>> Desarrollo_Dylan:src/components/form/auth/register/RegisterClinic.tsx
   const initialValues: ClinicType = {
     razonSocial: '',
     rfc: '',
@@ -72,18 +83,20 @@ const RegisterClinic = () => {
     ) {
       const file = inputElement.files[0]
       setFile(file)
+<<<<<<< HEAD:src/components/form/auth/register/clinic/RegisterClinic.tsx
       formikProps.values.logoSource = file.name
       console.log(formikProps.values.logoSource)
+=======
+      setLargeFile(false)
+>>>>>>> Desarrollo_Dylan:src/components/form/auth/register/RegisterClinic.tsx
       return
     }
-
-    toast.custom((t) => <ToastCustom t={t} />)
+    setLargeFile(true)
   }
 
   return (
     <>
       <div className='lg:w-1/2 lg:flex flex-col items-center justify-center w-full p-4'>
-        <Toaster position='top-left' />
         <div>
           <div className='mx-auto mb-4 flex justify-center items-center text-gray-400 border border-gray-200 border-dashed rounded-full cursor-pointer w-52 h-52'>
             <div className='flex relative flex-col gap-2 justify-center items-center text-gray-400 bg-gray-100 border border-gray-200 border-dashed rounded-full w-48 h-48 overflow-hidden'>
@@ -119,9 +132,30 @@ const RegisterClinic = () => {
                   )}
             </div>
           </div>
-          <small className='mt-4 text-gray-500'>
-            Permitidos *.jpeg, *.jpg tamaño máximo de 3,1 MB
-          </small>
+          <p className='mt-4 text-center text-gray-500 w-full text-sm'>
+            Permitidos *.jpeg, *.jpg tamaño máximo de 500 KB
+          </p>
+          {largeFile && (
+            <div
+              role='alert'
+              className='mt-4 mx-auto w-full lg:w-3/5'>
+              <div className='bg-red-600 text-white font-bold rounded-t px-4 py-2 text-sm'>
+                Archivo demasiado grande
+              </div>
+              <div className='border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700'>
+                <p className='text-xs'>
+                  El tamaño maximo permitido es de 500 KB. Si deseas puedes
+                  reducir el peso de tu imagen en el siguiente{' '}
+                  <a
+                    href='https://tinypng.com/'
+                    target='_blank'
+                    className='text-red-800 font-semibold underline'>
+                    enlace.
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className='w-full lg:w-1/2 flex justify-center items-start lg:items-center p-4'>
