@@ -92,7 +92,9 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: `${
+              activeStep === 0 ? 'flex-end' : 'space-between'
+            }`,
             alignItems: 'center',
             gap: 2
           }}>
@@ -100,6 +102,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
           <LoadingButton
             disabled={false}
             type={activeStep === 2 ? 'submit' : 'button'}
+            color={activeStep === 2 ? 'success' : 'primary'}
             onClick={nextStep}>
             {activeStep === 2 ? 'Guardar' : 'Siguiente'}
           </LoadingButton>

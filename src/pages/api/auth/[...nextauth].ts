@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import FacebookProvider from 'next-auth/providers/facebook'
-import { fetchingDataEncrypted } from '@/utils/utils'
+import { fetchingDataEncrypted } from '@/utils/encryptData'
 export default NextAuth({
   providers: [
     FacebookProvider({
@@ -27,7 +27,7 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
 
         const data = JSON.stringify({
-          email: credentials?.email,
+          correoElectronico: credentials?.email,
           password: credentials?.password
         })
 

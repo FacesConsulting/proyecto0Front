@@ -11,11 +11,21 @@ export interface EmailInterface {
 }
 
 export interface SingUpInterface {
-  firstname: string
-  lastname: string
-  email: string
+  nombre: string
+  apellidos: string
+  correoElectronico: string
   password: string
   confirmPassword: string
+  rol?: string
   terminos: boolean
   politicas: boolean
+}
+
+export type ClinicType = {
+  razonSocial: string
+  rfc: string
+  direccion: string
+  correoElectronico: string
+  password: string
+  logoSource: string
 }

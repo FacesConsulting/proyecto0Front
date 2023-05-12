@@ -1,12 +1,7 @@
 import React from 'react'
 import ModalContainer from '../../ModalContainer'
 import NewDoctorForm from '@/components/form/clinic/doctor/NewDoctorForm'
-
-export interface ModalProps {
-  title: string
-  open: boolean
-  state: React.Dispatch<React.SetStateAction<boolean>>
-}
+import { ModalProps } from '@/interfaces/types/HelperTypes'
 
 const ModalNewDoctor = ({ open, state, title }: ModalProps) => {
   return (
