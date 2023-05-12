@@ -27,6 +27,7 @@ const Verificacion = () => {
           setLoading({ ...loading, loadingData: false })
         })
         .catch((error) => {
+          console.log(error)
           if (error.message === '"exp" claim timestamp check failed') {
             setExpired(true)
             setLoading({ ...loading, loadingData: false })
@@ -36,6 +37,7 @@ const Verificacion = () => {
     }
 
     route.push('/')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route])
 
   const handleVerifyEmail = async () => {
