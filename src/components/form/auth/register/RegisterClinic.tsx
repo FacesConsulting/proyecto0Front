@@ -21,6 +21,7 @@ import Public from '../../../../assets/images/new_clinic.jpg'
 import img from '@/assets/images/log1.png'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
 import { useFormik } from 'formik'
+import { validationSchemaNewClinic } from '../../../../validations/NewClinic/ValidationNewClinic'
 
 import React, { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
@@ -28,24 +29,25 @@ import ToastCustom from '@/components/toast/ToastCustom'
 
 const RegisterClinic = () => {
   const [file, setFile] = useState<File | null>(null)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const initialValues: ClinicType = {
     razonSocial: '',
     rfc: '',
     direccion: '',
     correoElectronico: '',
     password: '',
-    logoSource: Public.src
+    logoSource: Public.src,
+    confirmPassword: ''
   }
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik<ClinicType>({
-      enableReinitialize: true,
-      initialValues,
-      // validationSchema: validationSchemaSignUp,
-      onSubmit: async (values, { resetForm }) => {
-        console.log(values)
-      }
-    })
+  const formikProps = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema: validationSchemaNewClinic,
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values)
+    }
+  })
 
   const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target as HTMLInputElement
@@ -57,6 +59,8 @@ const RegisterClinic = () => {
     ) {
       const file = inputElement.files[0]
       setFile(file)
+      formikProps.values.logoSource = file.name
+      console.log(formikProps.values.logoSource)
       return
     }
 
@@ -115,8 +119,18 @@ const RegisterClinic = () => {
               <TextField
                 fullWidth
                 size='small'
-                id='razon'
-                name='razon'
+                id='razonSocial'
+                name='razonSocial'
+                value={formikProps.values.razonSocial}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.razonSocial &&
+                  Boolean(formikProps.errors.razonSocial)
+                }
+                helperText={
+                  formikProps.touched.razonSocial && formikProps.errors.razonSocial
+                }
                 label='Razon Social *'
                 placeholder='Clinica S.A. de C.V.'
               />
@@ -127,6 +141,16 @@ const RegisterClinic = () => {
                 size='small'
                 id='rfc'
                 name='rfc'
+                value={formikProps.values.rfc}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.rfc &&
+                  Boolean(formikProps.errors.rfc)
+                }
+                helperText={
+                  formikProps.touched.rfc && formikProps.errors.rfc
+                }
                 label='RFC *'
                 placeholder='CLNC123456XXX '
               />
@@ -137,6 +161,16 @@ const RegisterClinic = () => {
                 size='small'
                 id='direccion'
                 name='direccion'
+                value={formikProps.values.direccion}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.direccion &&
+                  Boolean(formikProps.errors.direccion)
+                }
+                helperText={
+                  formikProps.touched.direccion && formikProps.errors.direccion
+                }
                 label='Dirección *'
                 placeholder='Avenida Juárez 1000, Centro, Ciudad de México'
               />
@@ -145,8 +179,18 @@ const RegisterClinic = () => {
               <TextField
                 fullWidth
                 size='small'
-                id='email'
-                name='email'
+                id='correoElectronico'
+                name='correoElectronico'
+                value={formikProps.values.correoElectronico}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.correoElectronico &&
+                  Boolean(formikProps.errors.correoElectronico)
+                }
+                helperText={
+                  formikProps.touched.correoElectronico && formikProps.errors.correoElectronico
+                }
                 label='Dirección de Correo Electrónico *'
                 placeholder='example@enterprise.com'
               />
@@ -159,6 +203,14 @@ const RegisterClinic = () => {
                   size='small'
                   id='password'
                   name='password'
+                  value={formikProps.values.password}
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  error={
+                    formikProps.touched.password &&
+                    Boolean(formikProps.errors.password)
+                  }
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton
@@ -168,7 +220,13 @@ const RegisterClinic = () => {
                   }
                   label='Contraseña'
                 />
-                <FormHelperText></FormHelperText>
+                <FormHelperText>
+                {formikProps.touched.password && (
+                <span style={{ color: '#d32f2f' }}>
+                  {formikProps.errors.password}
+                </span>
+                )}
+                </FormHelperText>
               </FormControl>
             </div>
             <div className='mb-4'>
@@ -181,6 +239,14 @@ const RegisterClinic = () => {
                   size='small'
                   id='confirmPassword'
                   name='confirmPassword'
+                  value={formikProps.values.confirmPassword}
+                  type={showPassword ? 'text' : 'password'}
+                  error={
+                    formikProps.touched.confirmPassword &&
+                    Boolean(formikProps.errors.confirmPassword)
+                  }
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton

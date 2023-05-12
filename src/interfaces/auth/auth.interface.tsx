@@ -27,5 +27,6 @@ export type ClinicType = {
   direccion: string
   correoElectronico: string
   password: string
+  confirmPassword: string
   logoSource: string
 }
