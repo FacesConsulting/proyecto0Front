@@ -1,6 +1,31 @@
 import { api } from '@/api/axiosAPI'
 import { AxiosResponse } from 'axios'
 import * as crypto from 'crypto'
+import { JWTPayload, JWTVerifyOptions, jwtVerify } from 'jose'
+
+// interface jwtPayload {
+//   id: string
+//   nombre: string
+//   apellidos: string
+//   correoElectronico: string
+//   jti: string
+//   expiresAt: Date
+//   issuedAt: Date
+// }
+
+export async function decodeJWT (
+  jwtToken: string,
+  jwtSecret: string
+): Promise<JWTPayload> {
+  const jwtVerifyOptions: JWTVerifyOptions = {
+    algorithms: ['HS256'],
+    issuer: 'http://consulta-ya.com.mx'
+  }
+
+  const key: Uint8Array = new TextEncoder().encode(jwtSecret)
+  const { payload } = await jwtVerify(jwtToken, key, jwtVerifyOptions)
+  return payload as JWTPayload
+}
 
 export const fetchingDataEncrypted = async (
   data: string,
@@ -16,6 +41,14 @@ export const fetchingDataEncrypted = async (
   // Cifrar los datos
   let encryptedData = cipher.update(data, 'utf8', 'base64')
   encryptedData += cipher.final('base64')
+
+  console.log(
+    JSON.stringify({
+      data: encryptedData,
+      key: key.toString('base64'),
+      iv: iv.toString('base64')
+    })
+  )
 
   const res = api.post(
     url,
@@ -48,7 +81,10 @@ export const expresiones = {
  * @param {number} [decimals=2] - Número de decimales a mostrar en el resultado. Por defecto es 2.
  * @returns {string} Cadena de texto con el tamaño formateado y su unidad correspondiente.
  */
-export const formatBytes = (bytes: number | undefined, decimals: number = 2): string => {
+export const formatBytes = (
+  bytes: number | undefined,
+  decimals: number = 2
+): string => {
   if (bytes === undefined) return ''
   if (bytes === 0) return '0 Bytes'
   const k = 1024
