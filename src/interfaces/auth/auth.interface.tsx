@@ -22,13 +22,24 @@ export interface SingUpInterface {
 }
 
 export interface ClinicType {
+  // Datos tecnicos
   razonSocial: string
   rfc: string
-  direccion: string
+  // Localizacion
+  codigo_postal: string
+  estado: string
+  municipio: string
+  colonia: string
+  calle: string
+  numero_exterior: string
+  numero_interior: string
+  // Credenciales
   correoElectronico: string
   password: string
   confirmPassword: string
-  logoSource: string
+  // Logo
+  logoSource: File | string
+  // Terminos
   terminos: boolean
   politicas: boolean
 }

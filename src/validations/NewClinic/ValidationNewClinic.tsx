@@ -37,5 +37,7 @@ export const validationSchemaNewClinic = yup.object().shape({
     .bool()
     .oneOf([true], 'Debes aceptar las politicas de privacidad.')
     .required()
-    .default(false)
+    .default(false),
+  codigoPostal: yup.number()
+    .required('Campo obligtorio')
 })

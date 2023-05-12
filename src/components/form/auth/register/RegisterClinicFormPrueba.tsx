@@ -4,29 +4,23 @@
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField,
-  Typography
+  TextField
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import Public from '../../../../assets/images/new_clinic.jpg'
-import img from '@/assets/images/log1.png'
+import Public from '../../../../../assets/images/new_clinic.jpg'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
 import { FormikProps, useFormik } from 'formik'
-import { validationSchemaNewClinic } from '../../../../validations/NewClinic/ValidationNewClinic'
+import { validationSchemaNewClinic } from '../../../../../validations/NewClinic/ValidationNewClinic'
 import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 
-import React, { useEffect, useState } from 'react'
-import { Toaster, toast } from 'react-hot-toast'
-import ToastCustom from '@/components/toast/ToastCustom'
+import React, { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 interface ModalPrivacyPolicyProps {
@@ -34,10 +28,11 @@ interface ModalPrivacyPolicyProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
   formikProps: FormikProps<ClinicType>
 }
-const RegisterClinicFormPrueba = () => {
+const RegisterClinic = () => {
   const [file, setFile] = useState<File | null>(null)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
+  const [largeFile, setLargeFile] = useState<boolean>(false)
   const initialValues: ClinicType = {
     razonSocial: '',
     rfc: '',
@@ -72,18 +67,17 @@ const RegisterClinicFormPrueba = () => {
     ) {
       const file = inputElement.files[0]
       setFile(file)
-      formikProps.values.logoSource = file.name
+      formikProps.values.logoSource = file
       console.log(formikProps.values.logoSource)
+      setLargeFile(false)
       return
     }
-
-    toast.custom((t) => <ToastCustom t={t} />)
+    setLargeFile(true)
   }
 
   return (
     <>
       <div className='lg:w-1/2 lg:flex flex-col items-center justify-center w-full p-4'>
-        <Toaster position='top-left' />
         <div>
           <div className='mx-auto mb-4 flex justify-center items-center text-gray-400 border border-gray-200 border-dashed rounded-full cursor-pointer w-52 h-52'>
             <div className='flex relative flex-col gap-2 justify-center items-center text-gray-400 bg-gray-100 border border-gray-200 border-dashed rounded-full w-48 h-48 overflow-hidden'>
@@ -119,9 +113,30 @@ const RegisterClinicFormPrueba = () => {
                   )}
             </div>
           </div>
-          <small className='mt-4 text-gray-500'>
-            Permitidos *.jpeg, *.jpg tamaño máximo de 3,1 MB
-          </small>
+          <p className='mt-4 text-center text-gray-500 w-full text-sm'>
+            Permitidos *.jpeg, *.jpg tamaño máximo de 500 KB
+          </p>
+          {largeFile && (
+            <div
+              role='alert'
+              className='mt-4 mx-auto w-full lg:w-3/5'>
+              <div className='bg-red-600 text-white font-bold rounded-t px-4 py-2 text-sm'>
+                Archivo demasiado grande
+              </div>
+              <div className='border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700'>
+                <p className='text-xs'>
+                  El tamaño maximo permitido es de 500 KB. Si deseas puedes
+                  reducir el peso de tu imagen en el siguiente{' '}
+                  <a
+                    href='https://tinypng.com/'
+                    target='_blank'
+                    className='text-red-800 font-semibold underline'>
+                    enlace.
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className='w-full lg:w-1/2 flex justify-center items-start lg:items-center p-4'>
@@ -333,4 +348,4 @@ const RegisterClinicFormPrueba = () => {
   )
 }
 
-export default RegisterClinicFormPrueba
+export default RegisterClinic
