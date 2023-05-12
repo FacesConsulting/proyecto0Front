@@ -21,7 +21,7 @@ export interface SingUpInterface {
   politicas: boolean
 }
 
-export type ClinicType = {
+export interface ClinicType {
   razonSocial: string
   rfc: string
   direccion: string
@@ -29,4 +29,6 @@ export type ClinicType = {
   password: string
   confirmPassword: string
   logoSource: string
+  terminos: boolean
+  politicas: boolean
 }

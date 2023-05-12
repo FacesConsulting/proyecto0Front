@@ -9,12 +9,12 @@ import {
   Typography
 } from '@mui/material'
 import { FormikProps } from 'formik'
-import { SingUpInterface } from '@/interfaces/auth/auth.interface'
+import { ClinicType, SingUpInterface } from '@/interfaces/auth/auth.interface'
 
 interface ModalPrivacyPolicyProps {
   open: boolean
   state: React.Dispatch<React.SetStateAction<boolean>>
-  formikProps: FormikProps<SingUpInterface>
+  formikProps: FormikProps<SingUpInterface> | FormikProps<ClinicType>
 }
 
 const ModalPrivacyPolicy = ({

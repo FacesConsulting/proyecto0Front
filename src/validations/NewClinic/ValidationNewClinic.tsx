@@ -27,5 +27,15 @@ export const validationSchemaNewClinic = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), ''], 'Las contrasenas no coinciden.')
-    .required('Este campo es obligatorio.')
+    .required('Este campo es obligatorio.'),
+  terminos: yup
+    .bool()
+    .oneOf([true], 'Debes aceptar los términos y condiciones.')
+    .required()
+    .default(false),
+  politicas: yup
+    .bool()
+    .oneOf([true], 'Debes aceptar las politicas de privacidad.')
+    .required()
+    .default(false)
 })

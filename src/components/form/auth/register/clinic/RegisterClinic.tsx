@@ -17,19 +17,27 @@ import {
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import Public from '../../../../assets/images/new_clinic.jpg'
+import Public from '../../../../../assets/images/new_clinic.jpg'
 import img from '@/assets/images/log1.png'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
-import { useFormik } from 'formik'
-import { validationSchemaNewClinic } from '../../../../validations/NewClinic/ValidationNewClinic'
+import { FormikProps, useFormik } from 'formik'
+import { validationSchemaNewClinic } from '../../../../../validations/NewClinic/ValidationNewClinic'
+import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 
 import React, { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import ToastCustom from '@/components/toast/ToastCustom'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
+interface ModalPrivacyPolicyProps {
+  open: boolean
+  state: React.Dispatch<React.SetStateAction<boolean>>
+  formikProps: FormikProps<ClinicType>
+}
 const RegisterClinic = () => {
   const [file, setFile] = useState<File | null>(null)
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const initialValues: ClinicType = {
     razonSocial: '',
     rfc: '',
@@ -37,8 +45,13 @@ const RegisterClinic = () => {
     correoElectronico: '',
     password: '',
     logoSource: Public.src,
-    confirmPassword: ''
+    confirmPassword: '',
+    terminos: false,
+    politicas: false
   }
+  const [open, setOpen] = useState<boolean>(false)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const formikProps = useFormik({
     enableReinitialize: true,
@@ -114,7 +127,7 @@ const RegisterClinic = () => {
       <div className='w-full lg:w-1/2 flex justify-center items-start lg:items-center p-4'>
         <Box className='w-full px-4'>
           <h2 className='text-black mb-6'>Registro de Clinica</h2>
-          <form autoComplete='off'>
+          <form autoComplete='off' onSubmit={formikProps.handleSubmit}>
             <div className='mb-4'>
               <TextField
                 fullWidth
@@ -129,7 +142,8 @@ const RegisterClinic = () => {
                   Boolean(formikProps.errors.razonSocial)
                 }
                 helperText={
-                  formikProps.touched.razonSocial && formikProps.errors.razonSocial
+                  formikProps.touched.razonSocial &&
+                  formikProps.errors.razonSocial
                 }
                 label='Razon Social *'
                 placeholder='Clinica S.A. de C.V.'
@@ -145,12 +159,9 @@ const RegisterClinic = () => {
                 onChange={formikProps.handleChange}
                 onBlur={formikProps.handleBlur}
                 error={
-                  formikProps.touched.rfc &&
-                  Boolean(formikProps.errors.rfc)
+                  formikProps.touched.rfc && Boolean(formikProps.errors.rfc)
                 }
-                helperText={
-                  formikProps.touched.rfc && formikProps.errors.rfc
-                }
+                helperText={formikProps.touched.rfc && formikProps.errors.rfc}
                 label='RFC *'
                 placeholder='CLNC123456XXX '
               />
@@ -189,7 +200,8 @@ const RegisterClinic = () => {
                   Boolean(formikProps.errors.correoElectronico)
                 }
                 helperText={
-                  formikProps.touched.correoElectronico && formikProps.errors.correoElectronico
+                  formikProps.touched.correoElectronico &&
+                  formikProps.errors.correoElectronico
                 }
                 label='Dirección de Correo Electrónico *'
                 placeholder='example@enterprise.com'
@@ -207,6 +219,7 @@ const RegisterClinic = () => {
                   type={showPassword ? 'text' : 'password'}
                   onChange={formikProps.handleChange}
                   onBlur={formikProps.handleBlur}
+                  onInput={formikProps.handleChange}
                   error={
                     formikProps.touched.password &&
                     Boolean(formikProps.errors.password)
@@ -215,17 +228,20 @@ const RegisterClinic = () => {
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
-                        edge='end'></IconButton>
+                        onClick={handleClickShowPassword}
+                        edge='end'>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
                     </InputAdornment>
                   }
                   label='Contraseña'
                 />
                 <FormHelperText>
-                {formikProps.touched.password && (
-                <span style={{ color: '#d32f2f' }}>
-                  {formikProps.errors.password}
-                </span>
-                )}
+                  {formikProps.touched.password && (
+                    <span style={{ color: '#d32f2f' }}>
+                      {formikProps.errors.password}
+                    </span>
+                  )}
                 </FormHelperText>
               </FormControl>
             </div>
@@ -247,60 +263,65 @@ const RegisterClinic = () => {
                   }
                   onChange={formikProps.handleChange}
                   onBlur={formikProps.handleBlur}
+                  onInput={formikProps.handleChange}
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
-                        edge='end'></IconButton>
+                        onClick={handleClickShowPassword}
+                        edge='end'>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
                     </InputAdornment>
                   }
                   label='Confirmar Contraseña'
                 />
-                <FormHelperText> </FormHelperText>
+                <FormHelperText>
+                  {formikProps.touched.confirmPassword && (
+                    <span style={{ color: '#d32f2f' }}>
+                      {formikProps.errors.confirmPassword}
+                    </span>
+                  )}
+                </FormHelperText>
               </FormControl>
             </div>
-            <FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox size='small' id='terminos' name='terminos' />
-                }
-                label={
-                  <Typography fontSize={11}>
-                    Acepto &nbsp;
-                    <Link href={''} className='text-sky-700'>
-                      Terminos y Servicios
-                    </Link>
-                  </Typography>
-                }
-              />
-
-              <FormControlLabel
-                control={
-                  <Checkbox size='small' id='politicas' name='politicas' />
-                }
-                label={
-                  <Typography fontSize={11}>
-                    Acepto &nbsp;
-                    <Link href={''} className='text-sky-700'>
-                      Política de privacidad.
-                    </Link>
-                  </Typography>
-                }
-              />
-            </FormControl>
-
             <div className='text-center box mb-4'>
-              <LoadingButton fullWidth variant='contained' type='submit'>
-                Registrate
+              <LoadingButton
+                fullWidth
+                disabled={open}
+                variant='contained'
+                type={
+                  !formikProps.values.politicas || !formikProps.values.terminos
+                    ? 'button'
+                    : 'submit'
+                }
+                loading={loading}
+                onClick={() => {
+                  if (
+                    !formikProps.values.politicas ||
+                    !formikProps.values.terminos
+                  ) {
+                    setOpen(true)
+                  }
+                }}>
+                {!formikProps.values.politicas || !formikProps.values.terminos
+                  ? 'Continuar'
+                  : 'Registrarme'}
               </LoadingButton>
             </div>
+
+            <ModalPrivacyPolicy
+              open={open}
+              state={setOpen}
+              formikProps={formikProps}
+            />
           </form>
 
           <div className='flex mb-4'>
             <Link
               href={'/auth/signIn'}
               className='text-center text-sm text-slate-500'>
-              ¿Ya tienes una cuenta? &nbsp;
+              ¿Ya esta registrada su clinica? &nbsp;
               <span className='text-sky-700 hover:underline decoration-1'>
                 Inicia sesión
               </span>
