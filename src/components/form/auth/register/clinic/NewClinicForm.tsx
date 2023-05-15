@@ -13,10 +13,17 @@ import { Toaster } from 'react-hot-toast'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
 import { validationSchemaNewClinic } from '@/validations/NewClinic/ValidationNewClinic'
 import { fetchingDataEncrypted } from '@/utils/encryptData'
+import BackImage from '../../../../../assets/images/new_clinic.jpg'
+import Swal from 'sweetalert2'
 import Politics from './Politics'
 import UpdateLogo from './UpdateLogo'
 import { api } from '@/api/axiosAPI'
 import { preparedFormDataClinic } from '@/utils/utils'
+
+const styling = {
+  backgroundImage: `url(${BackImage.src})`,
+  backgroundColor: 'red'
+}
 
 export interface NewClinicFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,24 +45,26 @@ const NewClinicForm = () => {
   }
 
   const initialValues: ClinicType = {
-    razonSocial: 'Clinica S.A. de C.V.',
-    rfc: 'ABCD123456',
-    correoElectronico: 'empresa@mail.com',
-    password: '123abc456A!',
-    confirmPassword: '123abc456A!',
-    logoSource: null,
-    terminos: true,
-    politicas: true,
-    codigo_postal: '12345',
-    estado: 'México',
-    municipio: 'Huehuetoca',
-    colonia: 'Salitrillo',
-    calle: 'Av. Lorem',
-    numero_exterior: '35',
-    numero_interior: '4-A'
+    razonSocial: '',
+    rfc: '',
+    correoElectronico: '',
+    password: '',
+    confirmPassword: '',
+    logoSource: '',
+    terminos: false,
+    politicas: false,
+    codigoPostal: '',
+    estado: '',
+    municipio: '',
+    colonia: '',
+    calle: '',
+    numeroExterior: '',
+    numeroInterior: '',
+    telefono: ''
   }
 
   const formik = useFormik<ClinicType>({
+    isInitialValid: false,
     enableReinitialize: true,
     initialValues,
     // validationSchema: validationSchemaNewClinic,

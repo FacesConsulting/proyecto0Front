@@ -25,14 +25,15 @@ export interface ClinicType {
   // Datos tecnicos
   razonSocial: string
   rfc: string
+  telefono: string
   // Localizacion
-  codigo_postal: string
+  codigoPostal: string
   estado: string
   municipio: string
   colonia: string
   calle: string
-  numero_exterior: string
-  numero_interior: string
+  numeroExterior: string
+  numeroInterior: string
   // Credenciales
   correoElectronico: string
   password: string

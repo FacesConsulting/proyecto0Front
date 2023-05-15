@@ -42,6 +42,23 @@ const TechnicalData = ({ formikProps }: GeneralDataProps) => {
           }
         />
       </Grid>
+      <Grid item xs={12}>
+      <TextField
+          fullWidth
+          id='telefono'
+          name='telefono'
+          label='Telefono *'
+          value={formikProps.values.telefono}
+          onChange={formikProps.handleChange}
+          onBlur={formikProps.handleBlur}
+          error={
+            formikProps.touched.telefono && Boolean(formikProps.errors.telefono)
+          }
+          helperText={
+            formikProps.touched.telefono && formikProps.errors.telefono
+          }
+        />
+      </Grid>
     </Grid>
   )
 }

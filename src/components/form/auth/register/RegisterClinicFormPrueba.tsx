@@ -36,11 +36,18 @@ const RegisterClinic = () => {
   const initialValues: ClinicType = {
     razonSocial: '',
     rfc: '',
-    direccion: '',
+    telefono: '',
+    codigoPostal: '',
+    estado: '',
+    municipio: '',
+    colonia: '',
+    calle: '',
+    numeroExterior: '',
+    numeroInterior: '',
     correoElectronico: '',
     password: '',
-    logoSource: Public.src,
     confirmPassword: '',
+    logoSource: '',
     terminos: false,
     politicas: false
   }
