@@ -4,26 +4,34 @@
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField,
-  Typography
+  TextField
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import Public from '../../../../assets/images/new_clinic.jpg'
+import Public from '../../../../../assets/images/new_clinic.jpg'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
-import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import { FormikProps, useFormik } from 'formik'
+import { validationSchemaNewClinic } from '../../../../../validations/NewClinic/ValidationNewClinic'
+import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 
+import React, { useState } from 'react'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+
+interface ModalPrivacyPolicyProps {
+  open: boolean
+  state: React.Dispatch<React.SetStateAction<boolean>>
+  formikProps: FormikProps<ClinicType>
+}
 const RegisterClinic = () => {
   const [file, setFile] = useState<File | null>(null)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [largeFile, setLargeFile] = useState<boolean>(false)
   const initialValues: ClinicType = {
     razonSocial: '',
@@ -31,18 +39,23 @@ const RegisterClinic = () => {
     direccion: '',
     correoElectronico: '',
     password: '',
-    logoSource: Public.src
+    logoSource: Public.src,
+    confirmPassword: '',
+    terminos: false,
+    politicas: false
   }
+  const [open, setOpen] = useState<boolean>(false)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik<ClinicType>({
-      enableReinitialize: true,
-      initialValues,
-      // validationSchema: validationSchemaSignUp,
-      onSubmit: async (values, { resetForm }) => {
-        console.log(values)
-      }
-    })
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+  const formikProps = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema: validationSchemaNewClinic,
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values)
+    }
+  })
 
   const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target as HTMLInputElement
@@ -54,6 +67,8 @@ const RegisterClinic = () => {
     ) {
       const file = inputElement.files[0]
       setFile(file)
+      formikProps.values.logoSource = file
+      console.log(formikProps.values.logoSource)
       setLargeFile(false)
       return
     }
@@ -127,13 +142,24 @@ const RegisterClinic = () => {
       <div className='w-full lg:w-1/2 flex justify-center items-start lg:items-center p-4'>
         <Box className='w-full px-4'>
           <h2 className='text-black mb-6'>Registro de Clinica</h2>
-          <form autoComplete='off'>
+          <form autoComplete='off' onSubmit={formikProps.handleSubmit}>
             <div className='mb-4'>
               <TextField
                 fullWidth
                 size='small'
-                id='razon'
-                name='razon'
+                id='razonSocial'
+                name='razonSocial'
+                value={formikProps.values.razonSocial}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.razonSocial &&
+                  Boolean(formikProps.errors.razonSocial)
+                }
+                helperText={
+                  formikProps.touched.razonSocial &&
+                  formikProps.errors.razonSocial
+                }
                 label='Razon Social *'
                 placeholder='Clinica S.A. de C.V.'
               />
@@ -144,6 +170,13 @@ const RegisterClinic = () => {
                 size='small'
                 id='rfc'
                 name='rfc'
+                value={formikProps.values.rfc}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.rfc && Boolean(formikProps.errors.rfc)
+                }
+                helperText={formikProps.touched.rfc && formikProps.errors.rfc}
                 label='RFC *'
                 placeholder='CLNC123456XXX '
               />
@@ -154,6 +187,16 @@ const RegisterClinic = () => {
                 size='small'
                 id='direccion'
                 name='direccion'
+                value={formikProps.values.direccion}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.direccion &&
+                  Boolean(formikProps.errors.direccion)
+                }
+                helperText={
+                  formikProps.touched.direccion && formikProps.errors.direccion
+                }
                 label='Dirección *'
                 placeholder='Avenida Juárez 1000, Centro, Ciudad de México'
               />
@@ -162,8 +205,19 @@ const RegisterClinic = () => {
               <TextField
                 fullWidth
                 size='small'
-                id='email'
-                name='email'
+                id='correoElectronico'
+                name='correoElectronico'
+                value={formikProps.values.correoElectronico}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                error={
+                  formikProps.touched.correoElectronico &&
+                  Boolean(formikProps.errors.correoElectronico)
+                }
+                helperText={
+                  formikProps.touched.correoElectronico &&
+                  formikProps.errors.correoElectronico
+                }
                 label='Dirección de Correo Electrónico *'
                 placeholder='example@enterprise.com'
               />
@@ -176,16 +230,34 @@ const RegisterClinic = () => {
                   size='small'
                   id='password'
                   name='password'
+                  value={formikProps.values.password}
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  onInput={formikProps.handleChange}
+                  error={
+                    formikProps.touched.password &&
+                    Boolean(formikProps.errors.password)
+                  }
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
-                        edge='end'></IconButton>
+                        onClick={handleClickShowPassword}
+                        edge='end'>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
                     </InputAdornment>
                   }
                   label='Contraseña'
                 />
-                <FormHelperText></FormHelperText>
+                <FormHelperText>
+                  {formikProps.touched.password && (
+                    <span style={{ color: '#d32f2f' }}>
+                      {formikProps.errors.password}
+                    </span>
+                  )}
+                </FormHelperText>
               </FormControl>
             </div>
             <div className='mb-4'>
@@ -198,60 +270,73 @@ const RegisterClinic = () => {
                   size='small'
                   id='confirmPassword'
                   name='confirmPassword'
+                  value={formikProps.values.confirmPassword}
+                  type={showPassword ? 'text' : 'password'}
+                  error={
+                    formikProps.touched.confirmPassword &&
+                    Boolean(formikProps.errors.confirmPassword)
+                  }
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  onInput={formikProps.handleChange}
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
-                        edge='end'></IconButton>
+                        onClick={handleClickShowPassword}
+                        edge='end'>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
                     </InputAdornment>
                   }
                   label='Confirmar Contraseña'
                 />
-                <FormHelperText> </FormHelperText>
+                <FormHelperText>
+                  {formikProps.touched.confirmPassword && (
+                    <span style={{ color: '#d32f2f' }}>
+                      {formikProps.errors.confirmPassword}
+                    </span>
+                  )}
+                </FormHelperText>
               </FormControl>
             </div>
-            <FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox size='small' id='terminos' name='terminos' />
-                }
-                label={
-                  <Typography fontSize={11}>
-                    Acepto &nbsp;
-                    <Link href={''} className='text-sky-700'>
-                      Terminos y Servicios
-                    </Link>
-                  </Typography>
-                }
-              />
-
-              <FormControlLabel
-                control={
-                  <Checkbox size='small' id='politicas' name='politicas' />
-                }
-                label={
-                  <Typography fontSize={11}>
-                    Acepto &nbsp;
-                    <Link href={''} className='text-sky-700'>
-                      Política de privacidad.
-                    </Link>
-                  </Typography>
-                }
-              />
-            </FormControl>
-
             <div className='text-center box mb-4'>
-              <LoadingButton fullWidth variant='contained' type='submit'>
-                Registrate
+              <LoadingButton
+                fullWidth
+                disabled={open}
+                variant='contained'
+                type={
+                  !formikProps.values.politicas || !formikProps.values.terminos
+                    ? 'button'
+                    : 'submit'
+                }
+                loading={loading}
+                onClick={() => {
+                  if (
+                    !formikProps.values.politicas ||
+                    !formikProps.values.terminos
+                  ) {
+                    setOpen(true)
+                  }
+                }}>
+                {!formikProps.values.politicas || !formikProps.values.terminos
+                  ? 'Continuar'
+                  : 'Registrarme'}
               </LoadingButton>
             </div>
+
+            <ModalPrivacyPolicy
+              open={open}
+              state={setOpen}
+              formikProps={formikProps}
+            />
           </form>
 
           <div className='flex mb-4'>
             <Link
               href={'/auth/signIn'}
               className='text-center text-sm text-slate-500'>
-              ¿Ya tienes una cuenta? &nbsp;
+              ¿Ya esta registrada su clinica? &nbsp;
               <span className='text-sky-700 hover:underline decoration-1'>
                 Inicia sesión
               </span>

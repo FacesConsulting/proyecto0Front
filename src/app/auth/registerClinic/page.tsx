@@ -1,4 +1,4 @@
-import RegisterClinic from '@/components/form/auth/register/RegisterClinic'
+import RegisterClinic from '@/components/form/auth/register/clinic/RegisterClinic'
 import AuthContext from '@/context/AuthContext'
 
 const page = () => {
