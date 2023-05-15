@@ -21,7 +21,7 @@ const SubscribeForm = () => {
     try {
       const res = await fetchingDataEncrypted(
         JSON.stringify({ correo: email }),
-        'clinica/register',
+        '/clinica/clinica/teamInvitation',
         'post'
       )
 
