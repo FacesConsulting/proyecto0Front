@@ -9,7 +9,6 @@ export const validationSchemaNewClinic = yup.object().shape({
       message: 'RFC invalido.'
     })
     .required('Campo requerido.'),
-  direccion: yup.string().required('Campo requerido.'),
   correoElectronico: yup
     .string()
     .matches(expresiones.correo, {
@@ -38,6 +37,8 @@ export const validationSchemaNewClinic = yup.object().shape({
     .oneOf([true], 'Debes aceptar las politicas de privacidad.')
     .required()
     .default(false),
-  codigoPostal: yup.number()
-    .required('Campo obligtorio')
+  codigoPostal: yup.number().required('Campo obligtorio'),
+  telefono: yup.string().matches(expresiones.telefono, {
+    message: 'Numero de telefono invalido'
+  }).required('Campo obligatorio')
 })

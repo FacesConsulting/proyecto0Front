@@ -1,31 +1,47 @@
 import { ClinicType } from '@/interfaces/auth/auth.interface'
-import { Grid, TextField } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import { FormikProps } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
+import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 
 interface GeneralDataProps {
   formikProps: FormikProps<ClinicType>
 }
+
 const Politics = ({ formikProps }: GeneralDataProps) => {
+  const [open, setOpen] = useState<boolean>(false)
   return (
-    <Grid container spacing={2} marginBottom={3}>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          id='codigoPostal'
-          name='codigoPostal'
-          label='Codigo Postal *'
-          value={formikProps.values.codigo_postal}
-          onChange={formikProps.handleChange}
-          onBlur={formikProps.handleBlur}
-          error={
-            formikProps.touched.codigo_postal && Boolean(formikProps.errors.codigo_postal)
-          }
-          helperText={formikProps.touched.codigo_postal && formikProps.errors.codigo_postal}
-          placeholder='john_doe@example.com'
-        />
+    <>
+      <Grid container spacing={2} marginBottom={3}>
+        <Grid item xs={12} textAlign={'center'}>
+          <Button
+            onClick={() => {
+              if (
+                !formikProps.values.terminos ||
+                !formikProps.values.politicas
+              ) {
+                setOpen(true)
+              } else {
+                console.log(formikProps.errors)
+                formikProps.values.terminos = false
+                formikProps.values.politicas = false
+                setOpen(true)
+              }
+            }}>
+            {formikProps.values.terminos && formikProps.values.politicas
+              ? 'Volver a leer Terminos y Condiciones y Politicas de Privacidad'
+              : (!formikProps.values.terminos
+                  ? 'Terminos y Condiciones'
+                  : 'Politica de Privacidad') }
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+      <ModalPrivacyPolicy
+        open={open}
+        state={setOpen}
+        formikProps={formikProps}
+      />
+    </>
   )
 }
 
