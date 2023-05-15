@@ -55,7 +55,7 @@ const Location = ({ formikProps }: GeneralDataProps) => {
   return (
     <>
       <Grid container spacing={2} marginBottom={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <FormControl fullWidth variant='outlined'>
             <InputLabel htmlFor='codigo_postal'>Código Postal</InputLabel>
             <OutlinedInput

@@ -38,7 +38,7 @@ export interface ClinicType {
   password: string
   confirmPassword: string
   // Logo
-  logoSource: File | string
+  logoSource: File | null
   // Terminos
   terminos: boolean
   politicas: boolean

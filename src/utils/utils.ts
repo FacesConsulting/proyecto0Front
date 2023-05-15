@@ -1,3 +1,5 @@
+import { ClinicType } from '@/interfaces/auth/auth.interface'
+
 export const expresiones = {
   onlyLetters: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -29,4 +31,14 @@ export const formatBytes = (
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
   const i = Math.floor(Math.log(bytes) / Math.log(k))
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
+
+export const preparedFormDataClinic = (values: ClinicType) => {
+  const formData = new FormData()
+  formData.append('razonSocial', values.razonSocial)
+  formData.append('rfc', values.rfc)
+  if (values.logoSource !== null) {
+    formData.append('logo', values.logoSource)
+  }
+  return formData
 }

@@ -9,12 +9,12 @@ interface GeneralDataProps {
 const TechnicalData = ({ formikProps }: GeneralDataProps) => {
   return (
     <Grid container spacing={2} marginBottom={3}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <TextField
           fullWidth
           id='razonSocial'
           name='razonSocial'
-          label='Razon Social *'
+          label='Razon Social'
           value={formikProps.values.razonSocial}
           onChange={formikProps.handleChange}
           onBlur={formikProps.handleBlur}
@@ -25,12 +25,12 @@ const TechnicalData = ({ formikProps }: GeneralDataProps) => {
           placeholder='john_doe@example.com'
         />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <TextField
           fullWidth
           id='rfc'
           name='rfc'
-          label='RFC *'
+          label='RFC'
           value={formikProps.values.rfc}
           onChange={formikProps.handleChange}
           onBlur={formikProps.handleBlur}

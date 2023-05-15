@@ -1,12 +1,13 @@
-/* eslint-disable no-unused-vars */
 'use client'
-import { ModalProps } from '@/interfaces/types/HelperTypes'
-import React, { useState } from 'react'
+import { Divider } from '@mui/material'
 import NewClinicForm from './NewClinicForm'
-const RegisterClinic = ({ open, state, title }: ModalProps) => {
+
+const RegisterClinic = () => {
   return (
     <>
-      <NewClinicForm state={state} />
+      <h2 className='mb-4'>Registro de clinica</h2>
+      <Divider/>
+      <NewClinicForm />
     </>
   )
 }

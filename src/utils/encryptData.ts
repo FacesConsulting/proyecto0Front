@@ -37,8 +37,10 @@ export const fetchingDataEncrypted = async (
   // Crear instancia de cifrado
   const cipher = crypto.createCipheriv('aes-128-cbc', key, iv)
 
+  console.log(data)
+
   // Cifrar los datos
-  let encryptedData = cipher.update(data, 'utf8', 'base64')
+  let encryptedData = cipher.update(data, 'utf-8', 'base64')
   encryptedData += cipher.final('base64')
 
   const res = api.post(

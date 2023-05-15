@@ -7,7 +7,7 @@ const page = () => {
       <div
         className='bg-white min-h-screen w-screen flex justify-center items-center pt-8 px-4'
         id='login'>
-        <div className=' w-full lg:w-4/5 rounded-lg flex flex-col lg:flex-row shadow-form'>
+        <div className=' w-full lg:w-4/5 rounded-lg shadow-form p-4'>
           <RegisterClinic />
         </div>
       </div>

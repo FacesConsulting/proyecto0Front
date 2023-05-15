@@ -27,7 +27,7 @@ const Credentials = ({ formikProps }: GeneralDataProps) => {
             fullWidth
             id='correoElectronico'
             name='correoElectronico'
-            label='Correo Electrónico *'
+            label='Correo Electrónico'
             value={formikProps.values.correoElectronico}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
@@ -43,11 +43,10 @@ const Credentials = ({ formikProps }: GeneralDataProps) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl variant='outlined' size='small' fullWidth>
+          <FormControl variant='outlined' fullWidth>
             <InputLabel htmlFor='password'>Contraseña</InputLabel>
             <OutlinedInput
               fullWidth
-              size='small'
               id='password'
               name='password'
               value={formikProps.values.password}
@@ -81,13 +80,12 @@ const Credentials = ({ formikProps }: GeneralDataProps) => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <FormControl variant='outlined' size='small' fullWidth>
+          <FormControl variant='outlined' fullWidth>
             <InputLabel htmlFor='confirmPassword'>
               Confirmar Contraseña
             </InputLabel>
             <OutlinedInput
               fullWidth
-              size='small'
               id='confirmPassword'
               name='confirmPassword'
               value={formikProps.values.confirmPassword}
