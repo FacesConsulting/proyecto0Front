@@ -67,10 +67,11 @@ const RegisterForm = () => {
 
         resetForm()
       } catch (error : any) {
+        const { severity, title, message } = error.response.data
         Swal.fire({
-          icon: 'error',
-          title: 'Opsss.',
-          text: error.message
+          icon: severity.toLowerCase(),
+          title,
+          text: message
         })
       }
       setLoading(false)

@@ -24,7 +24,7 @@ interface GeneralDataProps {
 const Location = ({ formikProps }: GeneralDataProps) => {
   const [disableFields, setDisableField] = useState<boolean>(true)
   const [colonias, setColonias] = useState<Array<string>>([])
-  const [manual, setManual] = useState<boolean>(false)
+  const [manual, setManual] = useState<boolean>(true)
   const clearAddress = () => {
     formikProps.setFieldValue('estado', '', true)
     formikProps.setFieldValue('municipio', '', true)

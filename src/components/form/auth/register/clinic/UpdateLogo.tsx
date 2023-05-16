@@ -24,8 +24,6 @@ const UpdateLogo = ({
     }
     setLargeFile(true)
   }
-
-  console.log(formikProps.values)
   return (
     <div className='lg:flex flex-col items-center justify-center w-full p-4'>
       <div className='mx-auto mb-4 flex justify-center items-center text-gray-400 border border-gray-200 border-dashed rounded-full cursor-pointer w-52 h-52'>

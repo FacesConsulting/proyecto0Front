@@ -1,4 +1,5 @@
 import { api } from '@/api/axiosAPI'
+import { ClinicType } from '@/interfaces/auth/auth.interface'
 import { AxiosResponse } from 'axios'
 import * as crypto from 'crypto'
 import { JWTPayload, JWTVerifyOptions, jwtVerify } from 'jose'
@@ -53,4 +54,29 @@ export const fetchingDataEncrypted = async (
   )
 
   return res
+}
+
+export const preparedFormDataClinic = (values: ClinicType) => {
+  const key = crypto.randomBytes(16)
+  const iv = crypto.randomBytes(16)
+
+  // Crear instancia de cifrado
+  const cipher = crypto.createCipheriv('aes-128-cbc', key, iv)
+
+  // Cifrar los datos
+  let encryptedData = cipher.update(JSON.stringify(values), 'utf8', 'base64')
+  encryptedData += cipher.final('base64')
+
+  console.log('data', encryptedData)
+  console.log('key', key.toString('base64'))
+  console.log('iv', iv.toString('base64'))
+
+  const formData = new FormData()
+  formData.append('data', encryptedData)
+  formData.append('key', key.toString('base64'))
+  formData.append('iv', iv.toString('base64'))
+  if (values.logoSource !== null) {
+    formData.append('logo', values.logoSource)
+  }
+  return formData
 }

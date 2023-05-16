@@ -38,6 +38,7 @@ export interface ClinicType {
   correoElectronico: string
   password: string
   confirmPassword: string
+  plataforma: string
   // Logo
   logoSource: File | null
   // Terminos

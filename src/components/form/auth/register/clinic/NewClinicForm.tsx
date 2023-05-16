@@ -12,13 +12,16 @@ import Location from './Location'
 import { Toaster } from 'react-hot-toast'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
 import { validationSchemaNewClinic } from '@/validations/NewClinic/ValidationNewClinic'
-import { fetchingDataEncrypted } from '@/utils/encryptData'
+import {
+  fetchingDataEncrypted,
+  preparedFormDataClinic
+} from '@/utils/encryptData'
 import BackImage from '../../../../../assets/images/new_clinic.jpg'
 import Swal from 'sweetalert2'
 import Politics from './Politics'
-import UpdateLogo from './UpdateLogo'
 import { api } from '@/api/axiosAPI'
-import { preparedFormDataClinic } from '@/utils/utils'
+import UpdateLogo from './UpdateLogo'
+import axios from 'axios'
 
 const styling = {
   backgroundImage: `url(${BackImage.src})`,
@@ -45,22 +48,23 @@ const NewClinicForm = () => {
   }
 
   const initialValues: ClinicType = {
-    razonSocial: '',
-    rfc: '',
-    correoElectronico: '',
-    password: '',
-    confirmPassword: '',
-    logoSource: '',
+    razonSocial: 'Empresa S.A de C.V',
+    rfc: 'EMLDIDK1234',
+    correoElectronico: 'diablerojf@gmail.com',
+    password: 'Jay29092001.',
+    confirmPassword: 'Jay29092001.',
+    logoSource: null,
     terminos: false,
     politicas: false,
-    codigoPostal: '',
-    estado: '',
-    municipio: '',
-    colonia: '',
-    calle: '',
-    numeroExterior: '',
-    numeroInterior: '',
-    telefono: ''
+    codigoPostal: '54680',
+    estado: 'México',
+    municipio: 'Huehuetoca',
+    colonia: 'Salitrillo',
+    calle: 'Av. Lorem',
+    numeroExterior: '35',
+    numeroInterior: '4-A',
+    telefono: '5500112233',
+    plataforma: 'web'
   }
 
   const formik = useFormik<ClinicType>({
@@ -70,12 +74,29 @@ const NewClinicForm = () => {
     // validationSchema: validationSchemaNewClinic,
     onSubmit: async (values, { resetForm }) => {
       const formData = preparedFormDataClinic(values)
+      try {
+        const res = await axios.post(
+          'http://localhost:8081/clinica/clinica/register',
+          formData
+        )
 
-      fetch('http://localhost:8081/clinica/clinica/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'multipart/form-data' },
-        body: formData
-      })
+        if (res.status !== 201) {
+          throw new Error(res.data)
+        }
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Hecho',
+          text: res.data
+        })
+      } catch (error: any) {
+        const { severity, title, message } = error.response.data
+        Swal.fire({
+          icon: severity.toLowerCase(),
+          title,
+          text: message
+        })
+      }
     }
   })
 
@@ -123,13 +144,24 @@ const NewClinicForm = () => {
             gap: 2
           }}>
           {activeStep > 0 && <Button onClick={prevStep}>Anterior</Button>}
-          <LoadingButton
-            disabled={false}
-            type={activeStep === 2 ? 'submit' : 'button'}
-            color={activeStep === 2 ? 'success' : 'primary'}
-            onClick={nextStep}>
-            {activeStep === 2 ? 'Guardar' : 'Siguiente'}
-          </LoadingButton>
+          {activeStep < 2 && (
+            <Button
+              disabled={false}
+              type={'button'}
+              color={'primary'}
+              onClick={nextStep}>
+              Siguiente
+            </Button>
+          )}
+          {activeStep === 2 && (
+            <LoadingButton
+              disabled={false}
+              type={'submit'}
+              color={'success'}
+              loading={false}>
+              Guardar
+            </LoadingButton>
+          )}
         </Box>
       </form>
     </LocalizationProvider>
