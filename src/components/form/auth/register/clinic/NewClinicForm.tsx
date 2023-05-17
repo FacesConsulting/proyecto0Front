@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Box, Button, Grid, Step, StepLabel, Stepper } from '@mui/material'
+import { Box, Button, Divider, Grid, Step, StepLabel, Stepper } from '@mui/material'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -12,14 +12,10 @@ import Location from './Location'
 import { Toaster } from 'react-hot-toast'
 import { ClinicType } from '@/interfaces/auth/auth.interface'
 import { validationSchemaNewClinic } from '@/validations/NewClinic/ValidationNewClinic'
-import {
-  fetchingDataEncrypted,
-  preparedFormDataClinic
-} from '@/utils/encryptData'
+import { preparedFormDataClinic } from '@/utils/encryptData'
 import BackImage from '../../../../../assets/images/new_clinic.jpg'
 import Swal from 'sweetalert2'
 import Politics from './Politics'
-import { api } from '@/api/axiosAPI'
 import UpdateLogo from './UpdateLogo'
 import axios from 'axios'
 
@@ -80,14 +76,18 @@ const NewClinicForm = () => {
           formData
         )
 
+        console.log(res.data)
+
         if (res.status !== 201) {
           throw new Error(res.data)
         }
 
+        const { severity, title, message } = res.data
+
         Swal.fire({
-          icon: 'success',
-          title: 'Hecho',
-          text: res.data
+          icon: severity.toLowerCase(),
+          title,
+          text: message
         })
       } catch (error: any) {
         const { severity, title, message } = error.response.data
@@ -108,11 +108,14 @@ const NewClinicForm = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'es'}>
+      <h2 >Registro de clinica</h2>
+      <Divider/>
       <Toaster position='top-right' reverseOrder={false} />
       <form
         autoComplete='off'
         onSubmit={formik.handleSubmit}
-        encType='multipart/form-data'>
+        encType='multipart/form-data'
+        className='z-20'>
         <Box my={3}>
           <Stepper alternativeLabel activeStep={activeStep}>
             {steeps.map((s) => (

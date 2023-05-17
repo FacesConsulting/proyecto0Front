@@ -1,12 +1,13 @@
 'use client'
 import { fetchingDataEncrypted } from '@/utils/encryptData'
 import { expresiones } from '@/utils/utils'
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
 const SubscribeForm = () => {
   const [email, setEmail] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -17,7 +18,7 @@ const SubscribeForm = () => {
         'warning'
       )
     }
-
+    setLoading(true)
     try {
       const res = await fetchingDataEncrypted(
         JSON.stringify({ correo: email }),
@@ -39,6 +40,7 @@ const SubscribeForm = () => {
         text: message
       })
     }
+    setLoading(false)
   }
 
   return (
@@ -49,8 +51,8 @@ const SubscribeForm = () => {
         placeholder='Ecribe tu correo electrónico'
         onChange={(e) => setEmail(e.target.value)}
       />
-      <Button size='large' variant='contained' type='submit'>
-        Enviar
+      <Button size='large' variant='contained' type='submit' >
+        {loading ? <CircularProgress color='inherit' size={20} /> : 'Enviar'}
       </Button>
     </form>
   )

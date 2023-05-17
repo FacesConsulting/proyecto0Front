@@ -64,12 +64,8 @@ export const preparedFormDataClinic = (values: ClinicType) => {
   const cipher = crypto.createCipheriv('aes-128-cbc', key, iv)
 
   // Cifrar los datos
-  let encryptedData = cipher.update(JSON.stringify(values), 'utf8', 'base64')
+  let encryptedData = cipher.update(JSON.stringify(values), 'utf-8', 'base64')
   encryptedData += cipher.final('base64')
-
-  console.log('data', encryptedData)
-  console.log('key', key.toString('base64'))
-  console.log('iv', iv.toString('base64'))
 
   const formData = new FormData()
   formData.append('data', encryptedData)
