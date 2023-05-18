@@ -1,30 +1,35 @@
 /* eslint-disable multiline-ternary */
 'use client'
-import { api } from '@/api/axiosAPI'
 import { decodeJWT } from '@/utils/encryptData'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import NewToken from './NewToken'
-import Swal from 'sweetalert2'
+import NewPasswordForm from '../form/newPassword/NewPasswordForm'
 
 interface LoadingInterface {
   loadingData: boolean
   fetchingData: boolean
 }
-const Verificacion = () => {
+const VerificacionNewPassword = () => {
   const [loading, setLoading] = useState<LoadingInterface>({
     loadingData: true,
     fetchingData: false
   })
   const [expired, setExpired] = useState<boolean>(false)
+  const [id, setId] = useState<string>('')
   const route = useRouter()
   useEffect(() => {
     const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get('id')?.toString() || ''
+    if (id !== '' && id !== null) {
+      setId(id)
+    }
     const code = queryParameters.get('code')?.toString() || ''
     if (code !== '' && code !== 'null') {
       decodeJWT(code, 'consulta-ya')
         .then((data) => {
           setLoading({ ...loading, loadingData: false })
+          console.log(data)
         })
         .catch((error) => {
           console.log(error)
@@ -35,34 +40,9 @@ const Verificacion = () => {
         })
       return
     }
-
     route.push('/')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route])
-
-  const handleVerifyEmail = async () => {
-    setLoading({ ...loading, fetchingData: true })
-    const queryParameters = new URLSearchParams(window.location.search)
-    const code = queryParameters.get('code')?.toString() || ''
-    try {
-      const res = await api.post('login/auth/verifyEmail', {
-        jwt: code
-      })
-
-      if (res.status !== 200) {
-        setLoading({ ...loading, fetchingData: false })
-        throw new Error(res.data)
-      }
-      Swal.fire('Verificado', res.data, 'success')
-      route.push('/auth/signIn')
-    } catch (error: any) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Opsss.',
-        text: error.message
-      })
-    }
-  }
 
   return (
     <div className='w-full p-4 flex flex-col gap-5'>
@@ -79,28 +59,21 @@ const Verificacion = () => {
       ) : (
         <>
           <h1 className='text-center text-lg lg:text-2xl'>
-            Confirmación de correo electrónico
+            Confirmación de cambio de contraseña
           </h1>
 
           <p className='text-md text-center'>
             {!expired ? (
-              'Estás a un paso de poder accerder a tu cuenta, solo da clic en el botón de abajo y podrás acceder a ella.'
+              'Estás a un paso de restablecer tu contraseña, solo da clic en el botón de abajo.'
             ) : (
               <NewToken />
             )}
           </p>
-          {!loading.fetchingData && !expired && (
-            <button
-              type='button'
-              className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl cursor-pointer focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'
-              onClick={handleVerifyEmail}>
-              Confirmar
-            </button>
-          )}
+          {!loading.fetchingData && !expired && <NewPasswordForm id = { id } />}
         </>
       )}
     </div>
   )
 }
 
-export default Verificacion
+export default VerificacionNewPassword

@@ -3,11 +3,12 @@ export interface LoginInterface {
   password: string
 }
 export interface ResetPasswordInterface {
-  newPassword: string
+  id: string
+  password: string
   confirmPassword: string
 }
 export interface EmailInterface {
-  email: string
+  correoElectronico: string
 }
 
 export interface SingUpInterface {

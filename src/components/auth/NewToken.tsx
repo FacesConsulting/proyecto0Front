@@ -11,16 +11,25 @@ const NewToken = () => {
     setSend(false)
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get('id')?.toString() || ''
+    const queryParameter = new URLSearchParams(window.location.pathname)
+    const encodedUrl = queryParameter.toString()
+    console.log(encodedUrl)
+    const url = decodeURIComponent(encodedUrl)
+    console.log(url)
     try {
       const res = await api.post('login/auth/refreshToken', {
-        id: id
+        id,
+        url
       })
       if (res.status !== 200) {
         setSend(true)
         throw new Error(res.data)
       }
-      Swal.fire('Se le ha enviado un correo, por favor verifique ', res.data, 'success')
-      route.push('/')
+      Swal.fire(
+        'Se le ha enviado un correo, por favor verifique ',
+        res.data,
+        'success'
+      )
     } catch (error: any) {
       Swal.fire({
         icon: 'error',
@@ -28,8 +37,8 @@ const NewToken = () => {
         text: error.message
       })
     }
+    route.push('/')
   }
-
   return (
     <span>
       Lo sentimos, tu token a expirado. Solicita nuevamente un
