@@ -56,14 +56,9 @@ const NewPasswordForm = ({ id }: { id: string }) => {
         )
 
         if (res.status !== 200) {
-          setLoading({ ...loading, fetchingData: false })
           throw new Error(res.data)
         }
-        Swal.fire(
-          'Su contraseña ha sido actualizada exitosamente',
-          res.data,
-          'success'
-        )
+        Swal.fire('Su contraseña ha sido actualizada exitosamente', res.data, 'success')
         router.push('/auth/signIn')
       } catch (error: any) {
         Swal.fire({
