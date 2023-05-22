@@ -66,8 +66,7 @@ const RegisterForm = () => {
         router.push('/auth/signIn')
 
         resetForm()
-        console.log(res.data)
-      } catch (error: any) {
+      } catch (error : any) {
         const { severity, title, message } = error.response.data
         Swal.fire({
           icon: severity.toLowerCase(),
@@ -94,9 +93,12 @@ const RegisterForm = () => {
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.nombre && Boolean(formikProps.errors.nombre)
+              formikProps.touched.nombre &&
+              Boolean(formikProps.errors.nombre)
             }
-            helperText={formikProps.touched.nombre && formikProps.errors.nombre}
+            helperText={
+              formikProps.touched.nombre && formikProps.errors.nombre
+            }
             placeholder='John Doe'
           />
           <TextField
@@ -129,13 +131,9 @@ const RegisterForm = () => {
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.correoElectronico &&
-              Boolean(formikProps.errors.correoElectronico)
+              formikProps.touched.correoElectronico && Boolean(formikProps.errors.correoElectronico)
             }
-            helperText={
-              formikProps.touched.correoElectronico &&
-              formikProps.errors.correoElectronico
-            }
+            helperText={formikProps.touched.correoElectronico && formikProps.errors.correoElectronico}
             placeholder='JohnDoe@example.com'
           />
         </div>

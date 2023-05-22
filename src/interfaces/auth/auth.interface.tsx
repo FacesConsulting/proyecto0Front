@@ -21,11 +21,27 @@ export interface SingUpInterface {
   politicas: boolean
 }
 
-export type ClinicType = {
+export interface ClinicType {
+  // Datos tecnicos
   razonSocial: string
   rfc: string
-  direccion: string
+  telefono: string
+  // Localizacion
+  codigoPostal: string
+  estado: string
+  municipio: string
+  colonia: string
+  calle: string
+  numeroExterior: string
+  numeroInterior: string
+  // Credenciales
   correoElectronico: string
   password: string
-  logoSource: string
+  confirmPassword: string
+  plataforma: string
+  // Logo
+  logoSource: File | null
+  // Terminos
+  terminos: boolean
+  politicas: boolean
 }
