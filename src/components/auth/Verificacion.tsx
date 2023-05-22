@@ -27,8 +27,6 @@ const Verificacion = () => {
           setLoading({ ...loading, loadingData: false })
         })
         .catch((error: any) => {
-        .catch((error) => {
-          console.log(error)
           if (error.message === '"exp" claim timestamp check failed') {
             setExpired(true)
             setLoading({ ...loading, loadingData: false })
