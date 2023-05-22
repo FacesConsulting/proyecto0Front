@@ -1,3 +1,4 @@
+
 export const expresiones = {
   onlyLetters: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -7,6 +8,7 @@ export const expresiones = {
   numerosPositivos: /^\d*$/, // Solo números positivos
   soloLetrasYNumeros: /^[a-zA-Z0-9À-ÿ.,\s]+$/, // Solo letras y numeros
   curp: /^[A-Z]{4}\d{6}[H,M][A-Z]{5}[0-9,A-Z]{2}$/,
+  rfc: /^([A-ZÑ&]{3,4})(\d{6})((\D|\d){3})?$/,
   cedulaProfesional: /^[A-Z]{4}\d{6}[A-Z]?\d{2}$/,
   onlyNumbers: /^\d{1,5}$/
 }

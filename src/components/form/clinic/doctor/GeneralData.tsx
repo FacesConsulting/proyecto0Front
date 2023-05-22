@@ -23,7 +23,7 @@ const GeneralData = ({ formikProps }: GeneralDataProps) => {
           error={formikProps.touched.curp && Boolean(formikProps.errors.curp)}
           helperText={formikProps.touched.curp && formikProps.errors.curp}
           placeholder='JOD'
-        /> 
+        />
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField

@@ -1,11 +1,11 @@
 /* eslint-disable multiline-ternary */
 'use client'
 import { api } from '@/api/axiosAPI'
-import { decodeJWT } from '@/utils/encryptData'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import NewToken from './NewToken'
 import Swal from 'sweetalert2'
+import { decodeJWT } from '@/utils/encryptData'
 
 interface LoadingInterface {
   loadingData: boolean
@@ -23,11 +23,10 @@ const Verificacion = () => {
     const code = queryParameters.get('code')?.toString() || ''
     if (code !== '' && code !== 'null') {
       decodeJWT(code, 'consulta-ya')
-        .then((data) => {
+        .then((data: any) => {
           setLoading({ ...loading, loadingData: false })
         })
-        .catch((error) => {
-          console.log(error)
+        .catch((error: any) => {
           if (error.message === '"exp" claim timestamp check failed') {
             setExpired(true)
             setLoading({ ...loading, loadingData: false })
