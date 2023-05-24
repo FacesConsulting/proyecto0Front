@@ -10,8 +10,9 @@ import GeneralData from './GeneralData'
 import ProfessionalInformation from './ProfessionalInformation'
 import Address from './Address'
 import { Toaster } from 'react-hot-toast'
-import { fetchingDataEncrypted, preparedFormDataDoctor } from '../../../../utils/encryptData'
+import { preparedFormDataDoctor } from '../../../../utils/encryptData'
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
 export interface NewDoctorFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -34,44 +35,48 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
 
   const initialValues: DoctorType = {
     curp: '',
-    nombres: '',
+    nombre: '',
     apellidos: '',
     telefono: '',
-    correo: '',
-    fecha_nacimiento: null,
+    correoElectronico: '',
+    fechaNacimiento: null,
     password: '',
+    confirmPassword: '',
     // Direccion
-    codigo_postal: '',
+    codigoPostal: '',
     estado: '',
     municipio: '',
     colonia: '',
     calle: '',
-    numero_exterior: '',
-    numero_interior: '',
+    numeroExterior: '',
+    numeroInterior: '',
+    terminos: true,
+    politicas: true,
     // Preperacion academica
-    cedula_profesional: '',
+    cedulaProfesional: null,
     especialidad: [
-      { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 },
-      { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 },
-      { especialidad: '', archivo: null, nombreArchivo: '', sizeArchivo: 0 }
+      { nombreEspecialidad: '', documentoEspecialidad: null },
+      { nombreEspecialidad: '', documentoEspecialidad: null },
+      { nombreEspecialidad: '', documentoEspecialidad: null }
     ],
-    tipo_registro: 'Medico',
-    titulo: ''
+    rol: 'Medico',
+    titulo: null,
+    firma: null
   }
 
   const formik = useFormik<DoctorType>({
+    isInitialValid: false,
     enableReinitialize: true,
     initialValues,
-    // validationSchema: validationSchemaSignUp,
+
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
-      const serializeData = JSON.stringify(preparedFormDataDoctor(values))
-      console.log(serializeData)
+      const formData = preparedFormDataDoctor(values)
+      console.log(formData)
       try {
-        const res = await fetchingDataEncrypted(
-          serializeData,
-          '/medic/register',
-          'post'
+        const res = await axios.post(
+          'http://localhost:8081/medico/medic/register',
+          formData
         )
         if (res.status !== 201) {
           throw new Error(res.data)
@@ -115,7 +120,6 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
         {activeStep === 0 && <GeneralData formikProps={formik} />}
         {activeStep === 1 && <Address formikProps={formik} />}
         {activeStep === 2 && <ProfessionalInformation formikProps={formik} />}
-
         <Box
           sx={{
             display: 'flex',
@@ -126,13 +130,24 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
             gap: 2
           }}>
           {activeStep > 0 && <Button onClick={prevStep}>Anterior</Button>}
-          <LoadingButton
-            disabled={false}
-            type={activeStep === 2 ? 'submit' : 'button'}
-            color={activeStep === 2 ? 'success' : 'primary'}
-            onClick={nextStep}>
-            {activeStep === 2 ? 'Guardar' : 'Siguiente'}
-          </LoadingButton>
+          {activeStep < 2 && (
+            <Button
+              disabled={false}
+              type={'button'}
+              color={'primary'}
+              onClick={nextStep}>
+              Siguiente
+            </Button>
+          )}
+          {activeStep === 2 && (
+            <LoadingButton
+              disabled={false}
+              type={'submit'}
+              color={'success'}
+              loading={false}>
+              Guardar
+            </LoadingButton>
+          )}
         </Box>
       </form>
     </LocalizationProvider>

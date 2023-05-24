@@ -1,14 +1,14 @@
 /* eslint-disable multiline-ternary */
-import { DoctorType } from '@/interfaces/clinic/doctor'
+import { Especialidad } from '@/interfaces/clinic/doctor'
 import { Grid } from '@mui/material'
 import { FormikProps } from 'formik'
 import Image from 'next/image'
 import React, { useState } from 'react'
 
-const ProfessionalInformation = ({
+const Speciality = ({
   formikProps
 }: {
-  formikProps: FormikProps<DoctorType>
+  formikProps: FormikProps<Especialidad>
 }) => {
   const [largeFile, setLargeFile] = useState<boolean>(false)
   const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,36 +26,6 @@ const ProfessionalInformation = ({
     }
     setLargeFile(true)
   }
-  const handleChangeFileT = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputElement = event.target as HTMLInputElement
-    if (
-      inputElement &&
-      inputElement.files &&
-      inputElement.files.length > 0 &&
-      inputElement.files[0].size <= 500000
-    ) {
-      const file = inputElement.files[0]
-      setLargeFile(false)
-      formikProps.setFieldValue('titulo', file, true)
-      return
-    }
-    setLargeFile(true)
-  }
-  const handleChangeFileF = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputElement = event.target as HTMLInputElement
-    if (
-      inputElement &&
-      inputElement.files &&
-      inputElement.files.length > 0 &&
-      inputElement.files[0].size <= 500000
-    ) {
-      const file = inputElement.files[0]
-      setLargeFile(false)
-      formikProps.setFieldValue('firma', file, true)
-      return
-    }
-    setLargeFile(true)
-  }
   return (
     <>
       <Grid container spacing={2} marginBottom={2}>
@@ -65,17 +35,17 @@ const ProfessionalInformation = ({
               <div className='flex relative flex-col gap-2 justify-center items-center text-gray-400 bg-gray-100 border border-gray-200 border-dashed rounded-full w-48 h-48 overflow-hidden'>
                 <input
                   type='file'
-                  name='cedulaProfesional'
-                  id='cedulaProfesional'
+                  name='especialidad'
+                  id='especialidad'
                   accept='.jpge,.jpg'
                   onChange={handleChangeFile}
                   className='absolute inset-0 z-50 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer'
                 />
-                {formikProps.values.cedulaProfesional !== null ? (
+                {formikProps.values.documentoEspecialidad !== null ? (
                   <Image
                     className='absolute inset-0 z-0 object-cover w-full h-full border-4 border-white'
                     src={URL.createObjectURL(
-                      formikProps.values.cedulaProfesional || new Blob()
+                      formikProps.values.documentoEspecialidad || new Blob()
                     )}
                     alt={'imag'}
                     fill
@@ -90,7 +60,7 @@ const ProfessionalInformation = ({
                       viewBox='0 0 24 24'>
                       <path d='M5 4h-3v-1h3v1zm8 6c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3zm11-5v17h-24v-17h5.93c.669 0 1.293-.334 1.664-.891l1.406-2.109h8l1.406 2.109c.371.557.995.891 1.664.891h3.93zm-19 4c0-.552-.447-1-1-1s-1 .448-1 1 .447 1 1 1 1-.448 1-1zm13 4c0-2.761-2.239-5-5-5s-5 2.239-5 5 2.239 5 5 5 5-2.239 5-5z' />
                     </svg>
-                    <p>Subir cedula Profesional</p>
+                    <p>Subir documento de especialidad</p>
                   </>
                 )}
               </div>
@@ -128,14 +98,14 @@ const ProfessionalInformation = ({
                   name='titulo'
                   id='titulo'
                   accept='.jpge,.jpg'
-                  onChange={handleChangeFileT}
+                  onChange={handleChangeFile}
                   className='absolute inset-0 z-50 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer'
                 />
-                {formikProps.values.titulo !== null ? (
+                {formikProps.values.documentoEspecialidad !== null ? (
                   <Image
                     className='absolute inset-0 z-0 object-cover w-full h-full border-4 border-white'
                     src={URL.createObjectURL(
-                      formikProps.values.titulo || new Blob()
+                      formikProps.values.documentoEspecialidad || new Blob()
                     )}
                     alt={'imag'}
                     fill
@@ -188,14 +158,14 @@ const ProfessionalInformation = ({
                   name='firma'
                   id='firma'
                   accept='.jpge,.jpg'
-                  onChange={handleChangeFileF}
+                  onChange={handleChangeFile}
                   className='absolute inset-0 z-50 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer'
                 />
-                {formikProps.values.firma !== null ? (
+                {formikProps.values.documentoEspecialidad !== null ? (
                   <Image
                     className='absolute inset-0 z-0 object-cover w-full h-full border-4 border-white'
                     src={URL.createObjectURL(
-                      formikProps.values.firma || new Blob()
+                      formikProps.values.documentoEspecialidad || new Blob()
                     )}
                     alt={'imag'}
                     fill
@@ -244,4 +214,4 @@ const ProfessionalInformation = ({
   )
 }
 
-export default ProfessionalInformation
+export default Speciality

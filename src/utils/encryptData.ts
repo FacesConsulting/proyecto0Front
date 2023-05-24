@@ -93,10 +93,26 @@ export const preparedFormDataDoctor = (values: DoctorType) => {
   formData.append('data', encryptedData)
   formData.append('key', key.toString('base64'))
   formData.append('iv', iv.toString('base64'))
+  if (values.titulo !== null) {
+    formData.append('titulo', values.titulo)
+  }
+  if (values.cedulaProfesional != null) {
+    formData.append('cedulaProfesional', values.cedulaProfesional)
+  }
+  if (values.firma != null) {
+    formData.append('firma', values.firma)
+  }
   if (values.especialidad !== null) {
     for (const element of values.especialidad) {
-      formData.append(('especialidad '), element.especialidad)
+      if (element.documentoEspecialidad !== null) {
+        formData.append(
+          'especialidad ',
+          element.documentoEspecialidad,
+          element.nombreEspecialidad
+        )
+      }
     }
   }
+  console.log(formData)
   return formData
 }

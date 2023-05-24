@@ -34,7 +34,7 @@ const Address = ({ formikProps }: AddressProps) => {
     setDisableField(false)
     try {
       const res = await toast.promise(
-        api.get('api/codigoPostal/mx/' + formikProps.values.codigo_postal),
+        api.get('api/codigoPostal/mx/' + formikProps.values.codigoPostal),
         {
           loading: 'Buscando ...',
           success: 'Código postal encontrado',
@@ -56,17 +56,17 @@ const Address = ({ formikProps }: AddressProps) => {
       <Grid container spacing={2} marginBottom={2}>
         <Grid item xs={12} md={6}>
           <FormControl fullWidth variant='outlined'>
-            <InputLabel htmlFor='codigo_postal'>Código Postal</InputLabel>
+            <InputLabel htmlFor='codigoPostal'>Código Postal</InputLabel>
             <OutlinedInput
               fullWidth
-              id='codigo_postal'
-              name='codigo_postal'
+              id='codigoPostal'
+              name='codigoPostal'
               type={'text'}
-              value={formikProps.values.codigo_postal}
+              value={formikProps.values.codigoPostal}
               onChange={formikProps.handleChange}
               onBlur={(e) => {
                 formikProps.handleBlur(e)
-                if (formikProps.values.codigo_postal.length === 5 && !manual) {
+                if (formikProps.values.codigoPostal.length === 5 && !manual) {
                   getZipData()
                 }
               }}
@@ -77,8 +77,8 @@ const Address = ({ formikProps }: AddressProps) => {
                 maxLength: 5
               }}
               error={
-                formikProps.touched.codigo_postal &&
-                Boolean(formikProps.errors.codigo_postal)
+                formikProps.touched.codigoPostal &&
+                Boolean(formikProps.errors.codigoPostal)
               }
               endAdornment={
                 <InputAdornment position='end'>
@@ -183,19 +183,19 @@ const Address = ({ formikProps }: AddressProps) => {
           <TextField
             fullWidth
             disabled={!manual && disableFields}
-            id='numero_exterior'
-            name='numero_exterior'
+            id='numeroExterior'
+            name='numeroExterior'
             label='Número exterior '
-            value={formikProps.values.numero_exterior}
+            value={formikProps.values.numeroExterior}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.numero_exterior &&
-              Boolean(formikProps.errors.numero_exterior)
+              formikProps.touched.numeroExterior &&
+              Boolean(formikProps.errors.numeroExterior)
             }
             helperText={
-              formikProps.touched.numero_exterior &&
-              formikProps.errors.numero_exterior
+              formikProps.touched.numeroExterior &&
+              formikProps.errors.numeroExterior
             }
             placeholder='5'
           />
@@ -204,19 +204,19 @@ const Address = ({ formikProps }: AddressProps) => {
           <TextField
             fullWidth
             disabled={!manual && disableFields}
-            id='numero_interior'
-            name='numero_interior'
+            id='numeroInterior'
+            name='numeroInterior'
             label='Nº interior/Depto (opcional) '
-            value={formikProps.values.numero_interior}
+            value={formikProps.values.numeroInterior}
             onChange={formikProps.handleChange}
             onBlur={formikProps.handleBlur}
             error={
-              formikProps.touched.numero_interior &&
-              Boolean(formikProps.errors.numero_interior)
+              formikProps.touched.numeroInterior &&
+              Boolean(formikProps.errors.numeroInterior)
             }
             helperText={
-              formikProps.touched.numero_interior &&
-              formikProps.errors.numero_interior
+              formikProps.touched.numeroInterior &&
+              formikProps.errors.numeroInterior
             }
             placeholder='6'
           />
