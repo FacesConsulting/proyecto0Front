@@ -4,6 +4,7 @@ import { InfoAddress } from '@/interfaces/types/HelperTypes'
 import { LocationOff, LocationOn } from '@mui/icons-material'
 import {
   FormControl,
+  FormHelperText,
   Grid,
   IconButton,
   InputAdornment,
@@ -95,6 +96,13 @@ const Address = ({ formikProps }: AddressProps) => {
               label='Código Postal'
             />
           </FormControl>
+          <FormHelperText>
+              {formikProps.touched.codigoPostal && (
+                <span style={{ color: '#d32f2f' }}>
+                  {formikProps.errors.codigoPostal}
+                </span>
+              )}
+            </FormHelperText>
         </Grid>
       </Grid>
       <Grid container spacing={2} marginBottom={2}>

@@ -68,7 +68,7 @@ const GeneralData = ({ formikProps }: GeneralDataProps) => {
           label='Fecha de Nacimiento'
           value={
             formikProps.values.fechaNacimiento !== null
-              ? dayjs(formikProps.values.fechaNacimiento).format('DD/MM/YYYY')
+              ? dayjs(formikProps.values.fechaNacimiento)
               : null
           }
           onChange={(value) =>

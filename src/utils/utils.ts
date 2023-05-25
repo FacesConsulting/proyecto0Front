@@ -7,7 +7,7 @@ export const expresiones = {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/, // 8 a 15 digitos.
   numerosPositivos: /^\d*$/, // Solo números positivos
   soloLetrasYNumeros: /^[a-zA-Z0-9À-ÿ.,\s]+$/, // Solo letras y numeros
-  curp: /^[A-Z]{4}\d{6}[H,M][A-Z]{5}[0-9,A-Z]{2}$/,
+  curp: /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
   rfc: /^([A-ZÑ&]{3,4})(\d{6})((\D|\d){3})?$/,
   cedulaProfesional: /^[A-Z]{4}\d{6}[A-Z]?\d{2}$/,
   onlyNumbers: /^\d{1,5}$/

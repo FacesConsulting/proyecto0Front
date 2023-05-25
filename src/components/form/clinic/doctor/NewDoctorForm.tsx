@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast'
 import { preparedFormDataDoctor } from '../../../../utils/encryptData'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import { validationSchemaNewDoctor } from '@/validations/NewDoctor/ValidationNewDoctor'
 
 export interface NewDoctorFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -67,6 +68,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
   const formik = useFormik<DoctorType>({
     isInitialValid: false,
     enableReinitialize: true,
+    //validationSchema: validationSchemaNewDoctor,
     initialValues,
 
     onSubmit: async (values, { resetForm }) => {
