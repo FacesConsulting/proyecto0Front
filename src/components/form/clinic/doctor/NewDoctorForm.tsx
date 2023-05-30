@@ -14,6 +14,7 @@ import { preparedFormDataDoctor } from '../../../../utils/encryptData'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { validationSchemaNewDoctor } from '@/validations/NewDoctor/ValidationNewDoctor'
+import Speciality from './Speciality'
 
 export interface NewDoctorFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -23,7 +24,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
   const [activeStep, setActiveStep] = useState<number>(0)
 
   const nextStep = () => {
-    if (activeStep < 2) {
+    if (activeStep < 3) {
       setActiveStep((prev) => prev + 1)
     }
   }
@@ -89,7 +90,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
           text: res.data
         })
         resetForm()
-      } catch (error : any) {
+      } catch (error: any) {
         const { severity, title, message } = error.response.data
         Swal.fire({
           icon: severity.toLowerCase(),
@@ -103,7 +104,8 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
   const steeps: Array<string> = [
     'Datos generales',
     'Domicilio',
-    'Información Profesional'
+    'Información Profesional',
+    'Especialidades'
   ]
 
   return (
@@ -122,6 +124,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
         {activeStep === 0 && <GeneralData formikProps={formik} />}
         {activeStep === 1 && <Address formikProps={formik} />}
         {activeStep === 2 && <ProfessionalInformation formikProps={formik} />}
+        {activeStep === 3 && <Speciality formikProps={formik} />}
         <Box
           sx={{
             display: 'flex',
@@ -132,7 +135,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
             gap: 2
           }}>
           {activeStep > 0 && <Button onClick={prevStep}>Anterior</Button>}
-          {activeStep < 2 && (
+          {activeStep < 3 && (
             <Button
               disabled={false}
               type={'button'}
@@ -141,7 +144,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
               Siguiente
             </Button>
           )}
-          {activeStep === 2 && (
+          {activeStep === 3 && (
             <LoadingButton
               disabled={false}
               type={'submit'}

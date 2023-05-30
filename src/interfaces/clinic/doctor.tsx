@@ -3,7 +3,7 @@ interface Ranking {
   puntuacion: number
 }
 
-export type Especialidad = {
+export interface Especialidad {
   nombreEspecialidad: string
   documentoEspecialidad: File | null
 }
