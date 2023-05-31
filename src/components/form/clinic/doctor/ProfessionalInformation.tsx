@@ -1,4 +1,5 @@
 /* eslint-disable multiline-ternary */
+import DynamicInput from '@/components/helpers/DynamicInput'
 import { DoctorType } from '@/interfaces/clinic/doctor'
 import { Grid } from '@mui/material'
 import { FormikProps } from 'formik'
@@ -239,6 +240,10 @@ const ProfessionalInformation = ({
             )}
           </div>
         </Grid>
+        <Grid item xs={12}>
+        <DynamicInput formikProps={formikProps} />
+        {}
+      </Grid>
       </Grid>
     </>
   )

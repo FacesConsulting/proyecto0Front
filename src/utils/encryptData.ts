@@ -102,15 +102,14 @@ export const preparedFormDataDoctor = (values: DoctorType) => {
   if (values.firma != null) {
     formData.append('firma', values.firma)
   }
+  for (const element of values.especialidad) {
+    if (element.documentoEspecialidad != null) {
+      formData.append('documentoEspecialidad', element.documentoEspecialidad)
+    }
+  }
   if (values.especialidad !== null) {
     for (const element of values.especialidad) {
-      if (element.documentoEspecialidad !== null) {
-        formData.append(
-          'especialidad[] ',
-          element.documentoEspecialidad,
-          element.nombreEspecialidad
-        )
-      }
+      formData.append('especialidad ', element.nombreEspecialidad)
     }
   }
   return formData

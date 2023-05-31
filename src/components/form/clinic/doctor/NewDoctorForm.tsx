@@ -14,7 +14,6 @@ import { preparedFormDataDoctor } from '../../../../utils/encryptData'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { validationSchemaNewDoctor } from '@/validations/NewDoctor/ValidationNewDoctor'
-import Speciality from './Speciality'
 
 export interface NewDoctorFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,7 +23,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
   const [activeStep, setActiveStep] = useState<number>(0)
 
   const nextStep = () => {
-    if (activeStep < 3) {
+    if (activeStep < 2) {
       setActiveStep((prev) => prev + 1)
     }
   }
@@ -57,9 +56,9 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     // Preperacion academica
     cedulaProfesional: null,
     especialidad: [
-      { nombreEspecialidad: '', documentoEspecialidad: null },
-      { nombreEspecialidad: '', documentoEspecialidad: null },
-      { nombreEspecialidad: '', documentoEspecialidad: null }
+      { nombreEspecialidad: '', documentoEspecialidad: null, nombreArchivo: '', sizeArchivo: 0 },
+      { nombreEspecialidad: '', documentoEspecialidad: null, nombreArchivo: '', sizeArchivo: 0 },
+      { nombreEspecialidad: '', documentoEspecialidad: null, nombreArchivo: '', sizeArchivo: 0 }
     ],
     rol: 'Medico',
     titulo: null,
@@ -75,7 +74,6 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
       const formData = preparedFormDataDoctor(values)
-      console.log(formData)
       try {
         const res = await axios.post(
           'http://localhost:8081/medico/medic/register',
@@ -104,8 +102,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
   const steeps: Array<string> = [
     'Datos generales',
     'Domicilio',
-    'Información Profesional',
-    'Especialidades'
+    'Información Profesional'
   ]
 
   return (
@@ -124,7 +121,6 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
         {activeStep === 0 && <GeneralData formikProps={formik} />}
         {activeStep === 1 && <Address formikProps={formik} />}
         {activeStep === 2 && <ProfessionalInformation formikProps={formik} />}
-        {activeStep === 3 && <Speciality formikProps={formik} />}
         <Box
           sx={{
             display: 'flex',
@@ -135,7 +131,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
             gap: 2
           }}>
           {activeStep > 0 && <Button onClick={prevStep}>Anterior</Button>}
-          {activeStep < 3 && (
+          {activeStep < 2 && (
             <Button
               disabled={false}
               type={'button'}
@@ -144,7 +140,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
               Siguiente
             </Button>
           )}
-          {activeStep === 3 && (
+          {activeStep === 2 && (
             <LoadingButton
               disabled={false}
               type={'submit'}

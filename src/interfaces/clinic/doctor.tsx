@@ -4,6 +4,8 @@ interface Ranking {
 }
 
 export interface Especialidad {
+  nombreArchivo? : string
+  sizeArchivo?: number
   nombreEspecialidad: string
   documentoEspecialidad: File | null
 }
