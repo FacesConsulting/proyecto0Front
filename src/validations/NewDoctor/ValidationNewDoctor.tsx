@@ -44,7 +44,7 @@ export const validationSchemaNewDoctor = yup.object().shape({
     .oneOf([true], 'Debes aceptar las politicas de privacidad.')
     .required()
     .default(false),
-  codigoPostal: yup.number().max(5).min(1).required('Campo requerido.'),
+  codigoPostal: yup.number().required('Campo obligtorio'),
   calle: yup
     .string()
     .matches(expresiones.soloLetrasYNumeros, {

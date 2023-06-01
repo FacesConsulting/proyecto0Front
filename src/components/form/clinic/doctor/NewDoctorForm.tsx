@@ -68,7 +68,7 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
   const formik = useFormik<DoctorType>({
     isInitialValid: false,
     enableReinitialize: true,
-    //validationSchema: validationSchemaNewDoctor,
+    validationSchema: validationSchemaNewDoctor,
     initialValues,
 
     onSubmit: async (values, { resetForm }) => {
