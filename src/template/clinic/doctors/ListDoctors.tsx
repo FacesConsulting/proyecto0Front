@@ -33,15 +33,24 @@ const ListDoctors = () => {
           </Breadcrumbs>
         </Box>
         <Box>
-          <Button startIcon={<Add />} variant='contained' size='small' onClick={() => setViewModal(true)}>
+          <Button
+            startIcon={<Add />}
+            variant='contained'
+            size='small'
+            onClick={() => setViewModal(true)}>
             nuevo
           </Button>
         </Box>
       </Box>
-
-      <ModalNewDoctor title='Nuevo Doctor' open={viewModal} state={setViewModal} />
+      <div>
+        <ModalNewDoctor
+          title='Nuevo Doctor'
+          open={viewModal}
+          state={setViewModal}
+        />
+      </div>
       <Box>
-      <NewDoctor></NewDoctor>
+        <NewDoctor></NewDoctor>
       </Box>
     </>
   )

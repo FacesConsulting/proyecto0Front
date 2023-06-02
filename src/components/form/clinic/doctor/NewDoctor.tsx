@@ -2,11 +2,25 @@ import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import { Avatar, Box, IconButton } from '@mui/material'
-import FmdGoodIcon from '@mui/icons-material/FmdGood'
+import { Avatar, Box, IconButton, Menu, MenuItem } from '@mui/material'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
 
-function UserCard ({ doctor }) {
+const options = ['Ninguno', 'Editar', 'ver Paciente']
+const ITEM_HEIGHT = 48
+
+function UserCard({ doctor }) {
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Grid item xs={4}>
       <Paper
@@ -16,10 +30,17 @@ function UserCard ({ doctor }) {
           maxWidth: 500,
           flexGrow: 1,
           backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? '#1A2027' : '#fff'
-        }}>
+            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+        }}
+      >
         <Grid container spacing={2}>
-          <Grid item display='flex' justifyContent='center' alignItems='center'>
+          <Grid
+            item
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+          >
             <Avatar variant='circular'></Avatar>
           </Grid>
           <Grid item xs={12} sm container>
@@ -29,28 +50,63 @@ function UserCard ({ doctor }) {
                   gutterBottom
                   variant='subtitle1'
                   style={{ fontWeight: 600 }}
-                  component='div'>
+                  component='div'
+                >
                   {doctor.name}
                 </Typography>
                 <Typography
                   variant='body2'
                   color='text.secondary'
-                  component='div'>
+                  component='div'
+                >
                   {doctor.profession}
                 </Typography>
                 <Typography
                   gutterBottom
                   variant='subtitle2'
-                  style={{ fontWeight: 400 }}
-                  component='div'>
-                  <FmdGoodIcon fontSize='small' /> {doctor.location}
+                  style={{ fontWeight: 400, marginTop: '0.5rem' }}
+                  component='div'
+                >
+                  <LocationOnIcon fontSize='small' /> {doctor.location}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton>
+              <IconButton
+                aria-label='more'
+                id='long-button'
+                aria-controls={open ? 'long-menu' : undefined}
+                aria-expanded={open ? 'true' : undefined}
+                aria-haspopup='true'
+                onClick={handleClick}
+              >
                 <MoreVertOutlinedIcon />
               </IconButton>
+              <Menu
+                id='long-menu'
+                MenuListProps={{
+                  'aria-labelledby': 'long-button'
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: '20ch'
+                  }
+                }}
+              >
+                {options.map((option) => (
+                  <MenuItem
+                    key={option}
+                    selected={option === 'Pyxis'}
+                    onClick={handleClose}
+                  >
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
             </Grid>
           </Grid>
         </Grid>
@@ -60,7 +116,7 @@ function UserCard ({ doctor }) {
 }
 
 export default function ComplexGrid () {
-  const [doctor] = useState([
+  const [doctors] = useState([
     {
       name: 'Ronald Jacobs',
       profession: 'Cardiologo',
@@ -111,7 +167,7 @@ export default function ComplexGrid () {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={3}>
-        {doctor.map((doctor, index) => (
+        {doctors.map((doctor, index) => (
           <UserCard key={index} doctor={doctor} />
         ))}
       </Grid>
