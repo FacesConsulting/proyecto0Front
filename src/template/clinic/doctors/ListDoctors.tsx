@@ -3,6 +3,7 @@ import { Add } from '@mui/icons-material'
 import { Box, Breadcrumbs, Button, Typography } from '@mui/material'
 import Link from 'next/link'
 import ModalNewDoctor from '@/components/modals/clinic/doctors/ModalNewDoctor'
+import NewDoctor from '@/components/form/clinic/doctor/NewDoctor'
 
 const ListDoctors = () => {
   const [viewModal, setViewModal] = useState<boolean>(false)
@@ -27,8 +28,8 @@ const ListDoctors = () => {
             <Link href='/'>
               <Typography color={'inherit'}>Inicio</Typography>
             </Link>
-            <Link href='/'>Doctores</Link>
-            <Typography color='text.primary.ligth'>Lista</Typography>
+            <Link href='/'>Doctor</Link>
+            <Typography color='text.primary.ligth'>Lista Doctor</Typography>
           </Breadcrumbs>
         </Box>
         <Box>
@@ -39,6 +40,9 @@ const ListDoctors = () => {
       </Box>
 
       <ModalNewDoctor title='Nuevo Doctor' open={viewModal} state={setViewModal} />
+      <Box>
+      <NewDoctor></NewDoctor>
+      </Box>
     </>
   )
 }
