@@ -10,6 +10,8 @@ import GeneralData from './GeneralData'
 import ProfessionalInformation from './ProfessionalInformation'
 import Address from './Address'
 import { Toaster } from 'react-hot-toast'
+import { fetchingDataEncrypted, preparedFormDataDoctor } from '../../../../utils/encryptData'
+import Swal from 'sweetalert2'
 
 export interface NewDoctorFormProps {
   state: React.Dispatch<React.SetStateAction<boolean>>
@@ -63,6 +65,31 @@ const NewDoctorForm = ({ state }: NewDoctorFormProps) => {
     // validationSchema: validationSchemaSignUp,
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
+      const serializeData = JSON.stringify(preparedFormDataDoctor(values))
+      console.log(serializeData)
+      try {
+        const res = await fetchingDataEncrypted(
+          serializeData,
+          '/medic/register',
+          'post'
+        )
+        if (res.status !== 201) {
+          throw new Error(res.data)
+        }
+        Swal.fire({
+          icon: 'success',
+          title: 'Hecho',
+          text: res.data
+        })
+        resetForm()
+      } catch (error : any) {
+        const { severity, title, message } = error.response.data
+        Swal.fire({
+          icon: severity.toLowerCase(),
+          title,
+          text: message
+        })
+      }
     }
   })
 

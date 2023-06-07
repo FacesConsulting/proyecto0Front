@@ -17,7 +17,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useFormik } from 'formik'
 import { SingUpInterface } from '@/interfaces/auth/auth.interface'
 import { validationSchemaSignUp } from '@/validations/Login/ValidationLogin'
-import { fetchingDataEncrypted } from '@/utils/utils'
+import { fetchingDataEncrypted } from '@/utils/encryptData'
 import Swal from 'sweetalert2'
 import ModalPrivacyPolicy from '@/components/modals/signUp/ModalPrivacyPolicy'
 import { useRouter } from 'next/navigation'
@@ -67,10 +67,11 @@ const RegisterForm = () => {
 
         resetForm()
       } catch (error : any) {
+        const { severity, title, message } = error.response.data
         Swal.fire({
-          icon: 'error',
-          title: 'Opsss.',
-          text: error.message
+          icon: severity.toLowerCase(),
+          title,
+          text: message
         })
       }
       setLoading(false)
